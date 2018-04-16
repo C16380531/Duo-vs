@@ -9,22 +9,26 @@ package duo_vs.state;
 
 import java.awt.Graphics;
 import duo_vs.connect4.Design;
+import duo_vs.Handler;
 
-
-public class GameState extends State {
+public class GameState extends State 
+{
 	private Design design;
-
-	public GameState(){
-		design = new Design();
+	
+	public GameState(Handler handler)
+	{
+		design = new Design(handler);
 	}
 	
 	@Override
-	public void tick() {
-		
+	public void tick() 
+	{
+		design.tick();
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics g) 
+	{
 	    design.render(g);
 	}
 

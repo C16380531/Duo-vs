@@ -1,11 +1,18 @@
+/* 
+    Team Name: Duo-vs.
+    Course: DT228/2.
+    Module: Object Oriented Programming.
+    Type: OOP assignment 2.
+*/
+
 package duo_vs.display;
 
-//import java.awt.Color;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-public class Display {
+public class Display 
+{
 
 	// use JFrame to create window and canvas to draw graphics
 	private JFrame frame;

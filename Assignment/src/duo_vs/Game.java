@@ -7,14 +7,17 @@
 
 package duo_vs;
 
-//import java.awt.Color;
+//plug ins
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-//import duo_vs.connect4.Something;
+//imported classes
 import duo_vs.display.Display;
 import duo_vs.state.GameState;
 import duo_vs.state.State;
+import duo_vs.input.MouseManager;
+import duo_vs.Handler;
 
 //implements runnable allows to run on thread
 public class Game implements Runnable 
@@ -32,8 +35,13 @@ public class Game implements Runnable
 	private Thread thread;
 	
 	//States
-	private State gameState;
+	public State gameState;
 	
+	//Input
+	private MouseManager mouseManager;
+
+	//Handler
+	private Handler handler;
 
 	//Constructor
 	public Game(String title, int width, int height)
@@ -41,16 +49,24 @@ public class Game implements Runnable
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		
+		mouseManager = new MouseManager();
 	}
 	
 	//initialize all graphics
 	private void init()
 	{
-		//Initialize display
 		display = new Display(title, width, height);
-	
+		
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
+		
+		handler = new Handler(this);
+		
 		//state
-		gameState = new GameState();
+		gameState = new GameState(handler);
 		State.setState(gameState);
 	}
 	
@@ -71,6 +87,8 @@ public class Game implements Runnable
 		//Clear Screen
 		g.clearRect(0, 0, width, height);
 		//Draw Here!
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, width, height+5);
 		
 		if(State.getState() != null)
 			State.getState().render(g);
@@ -94,6 +112,12 @@ public class Game implements Runnable
 			
 		stop();
 		
+	}
+	
+	
+	public MouseManager getMouseManager()
+	{
+		return mouseManager;
 	}
 	
 	//checks to make sure its running when start() called
