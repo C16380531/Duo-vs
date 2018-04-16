@@ -1,10 +1,3 @@
-/* 
-    Team Name: Duo-vs.
-    Course: DT228/2.
-    Module: Object Oriented Programming.
-    Type: OOP assignment 2.
-*/
-
 package duo_vs.display;
 
 //import java.awt.Color;
@@ -69,4 +62,3 @@ public class Display {
 	}
 	
 }
-

@@ -11,8 +11,10 @@ package duo_vs;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
-
+//import duo_vs.connect4.Something;
 import duo_vs.display.Display;
+import duo_vs.state.GameState;
+import duo_vs.state.State;
 
 //implements runnable allows to run on thread
 public class Game implements Runnable 
@@ -29,6 +31,9 @@ public class Game implements Runnable
 	private Graphics g;
 	private Thread thread;
 	
+	//States
+	private State gameState;
+	
 
 	//Constructor
 	public Game(String title, int width, int height)
@@ -44,14 +49,19 @@ public class Game implements Runnable
 		//Initialize display
 		display = new Display(title, width, height);
 	
+		//state
+		gameState = new GameState();
+		State.setState(gameState);
 	}
 	
 	private void tick()
 	{
-		
+		if(State.getState() != null)
+			State.getState().tick();
 	}
 	
-	private void render(){
+	private void render()
+	{
 		bs = display.getCanvas().getBufferStrategy();
 		if(bs == null){
 			display.getCanvas().createBufferStrategy(3);
@@ -61,11 +71,15 @@ public class Game implements Runnable
 		//Clear Screen
 		g.clearRect(0, 0, width, height);
 		//Draw Here!
+		
+		if(State.getState() != null)
+			State.getState().render(g);
 
 		//End Drawing!
 		bs.show();
 		g.dispose();
 	}
+	
 	
 	public void run()
 	{
