@@ -8,28 +8,33 @@
 package duo_vs.state;
 
 import java.awt.Graphics;
-import duo_vs.connect4.Design;
+//import duo_vs.connect4.Design;
+import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.Handler;
 
 public class GameState extends State 
 {
-	private Design design;
+	//private Design design;
+	private DotsandBoxes dotsandboxes;
 	
 	public GameState(Handler handler)
 	{
-		design = new Design(handler);
+		//design = new Design(handler);
+		dotsandboxes = new DotsandBoxes();
 	}
 	
 	@Override
 	public void tick() 
 	{
-		design.tick();
+		//design.tick();
+		dotsandboxes.tick();
 	}
 
 	@Override
 	public void render(Graphics g) 
 	{
-	    design.render(g);
+	    //design.render(g);
+		dotsandboxes.render(g);
 	}
 
 }
