@@ -20,7 +20,7 @@ public class GameState extends State
 	public GameState(Handler handler)
 	{
 		//design = new Design(handler);
-		dotsandboxes = new DotsandBoxes();
+		dotsandboxes = new DotsandBoxes(handler);
 	}
 	
 	@Override

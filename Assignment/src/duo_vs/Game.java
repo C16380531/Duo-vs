@@ -8,7 +8,7 @@
 package duo_vs;
 
 //plug ins
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 

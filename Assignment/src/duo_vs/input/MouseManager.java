@@ -7,7 +7,7 @@ import java.awt.event.MouseMotionListener;
 public class MouseManager implements MouseListener, MouseMotionListener 
 {
 
-	private boolean leftPressed, rightPressed;
+	private boolean leftPressed, rightPressed, clicked;
 	private int mouseX, mouseY;
 	
 	public MouseManager()
@@ -37,6 +37,11 @@ public class MouseManager implements MouseListener, MouseMotionListener
 		return mouseY;
 	}
 	
+	public boolean isClicked()
+	{
+		return clicked;
+		
+	}
 	// Implemented methods
 	
 	@Override
@@ -44,7 +49,8 @@ public class MouseManager implements MouseListener, MouseMotionListener
 	{
 		if(e.getButton() == MouseEvent.BUTTON1)
 			leftPressed = true;
-		else if(e.getButton() == MouseEvent.BUTTON3)
+		    clicked = true;
+	    if(e.getButton() == MouseEvent.BUTTON3)
 			rightPressed = true;
 	}
 
@@ -53,7 +59,11 @@ public class MouseManager implements MouseListener, MouseMotionListener
 	{
 		if(e.getButton() == MouseEvent.BUTTON1)
 			leftPressed = false;
-		else if(e.getButton() == MouseEvent.BUTTON3)
+		    clicked = true;
+		    mouseX = 0;
+		    mouseY = 0;
+		    
+	    if(e.getButton() == MouseEvent.BUTTON3)
 			rightPressed = false;
 	}
 
@@ -71,12 +81,42 @@ public class MouseManager implements MouseListener, MouseMotionListener
 		
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent arg0) 
+	public void mouseClicked(MouseEvent e)
 	{
+		
+		//clicked = true;
 		// TODO Auto-generated method stub
+		mouseX = e.getX();
+		mouseY = e.getY();
+		System.out.println(mouseX + " " + mouseY);
+		//onClick();
+		clicked =  false;
+		
+	
 		
 	}
+	
+	
+	/*
+	public void onClick() 
+	{
+		
+		for( int i = 25; i < 750; i += 50) 
+		{
+			for(int j = 100; j < 750; j+= 50 ) 
+			{
+				if( mouseX >i && mouseX < i+50 && mouseY > j && mouseY < j+50)
+				{
+					
+					Game.fillLine(i,j);
+					System.out.println("hello1");
+					
+				}
+					
+			}
+		}
+		
+	}*/
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) 
