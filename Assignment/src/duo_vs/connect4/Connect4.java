@@ -16,10 +16,10 @@ import duo_vs.state.State;
 import duo_vs.Handler;
 
 
-public class Design 
+public class Connect4 
 {	
 	private Handler handler;
-	public Design(Handler handler)
+	public Connect4(Handler handler)
 	{
 		this.handler =handler;
 	}
@@ -36,7 +36,7 @@ public class Design
 	    g.setColor(Color.blue);
 		g.fillRect(30, 30, 640 , 490);
 		
-		//displays 7 columns and 6 rows of white cirlces
+		//displays 7 columns and 6 rows of white circles
 		for(int x = 60; x < 640; x+=85)
 		{
 			for(int y =60; y <470 ; y+=90)
@@ -48,8 +48,8 @@ public class Design
 		}
 		
 		
-			g.setColor(Color.RED);
-			g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 8, 8);
+		g.setColor(Color.RED);
+		g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 8, 8);
 			
 	}
 }
