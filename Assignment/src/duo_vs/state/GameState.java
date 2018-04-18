@@ -14,10 +14,10 @@ import java.awt.Graphics;
 //imported classes
 import duo_vs.connect4.Connect4;
 import duo_vs.dotsandboxes.DotsandBoxes;
-/*import garys one
+//import garys one
 import duo_vs.tictactoe.Tictactoe;
-import duo_vs.checkers.Checkers;
-import chris one*/
+//import duo_vs.checkers.Checkers;
+//import chris one*/
 
 import duo_vs.Handler;
 
@@ -26,8 +26,8 @@ public class GameState extends State
 	//objects
 	private Connect4 connect4;
 	private DotsandBoxes dotsandboxes;
-	/*garys class object
 	private Tictactoe tictactoe;
+	/*garys class object
 	private Checkers checkers;
 	chris class object*/
 	
@@ -44,8 +44,8 @@ public class GameState extends State
 		
 		connect4 = new Connect4(handler);
 		dotsandboxes = new DotsandBoxes(handler);
-		/*garys class initialized here
 		tictactoe = new Tictactoe();
+		/*garys class initialized here
 		checkers = new Checkers();
 		chris class initialized here*/
 		
@@ -56,8 +56,8 @@ public class GameState extends State
 	{
 		connect4.tick();
 		dotsandboxes.tick();
-		/*garys tick called here
 		tictactoe.tick();
+		/*garys tick called here
 		checkers.tick();
 		chris tick called here*/
 		
@@ -132,7 +132,7 @@ public class GameState extends State
     			break;
     		case 4 :
     			g.clearRect(0, 0, 700, 550);
-    		    //tictactoe.render(g);
+    		    tictactoe.render(g);
     			g.drawString("WOW DAVIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
     			break;
     		case 5 :
