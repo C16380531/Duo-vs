@@ -7,19 +7,35 @@
 
 package duo_vs.state;
 
+//plug ins
 import java.awt.Color;
 import java.awt.Graphics;
 
+//imported classes
 import duo_vs.connect4.Connect4;
 import duo_vs.dotsandboxes.DotsandBoxes;
+//import garys one
+//import duo_vs.tictactoe.Tictactoe;
+//import duo_vs.checkers.Checkers;
+//import chris one
+
 import duo_vs.Handler;
 
 public class GameState extends State 
 {
+	//objects
 	private Connect4 connect4;
 	private DotsandBoxes dotsandboxes;
-	private String str, str1, str2, str3, str4, str5, str6;
+	//garys class object
+	//private Tictactoe tictactoe;
+	//private Checkers checkers;
+	//chris class object
+	
+	//handler
 	private Handler handler;
+	
+	//variable
+	private String str, str1, str2, str3, str4, str5, str6;
 	private int p1=0;
 	
 	public GameState(Handler handler)
@@ -28,6 +44,11 @@ public class GameState extends State
 		
 		connect4 = new Connect4(handler);
 		dotsandboxes = new DotsandBoxes(handler);
+		//garys class initialized here
+		//tictactoe = new Tictactoe();
+		//checkers = new Checkers();
+		//chris class initialized here
+		
 	}
 	
 	@Override
@@ -35,10 +56,34 @@ public class GameState extends State
 	{
 		connect4.tick();
 		dotsandboxes.tick();
+		//garys tick called here
+		//tictactoe.tick();
+		//checkers.tick();
+		//chris tick called here
 		
 		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 100 && handler.getMouseManager().getMouseY() > 80)
 		{
 			p1=1;
+		}
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 150 && handler.getMouseManager().getMouseY() > 130)
+		{
+			p1=2;
+		}
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 200 && handler.getMouseManager().getMouseY() > 180)
+		{
+			p1=3;
+		}
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 250 && handler.getMouseManager().getMouseY() > 230)
+		{
+			p1=4;
+		}
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 300 && handler.getMouseManager().getMouseY() > 280)
+		{
+			p1=5;
+		}
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 350 && handler.getMouseManager().getMouseY() > 330)
+		{
+			p1=6;
 		}
 	}
 	
@@ -51,9 +96,6 @@ public class GameState extends State
 	@Override
 	public void render(Graphics g) 
 	{
-	    //design.render(g);
-		//dotsandboxes.render(g);
-	
 		//make code better use array or something and loop
 		str = "Duo_vs";				
 		str1 = "Sharon's Game";
@@ -75,19 +117,33 @@ public class GameState extends State
 		switch(p1) 
 		{
     		case 1 :
+    			g.clearRect(0, 0, 700, 550);
     			connect4.render(g); 
+    			break;
     		case 2 :
-    		
+    			g.clearRect(0, 0, 700, 550);
+    			dotsandboxes.render(g);
+    			break;
     		case 3 :
-    		
+    			g.clearRect(0, 0, 700, 550);
+    			//garys called here
+    			g.drawString("WOW GARY YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+    			break;
     		case 4 :
-    		
+    			g.clearRect(0, 0, 700, 550);
+    		    //tictactoe.render(g);
+    			g.drawString("WOW DAVIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+    			break;
     		case 5 :
-    		
+    			g.clearRect(0, 0, 700, 550);
+    			//checkers.render(g);
+    			g.drawString("WOW PAUL YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+    			break;
     		case 6 :
-    		
-    		default :
-    		
+    			g.clearRect(0, 0, 700, 550);
+    			//chris called here
+    			g.drawString("WOW CHRIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+    			break;    		
 		}	
 	}
 }
