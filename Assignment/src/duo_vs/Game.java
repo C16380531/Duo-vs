@@ -8,7 +8,6 @@
 package duo_vs;
 
 //plug ins
-//import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -87,8 +86,6 @@ public class Game implements Runnable
 		//Clear Screen
 		g.clearRect(0, 0, width, height);
 		//Draw Here!
-		//g.setColor(Color.BLACK);
-		//g.fillRect(0, 0, width, height+5);
 		
 		if(State.getState() != null)
 			State.getState().render(g);
