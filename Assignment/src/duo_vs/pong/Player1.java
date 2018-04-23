@@ -47,8 +47,25 @@ public class Player1 implements Paddle{
 		{
 			yVel *= GRAVITY;
 		}
-		y+=yVel;
 		
+		if(y<0)
+		{
+			y=0;
+		}
+		else if(y>420)
+		{
+			y=420;
+		}
+		
+		if(yVel>=5)
+		{
+			yVel=5;
+		}
+		else if(yVel<=-5)
+		{
+			yVel=-5;
+		}
+		y+=yVel;
 	}
 	
 	public void setUpAccel(boolean input)
