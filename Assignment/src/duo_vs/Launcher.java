@@ -18,7 +18,6 @@ public class Launcher
 				
 		//call start method of game
 		game.start();
-
 	}
 	
 }

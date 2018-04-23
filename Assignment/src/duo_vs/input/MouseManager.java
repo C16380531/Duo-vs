@@ -8,6 +8,7 @@ public class MouseManager implements MouseListener, MouseMotionListener
 {
 
 	private boolean leftPressed, rightPressed;
+	protected boolean hovering = false;
 	private int mouseX, mouseY;
 	
 	public MouseManager()
