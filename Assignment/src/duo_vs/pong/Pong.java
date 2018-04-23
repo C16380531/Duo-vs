@@ -31,8 +31,16 @@ public class Pong extends Applet implements Runnable, KeyListener{
 	{
 			g.setColor(Color.black);
 			g.fillRect(0, 0, WIDTH, HEIGHT);
-			p1.draw(g);
-			b1.draw(g);
+			if(b1.getX() < -10 || b1.getX() > 710)
+			{
+				g.setColor(Color.red);
+				g.drawString("Game Over", 350, 250);
+			}
+			else
+			{
+				p1.draw(g);
+				b1.draw(g);
+			}
 	}
 	
 	public void update(Graphics g)
@@ -46,6 +54,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 		{
 			p1.move();
 			b1.move();
+			b1.checkPaddleCollision(p1, p1);
 			
 			repaint();
 			
