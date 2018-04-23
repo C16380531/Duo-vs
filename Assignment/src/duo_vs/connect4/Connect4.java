@@ -132,7 +132,11 @@ public class Connect4
 				g.drawOval( b[i], d[i], 75, 75);
 				g.fillOval(b[i], d[i], 75, 75);
 			}
+			
+			
 		}
+		
+		
 	}
 }
 
