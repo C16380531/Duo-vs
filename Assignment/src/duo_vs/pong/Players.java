@@ -3,14 +3,14 @@ package duo_vs.pong;
 import java.awt.Graphics;
 import java.awt.Color;
 
-public class Player1 implements Paddle{
+public class Players implements Paddle{
 
 	double y,yVel;
 	boolean upAcel,downAcel;
 	int player,x;
 	final double GRAVITY= 0.9;
 	
-	public Player1(int player) {
+	public Players(int player) {
 		upAcel=false; downAcel=false;
 		y=210; yVel=0;
 		if(player==1)

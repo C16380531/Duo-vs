@@ -12,14 +12,16 @@ public class Pong extends Applet implements Runnable, KeyListener{
 	final int WIDTH =700, HEIGHT = 500;
 	Thread thread;
 	
-	Player1 p1;
+	Players p1;
+	Players p2;
 	Ball b1;
 	
 	public void init()
 	{
 			this.resize(WIDTH,HEIGHT);
 			this.addKeyListener(this);
-			p1= new Player1(1);
+			p1= new Players(1);
+			p2= new Players(2);
 			b1= new Ball();
 			thread = new Thread(this);
 			thread.start();
@@ -39,6 +41,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 			else
 			{
 				p1.draw(g);
+				p2.draw(g);
 				b1.draw(g);
 			}
 	}
@@ -53,8 +56,9 @@ public class Pong extends Applet implements Runnable, KeyListener{
 		for(;;)
 		{
 			p1.move();
+			p2.move();
 			b1.move();
-			b1.checkPaddleCollision(p1, p1);
+			b1.checkPaddleCollision(p1, p2);
 			
 			repaint();
 			
@@ -79,6 +83,17 @@ public class Pong extends Applet implements Runnable, KeyListener{
 			p1.setDownAccel(true);
 			
 		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_UP )
+		{
+			p2.setUpAccel(true);
+		
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+		{
+			p2.setDownAccel(true);
+			
+		}
 
 	}
 
@@ -92,6 +107,17 @@ public class Pong extends Applet implements Runnable, KeyListener{
 		else if(e.getKeyCode() == KeyEvent.VK_S )
 		{
 			p1.setDownAccel(false);
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_UP )
+		{
+			p2.setUpAccel(false);
+		
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+		{
+			p2.setDownAccel(false);
+			
 		}
 	}
 
