@@ -34,10 +34,10 @@ public class Pong extends Applet implements Runnable, KeyListener{
 
 	
 	public void run() {
-		// TODO Auto-generated method stub
+		
+		repaint();
 		
 		try {
-			repaint();
 		Thread.sleep(10);
 		}
 		catch(InterruptedException e)
@@ -48,7 +48,6 @@ public class Pong extends Applet implements Runnable, KeyListener{
 
 	
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getKeyCode() == KeyEvent.VK_UP )
 		{
 			
@@ -62,7 +61,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 
 
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+
 		if(e.getKeyCode() == KeyEvent.VK_UP )
 		{
 			
@@ -75,7 +74,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 
 	
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+
 		
 	}
 	
