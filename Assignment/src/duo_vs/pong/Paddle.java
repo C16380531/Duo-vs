@@ -1,4 +1,5 @@
 package duo_vs.pong;
+import java.awt.Graphics;
 
 public interface Paddle {
 	public void draw(Graphics g)

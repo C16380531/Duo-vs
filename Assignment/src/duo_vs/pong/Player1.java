@@ -8,6 +8,7 @@ public class Player1 implements Paddle{
 	double y,yVel;
 	boolean upAcel,downAcel;
 	int player,x;
+	final double GRAVITY= 0.9;
 	
 	public Player1(int player) {
 		upAcel=false; downAcel=false;
@@ -23,15 +24,30 @@ public class Player1 implements Paddle{
 		
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics g)
+	{
 		// TODO Auto-generated method stub
 		g.setColor(Color.white);
 		g.fillRect(x,(int)y,20,80);
 	}
 
-	@Override
+	
 	public void move() {
 		// TODO Auto-generated method stub
+		if(upAcel)
+		{
+			yVel -=2;
+		}
+		else if(downAcel)
+		{
+			yVel +=2;
+			
+		}
+		else if(!upAcel && !downAcel)
+		{
+			yVel *= GRAVITY;
+		}
+		y+=yVel;
 		
 	}
 	
@@ -45,10 +61,11 @@ public class Player1 implements Paddle{
 		downAcel=input;
 	}
 
-	@Override
+	
 	public int getY() {
 		// TODO Auto-generated method stub
 		return (int)y;
 	}
+
 
 }
