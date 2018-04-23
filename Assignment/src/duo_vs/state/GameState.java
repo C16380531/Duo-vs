@@ -37,6 +37,7 @@ public class GameState extends State
 	//variable
 	private String str, str1, str2, str3, str4, str5, str6;
 	private int p1=0;
+	private int check;
 	
 	public GameState(Handler handler)
 	{
@@ -50,41 +51,73 @@ public class GameState extends State
 		chris class initialized here*/
 		
 	}
+	public int menu()
+	{
+		//code this better
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 100 && handler.getMouseManager().getMouseY() > 80)
+		{
+			p1=1;
+			//break;
+			System.out.print("");
+		}
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 150 && handler.getMouseManager().getMouseY() > 130)
+		{
+			p1=2;
+			System.out.print("");
+		}
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 200 && handler.getMouseManager().getMouseY() > 180)
+		{
+			p1=3;
+			System.out.print("");
+		}
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 250 && handler.getMouseManager().getMouseY() > 230)
+		{
+			p1=4;
+			System.out.print("");
+		}
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 300 && handler.getMouseManager().getMouseY() > 280)
+		{
+			p1=5;
+			System.out.print("");
+		}
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 350 && handler.getMouseManager().getMouseY() > 330)
+		{
+			p1=6;
+			System.out.print("");
+		}
+		return p1;
+	}
 	
 	@Override
 	public void tick() 
 	{
-		connect4.tick();
-		dotsandboxes.tick();
-		tictactoe.tick();
-		/*garys tick called here
-		checkers.tick();
-		chris tick called here*/
-		
-		//code this better
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 100 && handler.getMouseManager().getMouseY() > 80)
+		if(p1==0)
 		{
-			p1=1;
+			check= menu();
 		}
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 150 && handler.getMouseManager().getMouseY() > 130)
+		else
 		{
-			p1=2;
-		}
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 200 && handler.getMouseManager().getMouseY() > 180)
-		{
-			p1=3;
-		}
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 250 && handler.getMouseManager().getMouseY() > 230)
-		{
-			p1=4;
-		}
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 300 && handler.getMouseManager().getMouseY() > 280)
-		{
-			p1=5;
-		}
-		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 350 && handler.getMouseManager().getMouseY() > 330)
-		{
-			p1=6;
+			switch(check) 
+			{
+				case 1 :
+					connect4.tick();
+					break;
+				case 2 :
+					dotsandboxes.tick();
+					break;
+				case 3 :
+					//garys tick called here
+					break;
+				case 4 :
+					tictactoe.tick();
+					break;
+				case 5 :
+					//checkers.tick();
+					break;
+				case 6 :
+					//chris tick called here
+					break;    		
+			}	
 		}
 	}
 	
@@ -115,36 +148,42 @@ public class GameState extends State
 		g.drawString(str5, 280, 300);
 		g.drawString(str6, 280, 350);	
 
-		switch(p1) 
+		if(p1==0)
 		{
-    		case 1 :
-    			g.clearRect(0, 0, 700, 550);
-    			connect4.render(g); 
-    			break;
-    		case 2 :
-    			g.clearRect(0, 0, 700, 550);
-    			dotsandboxes.render(g);
-    			break;
-    		case 3 :
-    			g.clearRect(0, 0, 700, 550);
-    			//garys called here
-    			g.drawString("WOW GARY YOU HAVE DONE SOOOOOO MUCH", 200, 240);
-    			break;
-    		case 4 :
-    			g.clearRect(0, 0, 700, 550);
-    		    tictactoe.render(g);
-    			g.drawString("WOW DAVIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
-    			break;
-    		case 5 :
-    			g.clearRect(0, 0, 700, 550);
-    			//checkers.render(g);
-    			g.drawString("WOW PAUL YOU HAVE DONE SOOOOOO MUCH", 200, 240);
-    			break;
-    		case 6 :
-    			g.clearRect(0, 0, 700, 550);
-    			//chris called here
-    			g.drawString("WOW CHRIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
-    			break;    		
-		}	
+			check= menu();
+		}
+		else
+		{
+			switch(check) 
+			{
+				case 1 :
+					g.clearRect(0, 0, 700, 550);
+					connect4.render(g); 
+					break;
+				case 2 :
+	    			g.clearRect(0, 0, 700, 550);
+	    			dotsandboxes.render(g);
+	    			break;
+	    		case 3 :
+	    			g.clearRect(0, 0, 700, 550);
+	    			//garys called here
+	    			g.drawString("WOW GARY YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+	    			break;
+	    		case 4 :
+	    			g.clearRect(0, 0, 700, 550);
+	    		    tictactoe.render(g);
+	    			break;
+	    		case 5 :
+	    			g.clearRect(0, 0, 700, 550);
+	    			//checkers.render(g);
+	    			g.drawString("WOW PAUL YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+	    			break;
+	    		case 6 :
+	    			g.clearRect(0, 0, 700, 550);
+	    			//chris called here
+	    			g.drawString("WOW CHRIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+	    			break;    		
+			}
+		}
 	}
 }

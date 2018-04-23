@@ -98,6 +98,8 @@ public class Connect4
 	
 	public void render(Graphics g)
 	{
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 700 , 550);
 		//sets color of rectangle to blue
 	    g.setColor(Color.blue);
 		g.fillRect(30, 30, 640 , 490);
@@ -113,11 +115,20 @@ public class Connect4
 			}
 		}
 
-		for(int i=0; i<42; i++)
+		for(int i=0; i<42; i+=2)
 		{
 			if(b[i] !=0 && d[i]!=0)
 			{
 				g.setColor(Color.RED);		
+				g.drawOval( b[i], d[i], 75, 75);
+				g.fillOval(b[i], d[i], 75, 75);
+			}
+		}
+		for(int i=1; i<42; i+=2)
+		{
+			if(b[i] !=0 && d[i]!=0)
+			{
+				g.setColor(Color.YELLOW);
 				g.drawOval( b[i], d[i], 75, 75);
 				g.fillOval(b[i], d[i], 75, 75);
 			}
