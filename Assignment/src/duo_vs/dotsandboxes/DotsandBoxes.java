@@ -19,11 +19,18 @@ import duo_vs.Handler;
 public class DotsandBoxes 
 {	
 	private Handler handler;
-	private boolean turn = true;
-	private boolean count;
-	private int P1 = 0;
-	private int P2 = 0;
+	private boolean check;
+	private int next=0;
+	private int currentPlayer = 0;
+	//private int count=0;
+	private boolean P1 = true;
+	private boolean P2 = false;
 	private boolean[][] boxes = new boolean[20][10];
+	
+	ArrayList Player = new ArrayList();
+	//Player p = new Player();
+
+	
 	public DotsandBoxes(Handler handler) {
 		this.handler = handler;
 	}
@@ -82,6 +89,7 @@ public class DotsandBoxes
 			}
 		}
 	}
+	
 	private void fillBoxes() {
 		
 		for( int i = 25, x = 0; i < 500; i += 50, x += 2) 
@@ -95,7 +103,13 @@ public class DotsandBoxes
 						handler.getMouseManager().getMouseY() > j &&
 						handler.getMouseManager().getMouseY() < j+15)
 				{
+					validInput(boxes[x][y]);
 					boxes[x][y] = true;
+					/*int num = p.getPcount();
+					Player.add(num);
+					System.out.print(num + "num1 ");
+					int num1 = p.incrementCounter(x);
+					System.out.print(num1 + "nun2 ");*/
 					System.out.print("");
 					
 
@@ -107,14 +121,19 @@ public class DotsandBoxes
 						handler.getMouseManager().getMouseY() > j &&
 						handler.getMouseManager().getMouseY() < j+50)
 				{
+					validInput(boxes[x+1][y]);
 					boxes[x+1][y] = true;
+					
+					/*int num = p.getPcount();
+					Player.add(num);
+					int num1 = p.incrementCounter(x);*/
 					System.out.print("");
 				
 				}
 					
 			}
 		}
-		count = true;
+		
 	}
 	private void updateFrame(Graphics g) {
 		for(int i = 0; i <20; i += 2) {
@@ -128,50 +147,52 @@ public class DotsandBoxes
 			}
 		}
 		
-		isSurrounded(g, turn, P1, P2);
-		
-		
+		isSurrounded(g);
 	}
 
 	
-	private void isSurrounded(Graphics g, boolean turn, int P1, int P2) {
+	private void isSurrounded(Graphics g) {
 		
 		for(int i = 0; i <20; i += 2) {
 			for(int  j = 0; j < 10; j++){
 				if(boxes[i][j] && boxes[i+1][j] && boxes[i][j+1] && boxes[i+3][j])
 				{
-						if(turn == true)
-						{
+					//System.out.println(p.getPcount());
+					//if(p.OddEven(p.getPlayerCountNum())){
 							g.setColor(Color.BLUE);
 							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
 							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							System.out.println(turn);
-							turn = false;
-							
-							
-						}
-						else
-						{
-							g.setColor(Color.RED);
-							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							System.out.println(turn);
-							turn = true;
-							
-						}
-						
-					}
-				
-			
+							//System.out.println(turn);
+					//}
+					/*if(p.OddEven(p.getPlayerCountNum())== false) {
+						g.setColor(Color.RED);
+						g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+						g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);*/
+				}
 			}
+				
 		}
-		
 	}
+	private void validInput(boolean box) {
+		if(!box) {
+			changePlayer();
+		}
+	}
+	private void changePlayer() {
+		if(currentPlayer == 0) {
+			currentPlayer++;
+		}
+		else {
+			currentPlayer--;
+		}
+		System.out.println("Current Player: " + currentPlayer);
+	}
+		
+} 
 	
 	
 	
 	
-}	
 
 
 
