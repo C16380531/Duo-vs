@@ -26,7 +26,7 @@ public class GameState extends State
 	//objects
 	private Connect4 connect4;
 	private DotsandBoxes dotsandboxes;
-	private Tictactoe tictactoe;
+//	private Tictactoe tictactoe;
 	/*garys class object
 	private Checkers checkers;
 	chris class object*/
@@ -45,7 +45,7 @@ public class GameState extends State
 		
 		connect4 = new Connect4(handler);
 		dotsandboxes = new DotsandBoxes(handler);
-		tictactoe = new Tictactoe();
+	//	tictactoe = new Tictactoe();
 		/*garys class initialized here
 		checkers = new Checkers();
 		chris class initialized here*/
