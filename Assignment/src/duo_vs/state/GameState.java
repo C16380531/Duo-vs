@@ -109,7 +109,7 @@ public class GameState extends State
 					//garys tick called here
 					break;
 				case 4 :
-					tictactoe.tick();
+					//tictactoe.tick();
 					break;
 				case 5 :
 					//checkers.tick();
@@ -171,7 +171,7 @@ public class GameState extends State
 	    			break;
 	    		case 4 :
 	    			g.clearRect(0, 0, 700, 550);
-	    		    tictactoe.render(g);
+	    		   // tictactoe.render(g);
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);

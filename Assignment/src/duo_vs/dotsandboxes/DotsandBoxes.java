@@ -18,6 +18,10 @@ import duo_vs.Handler;
 public class DotsandBoxes 
 {	
 	private Handler handler;
+	private boolean turn = true;
+	private boolean count;
+	private int P1;
+	private int P2;
 	private boolean[][] boxes = new boolean[20][10];
 	public DotsandBoxes(Handler handler) {
 		this.handler = handler;
@@ -28,10 +32,12 @@ public class DotsandBoxes
 	}
 	
 	public void render(Graphics g) {
+		g.setColor(Color.BLACK);
 		drawDots(g);
 		drawLines(g);
 		updateFrame(g);
 	}
+	
 	private void drawDots(Graphics g) {
 		for(int i = 25; i < 550; i+=50)
 		{
@@ -43,6 +49,8 @@ public class DotsandBoxes
 		}
 	}
 	private void drawLines(Graphics g) {
+		count = false;
+		
 		for(int i = 25; i < 500; i+=50)
 		{
 			for(int j = 25; j < 500; j+=50) 
@@ -59,6 +67,7 @@ public class DotsandBoxes
 		}
 	}
 	private void fillBoxes() {
+		
 		for( int i = 25, x = 0; i < 500; i += 50, x += 2) 
 		{
 			for(int j = 25, y = 0; j < 500; j+= 50, y ++) 
@@ -72,6 +81,7 @@ public class DotsandBoxes
 				{
 					boxes[x][y] = true;
 					System.out.print("");
+					
 
 				}	
 				//Cols
@@ -83,10 +93,12 @@ public class DotsandBoxes
 				{
 					boxes[x+1][y] = true;
 					System.out.print("");
+				
 				}
 					
 			}
 		}
+		count = true;
 	}
 	private void updateFrame(Graphics g) {
 		for(int i = 0; i <20; i += 2) {
@@ -99,10 +111,56 @@ public class DotsandBoxes
 				}
 			}
 		}
+		
+		isSurrounded(g, turn);
+		
+		
+	}
+
+	
+	private void isSurrounded(Graphics g, boolean turn) {
+		
+		for(int i = 0; i <20; i += 2) {
+			for(int  j = 0; j < 10; j++){
+				if(boxes[i][j] && boxes[i+1][j] && boxes[i][j+1] && boxes[i+3][j])
+				{
+						if(turn == true)
+						{
+							g.setColor(Color.BLUE);
+							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+							System.out.println(turn);
+							turn = false;
+							
+						}
+						else
+						{
+							g.setColor(Color.RED);
+							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+							System.out.println(turn);
+							turn = true;
+						}
+						
+					}
+				
+				/*if(boxes[i+1][(j*10)-1] && boxes[i+2][j] && boxes[i+1][j+1] && boxes[i][j])
+				{
+					g.setColor(Color.BLUE);
+					g.drawRect(((i/2 * 50) + 25), (j * 50) + 25, 50, 50);
+					g.fillRect(((i/2) * 50) + 25, (j * 50) + 25, 50,  50);
+				}*/
+			}
+		}
+		
 	}
 	
 	
 }	
+
+
+
+
 
 
 
