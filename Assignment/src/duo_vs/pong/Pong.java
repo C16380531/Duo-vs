@@ -42,7 +42,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 		
 	}
 	
-	public void paint(Graphics g)
+	public void render(Graphics g)
 	{
 			gfx.setColor(Color.black);
 			gfx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -100,7 +100,12 @@ public class Pong extends Applet implements Runnable, KeyListener{
 	
 	public void update(Graphics g)
 	{
-			paint(g);
+			render(g);
+	}
+	
+	public void tick()
+	{
+		run();
 	}
 
 	
