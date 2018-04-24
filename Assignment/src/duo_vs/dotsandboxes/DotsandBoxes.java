@@ -9,6 +9,7 @@ package duo_vs.dotsandboxes;
 
 //plug ins
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 //imported classes
@@ -20,8 +21,8 @@ public class DotsandBoxes
 	private Handler handler;
 	private boolean turn = true;
 	private boolean count;
-	private int P1;
-	private int P2;
+	private int P1 = 0;
+	private int P2 = 0;
 	private boolean[][] boxes = new boolean[20][10];
 	public DotsandBoxes(Handler handler) {
 		this.handler = handler;
@@ -35,7 +36,9 @@ public class DotsandBoxes
 		g.setColor(Color.BLACK);
 		drawDots(g);
 		drawLines(g);
+		playerText(g);
 		updateFrame(g);
+		
 	}
 	
 	private void drawDots(Graphics g) {
@@ -48,8 +51,21 @@ public class DotsandBoxes
 			}
 		}
 	}
+	
+	private void playerText(Graphics g) {
+		
+		
+		String str1 = "Player 1";
+		String str2 = "Player 2";
+		
+		g.drawString(str1, 600, 150);
+		g.drawString(str2, 600, 350);
+		
+		
+	}
+	
 	private void drawLines(Graphics g) {
-		count = false;
+		
 		
 		for(int i = 25; i < 500; i+=50)
 		{
@@ -112,13 +128,13 @@ public class DotsandBoxes
 			}
 		}
 		
-		isSurrounded(g, turn);
+		isSurrounded(g, turn, P1, P2);
 		
 		
 	}
 
 	
-	private void isSurrounded(Graphics g, boolean turn) {
+	private void isSurrounded(Graphics g, boolean turn, int P1, int P2) {
 		
 		for(int i = 0; i <20; i += 2) {
 			for(int  j = 0; j < 10; j++){
@@ -132,6 +148,7 @@ public class DotsandBoxes
 							System.out.println(turn);
 							turn = false;
 							
+							
 						}
 						else
 						{
@@ -140,20 +157,18 @@ public class DotsandBoxes
 							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
 							System.out.println(turn);
 							turn = true;
+							
 						}
 						
 					}
 				
-				/*if(boxes[i+1][(j*10)-1] && boxes[i+2][j] && boxes[i+1][j+1] && boxes[i][j])
-				{
-					g.setColor(Color.BLUE);
-					g.drawRect(((i/2 * 50) + 25), (j * 50) + 25, 50, 50);
-					g.fillRect(((i/2) * 50) + 25, (j * 50) + 25, 50,  50);
-				}*/
+			
 			}
 		}
 		
 	}
+	
+	
 	
 	
 }	
