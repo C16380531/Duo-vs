@@ -138,6 +138,18 @@ public class Connect4
 		}
 	}
 	
+	public void Winner()
+	{
+		for(int i=0; i<21; i++)
+		{
+			for(int j=0; j<21; j++)
+			{
+			//	if(playerredx[i] == playerredx[j])
+			}
+		}
+		
+	}
+	
 	public void finished_game()
 	{
 		
@@ -145,8 +157,10 @@ public class Connect4
 	
 	public void tick()
 	{		
+		
 		pressed();
 		disc_place();
+		Winner();
 	}
 	
 	public void render(Graphics g)

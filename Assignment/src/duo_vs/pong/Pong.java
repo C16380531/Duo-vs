@@ -3,57 +3,46 @@ package duo_vs.pong;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
+import duo_vs.Handler;
 
-public class Pong extends Applet implements Runnable, KeyListener{
+public class Pong extends Applet {
 
 	final int WIDTH =700, HEIGHT = 500;
 	Thread thread;
-	
+	private Handler handler;
 	boolean gameStarted,gameOver;
-	Graphics gfx;
-	Image img;
-	
 	Players p1;
 	Players p2;
 	Ball b1;
 	Scoreboard s1;
 	Scoreboard s2;
 	
-	public void init()
+	public Pong(Handler handler)
 	{
-			this.resize(WIDTH,HEIGHT);
-			this.addKeyListener(this);
+		    this.handler =handler;
 			p1= new Players(1);
 			p2= new Players(2);
 			b1= new Ball();
 			s1= new Scoreboard(50);
 			s2= new Scoreboard(650);
-			img = createImage(WIDTH,HEIGHT);
-			gfx=img.getGraphics();
-			thread = new Thread(this);
 			gameStarted=false;
 			gameOver=false;
-			thread.start();
-			
 		
 	}
 	
 	public void render(Graphics g)
 	{
-			gfx.setColor(Color.black);
-			gfx.fillRect(0, 0, WIDTH, HEIGHT);
+			g.setColor(Color.black);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
 			if(b1.getX() < -10)
 			{
 				p1.lifeLost();
 				if(p1.remainingLives()<= 0)
 				{
 					gameOver=true;
-					gfx.setColor(Color.red);
-					gfx.drawString("Game Over, player 2 wins", 350, 250);
+					g.setColor(Color.red);
+					g.drawString("Game Over, player 2 wins", 350, 250);
 				}
 				else
 				{
@@ -67,8 +56,8 @@ public class Pong extends Applet implements Runnable, KeyListener{
 				if(p2.remainingLives()<= 0)
 				{
 					gameOver=true;
-					gfx.setColor(Color.red);
-					gfx.drawString("Game Over, player 1 wins", 350, 250);
+					g.setColor(Color.red);
+					g.drawString("Game Over, player 1 wins", 350, 250);
 				}
 				else
 				{
@@ -80,117 +69,103 @@ public class Pong extends Applet implements Runnable, KeyListener{
 			
 			else
 			{
-				p1.draw(gfx);
-				p2.draw(gfx);
-				b1.draw(gfx);
-				s1.draw(gfx,p1.remainingLives());
-				s2.draw(gfx,p2.remainingLives());
-			}
+				p1.draw(g);
+				p2.draw(g);
+				b1.draw(g);
+				s1.draw(g,p1.remainingLives());
+				s2.draw(g,p2.remainingLives());
+		}
 			
 			if(!gameStarted)
 			{
-				gfx.setColor(Color.white);
-				gfx.drawString("Pong",340,100);
-				gfx.drawString("Press Enter to start game", 310, 130);
+				g.setColor(Color.white);
+				g.drawString("Pong",340,100);
+				g.drawString("Press Enter to start game", 310, 130);
 			}
 			
-				g.drawImage(img, 0, 0, this);
-			
 	}
-	
-	public void update(Graphics g)
-	{
-			render(g);
-	}
-	
+
 	public void tick()
 	{
+		movement();
 		run();
 	}
 
 	
 	public void run() {
-		
-		for(;;)
-		{
-			if(gameStarted && !gameOver)
+	
+		if(gameStarted && !gameOver)
 			{
 			p1.move();
 			p2.move();
 			b1.move();
 			b1.checkPaddleCollision(p1, p2);
 			}
-			
-			repaint();
-			try {
-			Thread.sleep(10);
-			}
-			catch(InterruptedException e)
-			{
-				e.printStackTrace();
-			}
-		}
 		
 	}
 	
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_W )
+	public void movement() {
+		if(handler.getKeyManager().isW())
 		{
 			p1.setUpAccel(true);
-		
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_S )
+		else if(handler.getKeyManager().isS())
 		{
 			p1.setDownAccel(true);
-			
+
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_UP )
+		if(handler.getKeyManager().isUP())
 		{
 			p2.setUpAccel(true);
 		
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+		else if(handler.getKeyManager().isDOWN())
 		{
 			p2.setDownAccel(true);
 			
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_ENTER )
+		if(handler.getKeyManager().isENTER())
 		{
 			gameStarted=true;
 		
 		}
 
+		
+
 	}
 
 
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased() 
+	{
 
-		if(e.getKeyCode() == KeyEvent.VK_W )
+		if(handler.getKeyManager().isW())
 		{
 			p1.setUpAccel(false);
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_S )
+		else if(handler.getKeyManager().isS())
 		{
 			p1.setDownAccel(false);
+
 		}
 		
-		if(e.getKeyCode() == KeyEvent.VK_UP )
+		if(handler.getKeyManager().isUP())
 		{
 			p2.setUpAccel(false);
 		
 		}
-		else if(e.getKeyCode() == KeyEvent.VK_DOWN )
+		else if(handler.getKeyManager().isDOWN())
 		{
 			p2.setDownAccel(false);
 			
 		}
-	}
-
-	
-	public void keyTyped(KeyEvent arg0) {
-
+		
+		if(handler.getKeyManager().isENTER())
+		{
+			gameStarted=false;
+		
+		}
 	}
 	
 }

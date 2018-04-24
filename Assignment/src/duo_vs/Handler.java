@@ -7,6 +7,7 @@
 
 package duo_vs;
 
+import duo_vs.input.KeyManager;
 import duo_vs.input.MouseManager;
 
 
@@ -18,6 +19,10 @@ public class Handler
 	public Handler(Game game)
 	{
 		this.game = game;
+	}
+	
+	public KeyManager getKeyManager(){
+		return game.getKeyManager();
 	}
 	
 	public MouseManager getMouseManager()
