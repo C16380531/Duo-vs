@@ -94,7 +94,7 @@ public class Players implements Paddle{
 
 	public int remainingLives()
 	{
-		System.out.printf("%d",lives);
+		
 		return lives;
 	}
 	

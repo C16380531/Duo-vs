@@ -20,6 +20,8 @@ public class Pong extends Applet implements Runnable, KeyListener{
 	Players p1;
 	Players p2;
 	Ball b1;
+	Scoreboard s1;
+	Scoreboard s2;
 	
 	public void init()
 	{
@@ -28,6 +30,8 @@ public class Pong extends Applet implements Runnable, KeyListener{
 			p1= new Players(1);
 			p2= new Players(2);
 			b1= new Ball();
+			s1= new Scoreboard(50);
+			s2= new Scoreboard(650);
 			img = createImage(WIDTH,HEIGHT);
 			gfx=img.getGraphics();
 			thread = new Thread(this);
@@ -48,7 +52,6 @@ public class Pong extends Applet implements Runnable, KeyListener{
 				if(p1.remainingLives()<= 0)
 				{
 					gameOver=true;
-					System.out.printf("hello");
 					gfx.setColor(Color.red);
 					gfx.drawString("Game Over, player 2 wins", 350, 250);
 				}
@@ -61,7 +64,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 			}else if(b1.getX() > 710)
 			{
 				p2.lifeLost();
-				if(p2.remainingLives()== 0)
+				if(p2.remainingLives()<= 0)
 				{
 					gameOver=true;
 					gfx.setColor(Color.red);
@@ -80,6 +83,8 @@ public class Pong extends Applet implements Runnable, KeyListener{
 				p1.draw(gfx);
 				p2.draw(gfx);
 				b1.draw(gfx);
+				s1.draw(gfx,p1.remainingLives());
+				s2.draw(gfx,p2.remainingLives());
 			}
 			
 			if(!gameStarted)
