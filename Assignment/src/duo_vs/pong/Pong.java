@@ -13,7 +13,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 	final int WIDTH =700, HEIGHT = 500;
 	Thread thread;
 	
-	boolean gameStarted;
+	boolean gameStarted,gameOver;
 	Graphics gfx;
 	Image img;
 	
@@ -32,6 +32,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 			gfx=img.getGraphics();
 			thread = new Thread(this);
 			gameStarted=false;
+			gameOver=false;
 			thread.start();
 			
 		
@@ -41,11 +42,39 @@ public class Pong extends Applet implements Runnable, KeyListener{
 	{
 			gfx.setColor(Color.black);
 			gfx.fillRect(0, 0, WIDTH, HEIGHT);
-			if(b1.getX() < -10 || b1.getX() > 710)
+			if(b1.getX() < -10)
 			{
-				gfx.setColor(Color.red);
-				gfx.drawString("Game Over", 350, 250);
+				p1.lifeLost();
+				if(p1.remainingLives()<= 0)
+				{
+					gameOver=true;
+					System.out.printf("hello");
+					gfx.setColor(Color.red);
+					gfx.drawString("Game Over, player 2 wins", 350, 250);
+				}
+				else
+				{
+					b1.reset();
+					p1.reset();
+					p2.reset();
+				}
+			}else if(b1.getX() > 710)
+			{
+				p2.lifeLost();
+				if(p2.remainingLives()== 0)
+				{
+					gameOver=true;
+					gfx.setColor(Color.red);
+					gfx.drawString("Game Over, player 1 wins", 350, 250);
+				}
+				else
+				{
+					b1.reset();
+					p1.reset();
+					p2.reset();
+				}
 			}
+			
 			else
 			{
 				p1.draw(gfx);
@@ -59,7 +88,9 @@ public class Pong extends Applet implements Runnable, KeyListener{
 				gfx.drawString("Pong",340,100);
 				gfx.drawString("Press Enter to start game", 310, 130);
 			}
-			g.drawImage(img, 0, 0, this);
+			
+				g.drawImage(img, 0, 0, this);
+			
 	}
 	
 	public void update(Graphics g)
@@ -72,7 +103,7 @@ public class Pong extends Applet implements Runnable, KeyListener{
 		
 		for(;;)
 		{
-			if(gameStarted)
+			if(gameStarted && !gameOver)
 			{
 			p1.move();
 			p2.move();
