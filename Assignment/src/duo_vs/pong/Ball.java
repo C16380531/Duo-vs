@@ -15,7 +15,7 @@ public class Ball {
 	
 	public double getRandomSpeed()
 	{
-		return Math.random()*3;
+		return Math.random()*.6;
 	}
 	
 	public int getRandomDirection()
@@ -76,5 +76,13 @@ public class Ball {
 	
 	public int getY(){
 		return (int) y;
+	}
+	
+	public void reset()
+	{
+		x=350;
+		y=250;
+		xVel=getRandomSpeed()*getRandomDirection();
+		yVel=getRandomSpeed()*getRandomDirection();
 	}
 }

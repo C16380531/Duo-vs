@@ -1,4 +1,4 @@
-package brickbreaker_2;
+package duo_vs.breakout;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -13,7 +13,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import com.sun.javafx.collections.MappingChange.Map;
+//import com.sun.javafx.collections.MappingChange.Map;
 
 public class Game extends JPanel implements KeyListener, ActionListener {
 	private boolean play = false;

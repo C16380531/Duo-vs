@@ -7,11 +7,12 @@ public class Players implements Paddle{
 
 	double y,yVel;
 	boolean upAcel,downAcel;
-	int player,x;
+	int player,x,lives;
 	final double GRAVITY= 0.9;
 	
 	public Players(int player) {
 		upAcel=false; downAcel=false;
+		lives=3;
 		y=210; yVel=0;
 		if(player==1)
 		{
@@ -84,5 +85,22 @@ public class Players implements Paddle{
 		return (int)y;
 	}
 
+	public void reset()
+	{
+		y=210;
+		yVel=0;
+		upAcel=false; downAcel=false;
+	}
 
+	public int remainingLives()
+	{
+		
+		return lives;
+	}
+	
+	void lifeLost()
+	{
+		lives-=1;
+	}
+	
 }

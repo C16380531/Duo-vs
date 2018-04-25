@@ -1,4 +1,4 @@
-package brickbreaker_2;
+package duo_vs.breakout;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
