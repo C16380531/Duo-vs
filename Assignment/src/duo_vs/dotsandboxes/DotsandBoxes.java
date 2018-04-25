@@ -151,13 +151,23 @@ public class DotsandBoxes
 	}
 
 	
+<<<<<<< HEAD
+	private void isSurrounded(Graphics g) {
+=======
 	private void isSurrounded(Graphics g){
+>>>>>>> 236adab9b3091e13f6592bc9b5d2449a526fe8c9
 		
 		for(int i = 0; i <20; i += 2) {
 			for(int  j = 0; j < 10; j++){
 				if(boxes[i][j] && boxes[i+1][j] && boxes[i][j+1] && boxes[i+3][j])
 				{
 					//System.out.println(p.getPcount());
+<<<<<<< HEAD
+					//if(p.OddEven(p.getPlayerCountNum())){
+							g.setColor(Color.BLUE);
+							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
+=======
 					//if(p.OddEven(p.getPlayerCountNum()))
 							if(currentPlayer == 0) {
 							g.setColor(Color.BLUE);
@@ -171,6 +181,7 @@ public class DotsandBoxes
 							}
 								
 							
+>>>>>>> 236adab9b3091e13f6592bc9b5d2449a526fe8c9
 							//System.out.println(turn);
 					//}
 					/*if(p.OddEven(p.getPlayerCountNum())== false) {
@@ -187,6 +198,17 @@ public class DotsandBoxes
 			changePlayer();
 		}
 	}
+	private void changePlayer() {
+		if(currentPlayer == 0) {
+			currentPlayer++;
+		}
+		else {
+			currentPlayer--;
+		}
+		System.out.println("Current Player: " + currentPlayer);
+	}
+		
+} 
 	
 	private void changePlayer() {
 		if(currentPlayer == 0) {
