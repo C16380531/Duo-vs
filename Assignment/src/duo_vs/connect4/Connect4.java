@@ -12,14 +12,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 //imported classes
-//import duo_vs.state.State;
+import duo_vs.connect4.Winner;
 import duo_vs.Handler;
 
 
 public class Connect4 
 {	
 	private Handler handler;
-	boolean count, same, finished_col, hover;
+	private Winner winner;
+	boolean count, redwin, same, finished_col, hover, won, discdrop=false;
 	int[] b, d, finished_column; 
 	int[] playerredx, playerredy, playeryellowx, playeryellowy;
 	int dummy_rows, rows, circle_height, circle_width, hovered;
@@ -27,11 +28,12 @@ public class Connect4
 	
 	public Connect4(Handler handler)
 	{
+		this.handler =handler;
+		winner = new Winner(redwin, playerredx, playerredy);
 		playerredx = new int[21];
 		playerredy = new int[21];
 		playeryellowx = new int[22];
 		playeryellowy = new int[22];
-		this.handler =handler;
 		b =new int[43];
 		d =new int[43];
 		dummy_rows=410;
@@ -39,6 +41,22 @@ public class Connect4
 		finished_column = new int[8];
 		circle_height = 67;
 		circle_width = 70;
+		won=false;
+	}
+	
+	public void tick()
+	{		
+		if(discdrop==false)
+		{
+			pressed();
+			disc_place();
+			winner.RedWin();
+			winner.YellowWin();
+		}
+		else
+		{
+			finished_game();
+		}
 	}
 	
 	public void pressed()
@@ -137,20 +155,16 @@ public class Connect4
 			count =false;
 		}
 	}
-	
+		
 	public void finished_game()
 	{
 		
 	}
 	
-	public void tick()
-	{		
-		pressed();
-		disc_place();
-	}
+	//drawing classes below
 	
 	public void render(Graphics g)
-	{		
+	{	
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 700 , 550);
 		
@@ -161,6 +175,10 @@ public class Connect4
 		hover(g);
 		Drawcircles(g);			
 		colour_disc(g);
+		if(won)
+		{
+			discdrop=true;
+		}
 	}
 	
 	public void hover(Graphics g)
@@ -197,6 +215,7 @@ public class Connect4
 			{
 				playerredx[s] = b[i];
 				playerredy[s] = d[i];
+				redwin=true;
 				g.setColor(Color.RED);		
 				g.drawOval( b[i], d[i],  circle_width, circle_height);
 				g.fillOval(b[i], d[i],  circle_width, circle_height);

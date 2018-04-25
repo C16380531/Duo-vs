@@ -16,6 +16,7 @@ import java.awt.image.BufferStrategy;
 import duo_vs.display.Display;
 import duo_vs.state.GameState;
 import duo_vs.state.State;
+import duo_vs.input.KeyManager;
 import duo_vs.input.MouseManager;
 import duo_vs.Handler;
 
@@ -38,6 +39,7 @@ public class Game implements Runnable
 	public State gameState;
 	
 	//Input
+	private KeyManager keyManager;
 	private MouseManager mouseManager;
 
 	//Handler
@@ -50,6 +52,7 @@ public class Game implements Runnable
 		this.height = height;
 		this.title = title;
 		
+		keyManager = new KeyManager();
 		mouseManager = new MouseManager();
 	}
 	
@@ -58,6 +61,7 @@ public class Game implements Runnable
 	{
 		display = new Display(title, width, height);
 		
+		display.getFrame().addKeyListener(keyManager);
 		display.getFrame().addMouseListener(mouseManager);
 		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
@@ -72,6 +76,8 @@ public class Game implements Runnable
 	
 	private void tick()
 	{
+		keyManager.tick();
+		
 		if(State.getState() != null)
 			State.getState().tick();
 	}
@@ -114,6 +120,10 @@ public class Game implements Runnable
 		
 	}
 	
+
+	public KeyManager getKeyManager(){
+		return keyManager;
+	}
 	
 	public MouseManager getMouseManager()
 	{

@@ -15,7 +15,10 @@ import java.awt.Graphics;
 import duo_vs.connect4.Connect4;
 import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
+
 import duo_vs.tictactoe.Tictactoe;
+
+//import duo_vs.tictactoe.Tictactoe;
 //import duo_vs.checkers.Checkers;
 //import chris one*/
 
@@ -27,8 +30,10 @@ public class GameState extends State
 	private Connect4 connect4;
 	private DotsandBoxes dotsandboxes;
 //	private Tictactoe tictactoe;
-	//private Pong pong;
+	private Pong pong;
 	/*garys class object
+	private Pong pong;
+	/*
 	private Checkers checkers;
 	chris class object*/
 	
@@ -48,8 +53,11 @@ public class GameState extends State
 		dotsandboxes = new DotsandBoxes(handler);
 	//	tictactoe = new Tictactoe();
 		/*garys class initialized here*/
-		//pong = new Pong();
+		pong = new Pong();
 		/*checkers = new Checkers();
+		pong = new Pong(handler);
+		/*
+		checkers = new Checkers();
 		chris class initialized here*/
 		
 	}
@@ -109,6 +117,7 @@ public class GameState extends State
 					break;
 				case 3 :
 					//pong.run();
+					pong.tick();
 					break;
 					
 				case 4 :
@@ -169,8 +178,7 @@ public class GameState extends State
 	    			break;
 	    		case 3 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			//pong.run();
-	    			//g.drawString("WOW GARY YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+        			pong.render(g);
 	    			break;
 	    		case 4 :
 	    			g.clearRect(0, 0, 700, 550);
