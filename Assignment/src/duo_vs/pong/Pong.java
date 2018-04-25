@@ -89,11 +89,11 @@ public class Pong extends Applet {
 	{
 		movement();
 		run();
+		secondmove();
 	}
 
 	
 	public void run() {
-	
 		if(gameStarted && !gameOver)
 			{
 			p1.move();
@@ -137,7 +137,7 @@ public class Pong extends Applet {
 	}
 
 
-	public void keyReleased() 
+	public void secondmove() 
 	{
 
 		if(handler.getKeyManager().isW())
@@ -161,11 +161,6 @@ public class Pong extends Applet {
 			
 		}
 		
-		if(handler.getKeyManager().isENTER())
-		{
-			gameStarted=false;
-		
-		}
 	}
 	
 }

@@ -15,7 +15,7 @@ import java.awt.Graphics;
 import duo_vs.connect4.Connect4;
 import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
-//import duo_vs.tictactoe.Tictactoe;
+import duo_vs.tictactoe.Tictactoe;
 //import duo_vs.checkers.Checkers;
 //import chris one*/
 
@@ -26,7 +26,7 @@ public class GameState extends State
 	//objects
 	private Connect4 connect4;
 	private DotsandBoxes dotsandboxes;
-//	private Tictactoe tictactoe;
+	//private Tictactoe tictactoe;
 	private Pong pong;
 	/*
 	private Checkers checkers;
@@ -46,7 +46,7 @@ public class GameState extends State
 		
 		connect4 = new Connect4(handler);
 		dotsandboxes = new DotsandBoxes(handler);
-	//	tictactoe = new Tictactoe();
+		//tictactoe = new Tictactoe();
 		pong = new Pong(handler);
 		/*
 		checkers = new Checkers();
@@ -172,7 +172,7 @@ public class GameState extends State
 	    			break;
 	    		case 4 :
 	    			g.clearRect(0, 0, 700, 550);
-	    		   // tictactoe.render(g);
+	    			//tictactoe.render(g);
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);
