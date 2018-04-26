@@ -1,310 +1,150 @@
 package duo_vs.breakout;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Color; import java.awt.Font; import java.awt.Graphics; import java.awt.Graphics2D;
+import java.awt.Rectangle; import java.awt.event.ActionEvent; import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent; import java.awt.event.KeyListener;
+import java.util.Random;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.JPanel; import javax.swing.Timer;
 
-//import com.sun.javafx.collections.MappingChange.Map;
+import breakout.Terrain;
 
 public class Game extends JPanel implements KeyListener, ActionListener {
 	private boolean play = false;
-	
-	private int score = 0;
-	private int score2 = 0;
-	
-	private int totalBricks = 56;
-	private int totalBricks2 = 56;
-	
-	private Timer timer;
-	private int speed = 5;
-	
-	private int playerX = 275;
-	private int player2X = 965;
-	
-	private int ballposX = 120;
-	private int ballposY = 350;
-	private int ball2posX = 800;
-	private int ball2posY = 350;
-	
-	private int ballXdir = -1;
-	private int ballYdir = -2;
-	private int ball2Xdir = -1;
-	private int ball2Ydir = -2;
-	
-	private Terrain terrain;
-	
+
+		/*players*/		private int p1Xpos = 200; private int p1Ypos = 500;
+						private int p2Xpos = 400; private int p2Ypos = 500;
+		/*balls*/		private int b1Xpos = 240; private int b1Ypos = 400;
+						private int b2Xpos = 440; private int b2Ypos = 400;
+						private int b1Xdir = 1; private int b1Ydir = -2;
+						private int b2Xdir = 1; private int b2Ydir = -2;
+		/*vars*/		private int speed = 5; private int bricks = 75;
+						private int score1, score2 = 0;
+		/*globals*/		private Timer timer; private Terrain terrain;
+
 	public Game() {
-		terrain = new Terrain(4, 14);
-		addKeyListener(this);
-		setFocusable(true);
+		terrain = new Terrain(3,25);
+		addKeyListener(this); setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		timer = new Timer(speed, this);
-		timer.start();}
-	
+		timer = new Timer(speed, this); timer.start(); }
+
 	public void paint(Graphics g) {
-		//background
-		g.setColor(Color.black);
-		g.fillRect(1,  1, 1350, 675);
-		//drawing map
-		terrain.draw((Graphics2D)g);
-		//borders
-		g.setColor(Color.red);
-		g.fillRect(0, 0, 5, 675);
-		g.fillRect(0, 0, 675, 5);
-		g.fillRect(0, 641, 675, 5);
-		g.setColor(Color.white);
-		g.fillRect(675, 0, 5, 675);
-		g.setColor(Color.blue);
-		g.fillRect(1339, 0, 5, 675);
-		g.fillRect(680, 0, 675, 5);
-		g.fillRect(680, 641, 675, 5);
-		//scores
-		g.setColor(Color.white);
-		g.setFont(new Font("serif", Font.BOLD, 25));
-		g.drawString(""+score, 635, 30);
-		g.drawString(""+score2, 1300, 30);
-		//the paddles
-		g.setColor(Color.red);
-		g.fillRect(playerX, 600, 100, 2);
-		g.setColor(Color.blue);
-		g.fillRect(player2X, 600, 100, 2);
-		//the ball
-		g.setColor(Color.yellow);
-		g.fillOval(ballposX, ballposY, 20, 20);
-		g.setColor(Color.MAGENTA);
-		g.fillOval(ball2posX,  ball2posY, 20, 20);
+		/*background*/	g.setColor(Color.black); g.fillRect(1,1,700,550);
+		/*drawing map*/	terrain.draw((Graphics2D)g);
+		/*border*/		g.setColor(Color.yellow);
+						g.fillRect(0,0,3,550); g.fillRect(691,0,3,550);
+						g.fillRect(0,0,700,3); g.fillRect(0,518,700,3);
+		/*players*/		g.setColor(Color.red); g.fillRect(p1Xpos,p1Ypos,80,2);
+						g.setColor(Color.blue); g.fillRect(p2Xpos,p2Ypos,80,2);
+		/*ball1*/		g.setColor(Color.red); g.fillOval(b1Xpos, b1Ypos,15,15);
+		/*score1*/		g.drawString(""+score1, 10, 20);
+		/*ball2*/		g.setColor(Color.blue); g.fillOval(b2Xpos,b2Ypos,15,15);
+		/*score2*/		g.drawString(""+score2, 675, 20);
 		
-		if(totalBricks <= 0) {
+						
+
+		if(bricks<=0) {
 			play = false;
-			ballXdir = 0;
-			ballYdir = 0;
-			ball2Ydir = 0;
-			ball2Ydir = 0;
-			g.setColor(Color.RED);
-			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.setFont(new Font("serif", Font.BOLD, 20));
-			g.drawString("You Won", 260, 300);
-			g.drawString("Press Enter to Restart", 230, 350); }
-		
-		if(totalBricks2 <= 0) {
+			b1Xdir = 0; b1Ydir = 0; b2Xdir = 0; b2Ydir = 0;
+			g.setColor(Color.white); g.setFont(new Font("serif",Font.BOLD, 30));
+				if(score1 > score2) {
+					g.drawString("Red player wins!", 160, 300); g.drawString("Press Enter to Restart", 260, 350); } 
+				else {
+					g.drawString("Blue player wins!", 160, 300); g.drawString("Press Enter to Restart", 260, 350); } }
+			
+		if(b1Ypos > 550) {
 			play = false;
-			ballXdir = 0;
-			ballYdir = 0;
-			ball2Ydir = 0;
-			ball2Ydir = 0;
-			g.setColor(Color.RED);
-			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.setFont(new Font("serif", Font.BOLD, 20));
-			g.drawString("You Won", 900, 300);
-			g.drawString("Press Enter to Restart", 900, 350); }
-		
-		if(ballposY > 610) {
+			b1Xdir = 0; b1Ydir = 0; b2Xdir = 0; b2Ydir = 0;
+			g.setColor(Color.white); g.setFont(new Font("serif",Font.BOLD, 30));
+			g.drawString("Blue player wins!", 160, 300); g.drawString("Press Enter to Restart", 260, 350); }
+		if(b2Ypos > 550) {
 			play = false;
-			ballXdir = 0;
-			ballYdir = 0;
-			ball2Xdir = 0;
-			ball2Ydir = 0;
-			g.setColor(Color.RED);
-			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.drawString("GameOver, Score: ", 190, 300);
-			g.setFont(new Font("serif", Font.BOLD, 20));
-			g.drawString("Press Enter to Restart", 230, 350); }
-		
-		if(ball2posY > 610) {
-			play = false;
-			ballXdir = 0;
-			ballYdir = 0;
-			ball2Xdir = 0;
-			ball2Ydir = 0;
-			g.setColor(Color.RED);
-			g.setFont(new Font("serif", Font.BOLD, 30));
-			g.drawString("GameOver, Score: ", 900, 300);
-			g.setFont(new Font("serif", Font.BOLD, 20));
-			g.drawString("Press Enter to Restart", 900, 350); }
-		
+			b1Xdir = 0; b1Ydir = 0;b2Xdir = 0; b2Ydir = 0;
+			g.setColor(Color.white); g.setFont(new Font("serif",Font.BOLD, 30));
+			g.drawString("Red player wins!", 160, 300); g.drawString("Press Enter to Restart", 260, 350); }
+
 		g.dispose(); }
-	
-	
+
 	@Override
 	public void keyReleased(KeyEvent e) {}
 	@Override
 	public void keyTyped(KeyEvent e) {}
-	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		timer.start();
-		
 		if(play) {
-			if(new Rectangle(ballposX, ballposY, 20, 20).intersects(new Rectangle(playerX, 600, 100, 8))) {
-				ballYdir = -ballYdir; }
-			
+			if(new Rectangle(b1Xpos,b1Ypos,15,15).intersects(new Rectangle(p1Xpos,p1Ypos,80,2))) {
+				b1Ydir = -b1Ydir; }
+			if(new Rectangle(b2Xpos,b2Ypos,15,15).intersects(new Rectangle(p2Xpos,p2Ypos,80,2))) {
+				b2Ydir = -b2Ydir; }
+
 			A: for(int i = 0; i<terrain.map.length; i++) {
 				for(int j = 0; j<terrain.map[0].length; j++) {
 					if(terrain.map[i][j] > 0) {
-						int brickX = j * terrain.brickWidth + 80;
-						int brickY = i * terrain.brickHeight + 50;
-						int brickWidth = terrain.brickWidth;
-						int brickHeight = terrain.brickHeight;
+			/*hitboxes*/int brickX = j * terrain.brickW + 35; int brickY = i * terrain.brickH + 30;
+						int brickWidth = terrain.brickW; int brickHeight = terrain.brickH;
 						
 						Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
-						Rectangle ballRect = new Rectangle(ballposX, ballposY, 20, 20);
-						Rectangle brickRect = rect;
+						Rectangle ballRect = new Rectangle(b1Xpos, b1Ypos, 15, 15); Rectangle brickRect = rect;
+						Rectangle rect2 = new Rectangle(brickX, brickY, brickWidth, brickHeight);
+						Rectangle ballRect2 = new Rectangle(b2Xpos, b2Ypos, 15, 15); Rectangle brickRect2 = rect2;
 						
 						if(ballRect.intersects(brickRect)) {
-							terrain.setBrickValue(0, i, j);
-							totalBricks--;
-							score += 5;
+							terrain.brickVal(0, i, j); bricks--; score1 += 1;
 							
-							if(ballposX + 19 <= brickRect.x || ballposX + 1 >= brickRect.x + brickRect.width) {
-								ballXdir = -ballXdir;
-							} else {
-								ballYdir = -ballYdir;
-							}
+							if(b1Xpos + 19 <= brickRect.x || b1Xpos + 1 >= brickRect.x + brickRect.width) {
+								b1Xdir = -b1Xdir; } else { b1Ydir = -b1Ydir; }
+			break A; }
+						if(ballRect2.intersects(brickRect2)) {
+							terrain.brickVal(0, i, j); bricks--; score2 += 1;
 							
-							break A;
-						}
-					}
-				}
-			}
-			
-			ballposX += ballXdir;
-			ballposY += ballYdir;
-			if(ballposX < 0) {
-				ballXdir = -ballXdir;
-			}
-			if(ballposY < 0) {
-				ballYdir = -ballYdir;
-			}
-			if(ballposX > 660) {
-				ballXdir = -ballXdir;
-			}
-			
-			if(new Rectangle(ball2posX, ball2posY, 20, 20).intersects(new Rectangle(player2X, 600, 100, 8))) {
-				ball2Ydir = -ball2Ydir; }
-			
-			A: for(int i = 0; i<terrain.map.length; i++) {
-				for(int j = 0; j<terrain.map[0].length; j++) {
-					if(terrain.map[i][j] > 0) {
-						int brickX = j * terrain.brickWidth + 80;
-						int brickY = i * terrain.brickHeight + 50;
-						int brickWidth = terrain.brickWidth;
-						int brickHeight = terrain.brickHeight;
-						
-						Rectangle rect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
-						Rectangle ballRect = new Rectangle(ball2posX, ball2posY, 20, 20);
-						Rectangle brickRect = rect;
-						
-						if(ballRect.intersects(brickRect)) {
-							terrain.setBrickValue(0, i, j);
-							totalBricks--;
-							score2 += 5;
-							
-							if(ball2posX + 19 <= brickRect.x || ball2posX + 1 >= brickRect.x + brickRect.width) {
-								ball2Xdir = -ball2Xdir;
-							} else {
-								ball2Ydir = -ball2Ydir;
-							}
-							
-							break A;
-						}
-					}
-				}
-			}
-			
-			ball2posX += ball2Xdir;
-			ball2posY += ball2Ydir;
-			if(ball2posX < 0) {
-				ball2Xdir = -ball2Xdir;
-			}
-			if(ball2posY < 0) {
-				ball2Ydir = -ball2Ydir;
-			}
-			if(ball2posX > 660) {
-				ball2Xdir = -ball2Xdir;
-			}
-			
-			
-		}
-		
-		repaint();
-	}
+							if(b2Xpos + 19 <= brickRect2.x || b2Xpos + 1 >= brickRect2.x + brickRect2.width) {
+								b2Xdir = -b2Xdir; } else { b2Ydir = -b2Ydir; }
+			break A; } } } }
+
+		/*change dir*/	b1Xpos += b1Xdir; b1Ypos += b1Ydir;
+						if(b1Xpos<5) { b1Xdir = -b1Xdir; }
+						if(b1Xpos>680) { b1Xdir = -b1Xdir; }
+						if(b1Ypos<0) { b1Ydir = - b1Ydir; }
+
+						b2Xpos += b2Xdir; b2Ypos += b2Ydir;
+						if(b2Xpos<5) { b2Xdir = -b2Xdir; }
+						if(b2Xpos>680) { b2Xdir = -b2Xdir; }
+						if(b2Ypos<0) { b2Ydir = - b2Ydir; } }
+					repaint(); }
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_D) {
-			if(playerX >= 570) {
-				playerX = 570;
-			} else {
-				moveRight();
-			}
-		}
-		if(e.getKeyCode() == KeyEvent.VK_A) {
-			if(playerX <= 10) {
-				playerX = 10;
-			} else {
-				moveLeft();
-			}
-		}
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if(player2X >= 1230) {
-				player2X = 1230;
-			} else {
-				moveRight2();
-			}
-		}
-		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if(player2X <= 685) {
-				player2X = 685;
-			} else {
-				moveLeft2();
-			}
-		}
-		
-		
-		
-		
-		if(e.getKeyCode() == KeyEvent.VK_ENTER ) {
-			if(!play) {
+		if(e.getKeyCode()==KeyEvent.VK_D) {
+			if(p1Xpos>=610) { p1Xpos=610; } else { moveRight1(); } }
+		if(e.getKeyCode()==KeyEvent.VK_A) {
+			if(p1Xpos<=10) { p1Xpos=10; } else { moveLeft1(); } }
+
+		if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			if(p2Xpos>=610) { p2Xpos=610; } else { moveRight2(); } }
+		if(e.getKeyCode()==KeyEvent.VK_LEFT) {
+			if(p2Xpos<=10) { p2Xpos=10; } else { moveLeft2(); } }
+
+		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+			if(!play) { 
+				Random rand = new Random();
+				int randomNum1 = rand.nextInt((600 - 50) + 1) + 50;
+				int randomNum2 = rand.nextInt((600 - 50) + 1) + 50;
+				int randomNum3 = rand.nextInt((2 - 1) + 1) + 1;
+				int randomNum4 = rand.nextInt((2 - 1) + 1) + 1;
 				play = true;
-				ballposX = 120;
-				ballposY = 350;
-				ball2posX = 800;
-				ball2posY = 350;
-				ballXdir = -1;
-				ballYdir = -2;
-				ball2Xdir = -1;
-				ball2Ydir = -2;
-				playerX = 310;
-				player2X = 965;
-				score = 0;
-				totalBricks = 56;
-				totalBricks2 = 56;
-				terrain = new Terrain(3, 7);
-				
-				repaint();
-			}
-		}
-	}
-	
-	public void moveRight() {
-		play = true;
-		playerX += 50; }
-	public void moveLeft() {
-		play = true;
-		playerX -= 50; }
-	public void moveRight2() {
-		play = true;
-		player2X += 50; }
-	public void moveLeft2() {
-		play = true;
-		player2X -= 50; }
+				p1Xpos = 200; p1Ypos = 500; p2Xpos = 400; p2Ypos = 500;
+				b1Xpos = randomNum1; b1Ypos = 400; b2Xpos = randomNum2; b2Ypos = 400;
+				b1Xdir = randomNum3; b1Ydir = -2; b2Xdir = randomNum4; b2Ydir = -2;
+				score1 = 0; score2 = 0; bricks = 75;
+				terrain = new Terrain(3,25); repaint(); } } }
+
+	/*movement*/	public void moveRight1() {
+							play = true; p1Xpos += 50; }
+					public void moveLeft1() {
+							play = true; p1Xpos -= 50; }
+					public void moveRight2() {
+							play = true; p2Xpos += 50; }
+					public void moveLeft2() {
+							play = true; p2Xpos -= 50; }
 }
