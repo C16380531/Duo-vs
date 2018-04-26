@@ -2,13 +2,14 @@ package duo_vs.pong;
 
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 import duo_vs.Handler;
 
 public class Pong extends Applet {
 
-	final int WIDTH =700, HEIGHT = 500;
+	final int WIDTH =700, HEIGHT = 550;
 	Thread thread;
 	private Handler handler;
 	boolean gameStarted,gameOver;
@@ -41,8 +42,9 @@ public class Pong extends Applet {
 				if(p1.remainingLives()<= 0)
 				{
 					gameOver=true;
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
 					g.setColor(Color.red);
-					g.drawString("Game Over, player 2 wins", 350, 250);
+					g.drawString("Game Over, player 2 wins", 300, 250);
 				}
 				else
 				{
@@ -56,6 +58,7 @@ public class Pong extends Applet {
 				if(p2.remainingLives()<= 0)
 				{
 					gameOver=true;
+					g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
 					g.setColor(Color.red);
 					g.drawString("Game Over, player 1 wins", 350, 250);
 				}

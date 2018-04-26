@@ -5,29 +5,27 @@ import java.awt.Graphics;
 
 public class Ball {
 	double xVel,yVel,x,y;
+	int startSpeed=1;
+	double min=-0.3,max=0.3;
 	
 	public Ball() {
 		x=350;
-		y=250;
-		xVel=getRandomSpeed()*getRandomDirection();
-		yVel=getRandomSpeed()*getRandomDirection();
+		y=275;
+		xVel=startSpeed*getRandomDirection();
+		yVel=startSpeed*getRandomDirection();
 	}
 	
-	public double getRandomSpeed()
-	{
-		return Math.random()*.6;
-	}
 	
-	public int getRandomDirection()
+	public double getRandomDirection()
 	{
 		int rand=(int) Math.random()*2;
 		if(rand ==1)
 		{
-			return 1;
+			return Math.random() * (max - min) + min;
 		}
 		else
 		{
-			return -1;
+			return -(Math.random() * (max - min) + min);
 		}
 	}
 	
@@ -40,7 +38,7 @@ public class Ball {
 		{
 			yVel=-yVel;
 		}
-		else if(y>490)
+		else if(y>540)
 		{
 			yVel=-yVel;
 		}
@@ -81,8 +79,8 @@ public class Ball {
 	public void reset()
 	{
 		x=350;
-		y=250;
-		xVel=getRandomSpeed()*getRandomDirection();
-		yVel=getRandomSpeed()*getRandomDirection();
+		y=275;
+		xVel=startSpeed*getRandomDirection();
+		yVel=startSpeed*getRandomDirection();
 	}
 }

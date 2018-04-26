@@ -8,12 +8,12 @@ public class Players implements Paddle{
 	double y,yVel;
 	boolean upAcel,downAcel;
 	int player,x,lives;
-	final double GRAVITY= 0.9;
+	final double GRAVITY= 0.09;
 	
 	public Players(int player) {
 		upAcel=false; downAcel=false;
 		lives=3;
-		y=210; yVel=0;
+		y=260; yVel=0;
 		if(player==1)
 		{
 			x=20;
@@ -37,11 +37,11 @@ public class Players implements Paddle{
 		// TODO Auto-generated method stub
 		if(upAcel)
 		{
-			yVel -=2;
+			yVel -=0.2;
 		}
 		else if(downAcel)
 		{
-			yVel +=2;
+			yVel +=0.2;
 			
 		}
 		else if(!upAcel && !downAcel)
@@ -53,18 +53,18 @@ public class Players implements Paddle{
 		{
 			y=0;
 		}
-		else if(y>420)
+		else if(y>470)
 		{
-			y=420;
+			y=470;
 		}
 		
-		if(yVel>=5)
+		if(yVel>=0.5)
 		{
-			yVel=5;
+			yVel=0.5;
 		}
-		else if(yVel<=-5)
+		else if(yVel<=-0.5)
 		{
-			yVel=-5;
+			yVel=-0.5;
 		}
 		y+=yVel;
 	}
@@ -87,7 +87,7 @@ public class Players implements Paddle{
 
 	public void reset()
 	{
-		y=210;
+		y=260;
 		yVel=0;
 		upAcel=false; downAcel=false;
 	}
