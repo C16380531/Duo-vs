@@ -34,57 +34,60 @@ public class Pong extends Applet {
 	
 	public void render(Graphics g)
 	{
-			g.setColor(Color.black);
-			g.fillRect(0, 0, WIDTH, HEIGHT);
-			if(b1.getX() < -10)
+		
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+		g.setColor(Color.black);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		if(b1.getX() < -10)
+		{
+			p1.lifeLost();
+			if(p1.remainingLives()<= 0)
 			{
-				p1.lifeLost();
-				if(p1.remainingLives()<= 0)
-				{
-					gameOver=true;
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-					g.setColor(Color.red);
-					g.drawString("Game Over, player 2 wins", 300, 250);
-				}
-				else
-				{
-					b1.reset();
-					p1.reset();
-					p2.reset();
-				}
-			}else if(b1.getX() > 710)
-			{
-				p2.lifeLost();
-				if(p2.remainingLives()<= 0)
-				{
-					gameOver=true;
-					g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
-					g.setColor(Color.red);
-					g.drawString("Game Over, player 1 wins", 350, 250);
-				}
-				else
-				{
-					b1.reset();
-					p1.reset();
-					p2.reset();
-				}
+				gameOver=true; 
+				g.setColor(Color.red);
+				g.drawString("Game Over, player 2 wins", 250, 250);
 			}
-			
 			else
 			{
-				p1.draw(g);
-				p2.draw(g);
-				b1.draw(g);
-				s1.draw(g,p1.remainingLives());
-				s2.draw(g,p2.remainingLives());
-		}
-			
-			if(!gameStarted)
-			{
-				g.setColor(Color.white);
-				g.drawString("Pong",340,100);
-				g.drawString("Press Enter to start game", 310, 130);
+				b1.reset();
+				p1.reset();
+				p2.reset();
 			}
+		}else if(b1.getX() > 710)
+		{
+			p2.lifeLost();
+			if(p2.remainingLives()<= 0)
+			{
+				gameOver=true;
+				g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
+				g.setColor(Color.red);
+				g.drawString("Game Over, player 1 wins", 250, 250);
+			}
+			else
+			{
+				b1.reset();
+				p1.reset();
+				p2.reset();
+			}
+		}
+		
+		else
+		{
+			p1.draw(g);
+			p2.draw(g);
+			b1.draw(g);
+			s1.draw(g,p1.remainingLives());
+			s2.draw(g,p2.remainingLives());
+		}
+		
+		if(!gameStarted)
+		{
+			g.setFont(new Font("TimesRoman", Font.BOLD, 40));
+			g.setColor(Color.white);
+			g.drawString("Pong",295,100);
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+			g.drawString("Press Enter to start game", 250, 150);
+		}
 			
 	}
 

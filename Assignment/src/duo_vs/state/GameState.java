@@ -9,7 +9,13 @@ package duo_vs.state;
 
 //plug ins
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 //imported classes
 import duo_vs.connect4.Connect4;
@@ -40,6 +46,10 @@ public class GameState extends State
 	private int counter=1;
 	private int check;
 	private boolean right,left;
+	static BufferedImage arrowLeft = null;
+	static BufferedImage arrowRight = null;
+	static BufferedImage Pong = null;
+	static BufferedImage Breakout = null;
 	
 	public GameState(Handler handler)
 	{
@@ -50,6 +60,18 @@ public class GameState extends State
 		pong = new Pong(handler);
 		//checkers = new Checkers();
 		//chris class initialized here*/
+		
+		
+		try {
+			arrowLeft = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\arrow_left.png"));
+			arrowRight = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\arrow_right.png"));
+			Pong = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\Pong.jpg"));
+			Breakout = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\Breakout.png"));
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
 		
 	}
 	public int menu()
@@ -131,37 +153,43 @@ public class GameState extends State
 		str5 = "Paul's Game";
 		str6 = "Chris's Game";
 		g.setColor(Color.red);
-		g.drawString(str, 300, 50);
+		g.setFont(new Font("TimesRoman", Font.BOLD, 32));
+		g.drawString(str, 280, 65);
 		if(p1==0)
 		{
 			if(counter>=1 && counter <6)
 			{	
 				g.fillRect(575, 225, 100, 100);
+				g.drawImage(arrowRight, 575, 225, 100, 100, null);
 			}
 			if(counter>1)
 			{
 				g.fillRect(25, 225, 100, 100);
+				g.drawImage(arrowLeft, 25, 225, 100, 100, null);
 			}
 			int game=counter;
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
 				switch(game) 
 				{
 					case 1 :
-						g.drawString(str1, 280, 100);
+						g.drawString(str1, 276, 100);
 						break;
 					case 2 :
-						g.drawString(str2, 280, 100);
+						g.drawString(str2, 276, 100);
 		    			break;
 		    		case 3 :
-		    			g.drawString(str3, 280, 100);
+		    			g.drawString(str3, 284, 100);
+		    			g.drawImage(Pong, 150, 150, 400, 250, null);
 		    			break;
 		    		case 4 :
 		    			g.drawString(str4, 280, 100);
 		    			break;
 		    		case 5 :
-		    			g.drawString(str5, 280, 100);
+		    			g.drawString(str5, 284, 100);
 		    			break;
 		    		case 6 :
 		    			g.drawString(str6, 280, 100);
+		    			g.drawImage(Breakout, 150, 150, 400, 250, null);
 				}
 		}
 		

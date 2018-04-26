@@ -13,7 +13,7 @@ public class Players implements Paddle{
 	public Players(int player) {
 		upAcel=false; downAcel=false;
 		lives=3;
-		y=260; yVel=0;
+		y=235; yVel=0;
 		if(player==1)
 		{
 			x=20;
@@ -87,7 +87,7 @@ public class Players implements Paddle{
 
 	public void reset()
 	{
-		y=260;
+		y=235;
 		yVel=0;
 		upAcel=false; downAcel=false;
 	}
