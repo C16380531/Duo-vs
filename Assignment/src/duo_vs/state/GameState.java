@@ -13,9 +13,9 @@ import java.awt.Graphics;
 
 //imported classes
 import duo_vs.connect4.Connect4;
-import duo_vs.dotsandboxes.DotsandBoxes;
+//import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
-import duo_vs.tictactoe.Tictactoe;
+//import duo_vs.tictactoe.Tictactoe;
 //import duo_vs.checkers.Checkers;
 //import chris one*/
 
@@ -23,9 +23,10 @@ import duo_vs.Handler;
 
 public class GameState extends State 
 {
+	
 	//objects
 	private Connect4 connect4;
-	private DotsandBoxes dotsandboxes;
+//	private DotsandBoxes dotsandboxes;
 	private Pong pong;
 	//private Checkers checkers;
 	//chris class object*/
@@ -36,14 +37,16 @@ public class GameState extends State
 	//variable
 	private String str, str1, str2, str3, str4, str5, str6;
 	private int p1=0;
+	private int counter=1;
 	private int check;
+	private boolean right,left;
 	
 	public GameState(Handler handler)
 	{
 		this.handler = handler;
-		
+		left=right=false;
 		connect4 = new Connect4(handler);
-		dotsandboxes = new DotsandBoxes(handler);
+	//	dotsandboxes = new DotsandBoxes(handler);
 		pong = new Pong(handler);
 		//checkers = new Checkers();
 		//chris class initialized here*/
@@ -52,36 +55,33 @@ public class GameState extends State
 	public int menu()
 	{
 		//code this better
-		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 100 && handler.getMouseManager().getMouseY() > 80)
+		//change x and y
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 150 && handler.getMouseManager().getMouseX() < 550 && handler.getMouseManager().getMouseY()< 400 && handler.getMouseManager().getMouseY() > 150)
 		{
-			p1=1;
-			//break;
+			p1=counter;
+			
+		}
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 25 && handler.getMouseManager().getMouseX() < 125 && handler.getMouseManager().getMouseY()< 325 && handler.getMouseManager().getMouseY() > 225 && counter>=2)
+		{
+			left=true;		
 			System.out.print("");
 		}
-		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 150 && handler.getMouseManager().getMouseY() > 130)
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 575 && handler.getMouseManager().getMouseX() < 675 && handler.getMouseManager().getMouseY()< 325 && handler.getMouseManager().getMouseY() > 225 && counter<=5)
 		{
-			p1=2;
+			right=true;
 			System.out.print("");
 		}
-		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 200 && handler.getMouseManager().getMouseY() > 180)
+		if(left)
 		{
-			p1=3;
-			System.out.print("");
+			counter-=1;
+			
+			left=false;
 		}
-		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 250 && handler.getMouseManager().getMouseY() > 230)
+		if(right)
 		{
-			p1=4;
-			System.out.print("");
-		}
-		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 300 && handler.getMouseManager().getMouseY() > 280)
-		{
-			p1=5;
-			System.out.print("");
-		}
-		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() > 280 && handler.getMouseManager().getMouseX() < 350 && handler.getMouseManager().getMouseY()< 350 && handler.getMouseManager().getMouseY() > 330)
-		{
-			p1=6;
-			System.out.print("");
+			counter+=1;
+			
+			right=false;
 		}
 		return p1;
 	}
@@ -101,7 +101,7 @@ public class GameState extends State
 					connect4.tick();
 					break;
 				case 2 :
-					dotsandboxes.tick();
+	//				dotsandboxes.tick();
 					break;
 				case 3 :
 					pong.tick();
@@ -119,12 +119,6 @@ public class GameState extends State
 		}
 	}
 	
-	/*
-	only a menu template don't freak
-	not the real thing 
-	This will be changed later better code and look 
-	 */
-	
 	@Override
 	public void render(Graphics g) 
 	{
@@ -136,15 +130,41 @@ public class GameState extends State
 		str4 = "Davis's Game";
 		str5 = "Paul's Game";
 		str6 = "Chris's Game";
-		
 		g.setColor(Color.red);
 		g.drawString(str, 300, 50);
-		g.drawString(str1, 280, 100);
-		g.drawString(str2, 280, 150);
-		g.drawString(str3, 280, 200);
-		g.drawString(str4, 280, 250);
-		g.drawString(str5, 280, 300);
-		g.drawString(str6, 280, 350);	
+		if(p1==0)
+		{
+			if(counter>=1 && counter <6)
+			{	
+				g.fillRect(575, 225, 100, 100);
+			}
+			if(counter>1)
+			{
+				g.fillRect(25, 225, 100, 100);
+			}
+			int game=counter;
+				switch(game) 
+				{
+					case 1 :
+						g.drawString(str1, 280, 100);
+						break;
+					case 2 :
+						g.drawString(str2, 280, 100);
+		    			break;
+		    		case 3 :
+		    			g.drawString(str3, 280, 100);
+		    			break;
+		    		case 4 :
+		    			g.drawString(str4, 280, 100);
+		    			break;
+		    		case 5 :
+		    			g.drawString(str5, 280, 100);
+		    			break;
+		    		case 6 :
+		    			g.drawString(str6, 280, 100);
+				}
+		}
+		
 
 		if(p1==0)
 		{
@@ -160,7 +180,7 @@ public class GameState extends State
 					break;
 				case 2 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			dotsandboxes.render(g);
+//	    			dotsandboxes.render(g);
 	    			break;
 	    		case 3 :
 	    			g.clearRect(0, 0, 700, 550);
