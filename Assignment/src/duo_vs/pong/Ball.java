@@ -2,11 +2,16 @@ package duo_vs.pong;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Ball {
 	double xVel,yVel,x,y;
 	int startSpeed=1;
-	double min=-0.3,max=0.3;
+	double min=0.1,max=0.3;
+	File pong= new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\pong\\Pong.wav");
 	
 	public Ball() {
 		x=350;
@@ -44,21 +49,56 @@ public class Ball {
 		}
 	}
 	
-	public void checkPaddleCollision(Paddle p1,Paddle p2)
+	public void checkPaddleCollision(Players p1,Players p2)
 	{
-		if(x<=50)
+		if(x<=35 && x>=32)
 		{
 			if(y>=p1.getY() && y<=p1.getY()+80)
 			{
-				xVel=-xVel;
+				if(p1.checkUpAccel())
+				{
+					xVel=-xVel+0.1;
+				}else if(p1.checkDownAccel())
+				{
+					xVel=-xVel+0.1;
+				}else
+				{
+					xVel=-xVel;
+				}
+				PlaySound(pong);
 			}
 		}
-		else if(x>=650)
+		else if(x>=650 && x<=653)
 		{
 			if(y>=p2.getY() && y<=p2.getY()+80)
 			{
-				xVel=-xVel;
+				if(p2.checkUpAccel())
+				{
+					xVel=-xVel-0.1;
+				}else if(p2.checkDownAccel())
+				{
+					xVel=-xVel-0.1;
+				}else
+				{
+					xVel=-xVel;
+				}
+				PlaySound(pong);
 			}
+		}
+	}
+	
+	public void PlaySound(File Sound)
+	{
+		try
+		{
+			Clip clip =AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(Sound));
+			clip.start();
+			
+			//Thread.sleep(clip.getMicrosecondLength()/1000);
+		}catch(Exception e) 
+		{
+			
 		}
 	}
 	

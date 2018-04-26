@@ -29,7 +29,7 @@ public class Players implements Paddle{
 	{
 		// TODO Auto-generated method stub
 		g.setColor(Color.white);
-		g.fillRect(x,(int)y,20,80);
+		g.fillRect(x,(int)y,5,80);
 	}
 
 	
@@ -78,7 +78,16 @@ public class Players implements Paddle{
 	{
 		downAcel=input;
 	}
+	
+	public boolean checkUpAccel()
+	{
+		return upAcel;
+	}
 
+	public boolean checkDownAccel()
+	{
+		return downAcel;
+	}
 	
 	public int getY() {
 		// TODO Auto-generated method stub
