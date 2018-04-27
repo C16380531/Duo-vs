@@ -12,17 +12,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 //imported classes
 import duo_vs.connect4.Connect4;
+import duo_vs.imageloader.ImageLoader;
 //import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
 //import duo_vs.tictactoe.Tictactoe;
-//import duo_vs.checkers.Checkers;
+import duo_vs.checkers.Checkers;
 import duo_vs.breakout.Game;
 
 import duo_vs.Handler;
@@ -34,7 +31,7 @@ public class GameState extends State
 	private Connect4 connect4;
 //	private DotsandBoxes dotsandboxes;
 	private Pong pong;
-	//private Checkers checkers;
+	private Checkers checkers;
 	private Game breakout;
 	
 	//handler
@@ -58,21 +55,14 @@ public class GameState extends State
 		connect4 = new Connect4(handler);
 	//	dotsandboxes = new DotsandBoxes(handler);
 		pong = new Pong(handler);
-		//checkers = new Checkers();
+		checkers = new Checkers(handler);
 		breakout = new Game(handler);
 		
-		
-		try {
-			arrowLeft = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/arrow_left.png"));
-			arrowRight = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/arrow_right.png"));
-			Pong = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/Pong.JPG"));
-			Breakout = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/Breakout.png"));
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-		
+
+			arrowLeft = ImageLoader.loadImage("/textures/arrow_left.png");
+			arrowRight = ImageLoader.loadImage("/textures/arrow_right.png");
+			Pong =  ImageLoader.loadImage("/textures/Pong.JPG");
+			Breakout =  ImageLoader.loadImage("/textures/Breakout.png");
 	}
 	public int menu()
 	{
@@ -132,7 +122,7 @@ public class GameState extends State
 					//tictactoe.tick();
 					break;
 				case 5 :
-			//		checkers.tick();
+					checkers.tick();
 					break;
 				case 6 :
 					breakout.tick();
@@ -220,8 +210,7 @@ public class GameState extends State
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			//checkers.render(g);
-	    			g.drawString("WOW PAUL YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+	    			checkers.render(g);
 	    			break;
 	    		case 6 :
 	    			g.clearRect(0, 0, 700, 550);

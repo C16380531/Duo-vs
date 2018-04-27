@@ -1,46 +1,53 @@
 package duo_vs.checkers;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import java.io.*;
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.image.BufferedImage;
 
-public class Checkers extends JPanel implements ActionListener, MouseListener {
-	public static int width = 720, height = width;
+import duo_vs.Handler;
+import duo_vs.imageloader.ImageLoader;
+
+public class Checkers {
+	public static int width = 420;
 	public static final int tileSize = width/8; //8 Tiles for checkers board
-	public static final int numTilesPerRow = width/tileSize;
-	public static int[][] baseGameData = new int[numTilesPerRow][numTilesPerRow]; //Stores 8x8 board layout
-	public static int[][] gameData = new int[numTilesPerRow][numTilesPerRow]; //Stores piece data in an 8x8
+	public static final int numTilesPerRow = 1+(width/tileSize);
+	public static int[][] baseGameData = new int[numTilesPerRow+2][numTilesPerRow]; //Stores 8x8 board layout
+	public static int[][] gameData = new int[numTilesPerRow+2][numTilesPerRow]; //Stores piece data in an 8x8
 	public static final int EMPTY = 0, RED = 1, RED_KING = 2, WHITE = 3, WHITE_KING = 4; //Values for gameData
-	public static JFrame frame;
 	public boolean gameInProgress = true;
 	public int currentPlayer = RED;
 	public boolean inPlay = false; //Is there a move function processing
-	public static int[][] availablePlays = new int[numTilesPerRow][numTilesPerRow]; //Stores available plays in an 8x8
+	public boolean haka = false; 
+	public static int[][] availablePlays = new int[numTilesPerRow+2][numTilesPerRow]; //Stores available plays in an 8x8
 	public int storedRow, storedCol;
 	public boolean isJump = false;
 	static BufferedImage crownImage = null;
-
-	public static void main(String[] args){
-		try {
-			crownImage = ImageIO.read(new File("C:\\Users\\lenovo\\Documents\\OOP\\DuoVs\\Assignment\\src\\duo_vs\\checkers\\crown.jpg"));
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		new Checkers();
+	private Handler handler;
+	
+	public Checkers(Handler handler)
+	{
+		this.handler =handler;
+		crownImage = ImageLoader.loadImage("/textures/crown.jpg");
 	}
 	
-	public Checkers(){
-		window(width, height, this);
+	public void tick() 
+	{
+		if(haka ==false)
+		{
 		initializeBoard();
-		repaint(); // This is included in the JVM. Runs paint.
+		}
+		else
+		{
+		mousePressed();
+		}
+	//	gameOver();
 	}
+	
+	
+
+			
 	
 	public boolean gameOver(){ 
+		
 		return gameOverInternal(0, 0, 0, 0);
 	}
 	
@@ -61,43 +68,21 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 		return gameOverInternal(col+1, row, red, white);
 	}
 	
-	public void window(int width, int height, Checkers game){ //draw the frame and add exit functionality
-		JFrame frame = new JFrame();
-		frame.setSize(width, height);
-		frame.setIconImage(crownImage);
-		frame.setBackground(Color.red);
-		frame.setLocationRelativeTo(null);
-		frame.pack();
-		Insets insets = frame.getInsets();
-		int frameLeftBorder = insets.left;
-		int frameRightBorder = insets.right;
-		int frameTopBorder = insets.top;
-		int frameBottomBorder = insets.bottom;
-		frame.setPreferredSize(new Dimension(width + frameLeftBorder + frameRightBorder, height + frameBottomBorder + frameTopBorder));
-		frame.setMaximumSize(new Dimension(width + frameLeftBorder + frameRightBorder, height + frameBottomBorder + frameTopBorder));
-		frame.setMinimumSize(new Dimension(width + frameLeftBorder + frameRightBorder, height + frameBottomBorder + frameTopBorder));
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.addMouseListener(this);
-		frame.requestFocus();
-		frame.setVisible(true);
-		frame.add(game);
-	}
-	
 	public void initializeBoard(){
 		//UPDATE THE STARTING POSITIONS
-				for(int col=0; col < (numTilesPerRow); col+=2){
-					gameData[col][5] = RED;
-					gameData[col][7] = RED;
-				}
-				for(int col=1; col < (numTilesPerRow); col+=2)
+				for(int col=2; col < (numTilesPerRow+1); col+=2){
 					gameData[col][6] = RED;
-				for(int col=1; col < (numTilesPerRow); col+=2){
-					gameData[col][0] = WHITE;
-					gameData[col][2] = WHITE;
-				}	
-				for(int col=0; col < (numTilesPerRow); col+=2)
+					gameData[col][8] = RED;
+				}
+				for(int col=3; col < (numTilesPerRow+1); col+=2)
+					gameData[col][7] = RED;
+				for(int col=3; col < (numTilesPerRow+1); col+=2){
 					gameData[col][1] = WHITE;
+					gameData[col][3] = WHITE;
+				}	
+				for(int col=2; col < (numTilesPerRow+1); col+=2)
+					gameData[col][2] = WHITE;
+			haka=true;
 	}
 	
 	public static void drawPiece(int col, int row, Graphics g, Color color){
@@ -108,11 +93,10 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 		g.fillOval((col*tileSize)+2, (row*tileSize)+2, tileSize-4, tileSize-4);
 	}
 	
-	public void paint(Graphics g){ // This method paints the board
+	public void render(Graphics g){ // This method paints the board
 		//PRINT THE BOARD & PIECES
-		super.paintComponent(g);
-		for(int row = 0; row < numTilesPerRow; row++){
-			for(int col = 0; col < numTilesPerRow; col++){
+		for(int row = 1; row < numTilesPerRow; row++){
+			for(int col = 2; col < numTilesPerRow+1; col++){
 				if((row%2 == 0 && col%2 == 0) || (row%2 != 0 && col%2 != 0)){ // This assigns the checkerboard pattern
 					baseGameData[col][row] = 0;
 					g.setColor(Color.gray);
@@ -152,10 +136,9 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 	public void gameOverDisplay(Graphics g) { //Displays the game over message
 		 String msg = "Game Over";
 	     Font small = new Font("Helvetica", Font.BOLD, 20);
-	     FontMetrics metr = getFontMetrics(small);
 	     g.setColor(Color.white);
 	     g.setFont(small);
-	     g.drawString(msg, (width - metr.stringWidth(msg)) / 2, width / 2);
+	     g.drawString(msg, (width - 10) / 2, width / 2);
 	}
 	
 	public void resetPlay(){
@@ -168,24 +151,33 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 				availablePlays[col][row] = 0;
 			}
 		}
-		repaint();
 	}
 	
-	public void mousePressed(java.awt.event.MouseEvent evt) {
-    	int col = (evt.getX()-8) / tileSize; // 8 is left frame length
-        int row = (evt.getY()-30) / tileSize; // 30 is top frame length
-		if(inPlay == false && gameData[col][row] != 0 || inPlay == true && checkTeamPiece(col, row) == true){
-			resetPlay();
-			storedCol = col;
-			storedRow = row; // Sets the current click to instance variables to be used elsewhere
-			getAvailablePlays(col, row);
+	public void mousePressed()//java.awt.event.MouseEvent evt) 
+	{
+		int col=0;
+		int row=0;
+		if(handler.getMouseManager().isLeftPressed())
+		{
+			col = (handler.getMouseManager().getMouseX()-8) / tileSize; // 8 is left frame length
+            row = (handler.getMouseManager().getMouseY()-30) / tileSize; // 30 is top frame length
 		}
-		else if(inPlay == true && availablePlays[col][row] == 1){
-			makeMove(col, row, storedCol, storedRow);
-		}
-		else if(inPlay == true && availablePlays[col][row] == 0){
-			resetPlay();
-		}
+		if(row  != 0&& col !=0) 
+		{
+	        if(inPlay == false && gameData[col][row] != 0 || inPlay == true && checkTeamPiece(col, row) == true){
+				resetPlay();
+				storedCol = col;
+				storedRow = row; // Sets the current click to instance variables to be used elsewhere
+				getAvailablePlays(col, row);
+			}
+			else if(inPlay == true && availablePlays[col][row] == 1){
+				isJump=true;
+				makeMove(col, row, storedCol, storedRow);
+			}
+			else if(inPlay == true && availablePlays[col][row] == 0){
+				resetPlay();
+			}
+        }
 	}
 	
 	public void swapPlayer(){
@@ -234,7 +226,6 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 		else if(gameData[col+1][row+1] == opponent || gameData[col+1][row+1] == opponentKing){
 			availablePlays[col+1][row+1] = 1;
 		}
-		repaint();
 	}
 	
 	public void checkKing(int col, int row){
@@ -280,7 +271,6 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 				getUp(col, row);
 				getDown(col, row); 
 			}
-		repaint();
 		}
 	}
 	
@@ -408,11 +398,5 @@ public class Checkers extends JPanel implements ActionListener, MouseListener {
 		else
 			return new int[] {col+2, row+2};
 	}
-	//Need the unimplemented methods to stop and error yet it works without them
-	public void mouseClicked(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}
-	public void actionPerformed(ActionEvent e) {}
 	
 }
