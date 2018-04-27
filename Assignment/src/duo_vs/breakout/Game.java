@@ -2,15 +2,16 @@ package duo_vs.breakout;
 
 import java.awt.Color; import java.awt.Font; import java.awt.Graphics; import java.awt.Graphics2D;
 import java.awt.Rectangle; import java.awt.event.ActionEvent; import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent; import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JPanel; import javax.swing.Timer;
 
-import breakout.Terrain;
+import duo_vs.breakout.Terrain;
+import duo_vs.Handler;
 
-public class Game extends JPanel implements KeyListener, ActionListener {
+public class Game extends JPanel implements ActionListener {
 	private boolean play = false;
+	private Handler handler;
 
 		/*players*/		private int p1Xpos = 200; private int p1Ypos = 500;
 						private int p2Xpos = 400; private int p2Ypos = 500;
@@ -22,13 +23,14 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 						private int score1, score2 = 0;
 		/*globals*/		private Timer timer; private Terrain terrain;
 
-	public Game() {
+	public Game(Handler handler) {
 		terrain = new Terrain(3,25);
-		addKeyListener(this); setFocusable(true);
+		this.handler =handler;
+		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		timer = new Timer(speed, this); timer.start(); }
 
-	public void paint(Graphics g) {
+	public void render(Graphics g) {
 		/*background*/	g.setColor(Color.black); g.fillRect(1,1,700,550);
 		/*drawing map*/	terrain.draw((Graphics2D)g);
 		/*border*/		g.setColor(Color.yellow);
@@ -64,12 +66,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 			g.drawString("Red player wins!", 160, 300); g.drawString("Press Enter to Restart", 260, 350); }
 
 		g.dispose(); }
+	
+	public void tick()
+	{
+		movement();
+	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {}
-	@Override
-	public void keyTyped(KeyEvent e) {}
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		timer.start();
 		if(play) {
@@ -113,38 +115,67 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 						if(b2Ypos<0) { b2Ydir = - b2Ydir; } }
 					repaint(); }
 	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode()==KeyEvent.VK_D) {
-			if(p1Xpos>=610) { p1Xpos=610; } else { moveRight1(); } }
-		if(e.getKeyCode()==KeyEvent.VK_A) {
-			if(p1Xpos<=10) { p1Xpos=10; } else { moveLeft1(); } }
-
-		if(e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			if(p2Xpos>=610) { p2Xpos=610; } else { moveRight2(); } }
-		if(e.getKeyCode()==KeyEvent.VK_LEFT) {
-			if(p2Xpos<=10) { p2Xpos=10; } else { moveLeft2(); } }
-
-		if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-			if(!play) { 
-				Random rand = new Random();
-				int randomNum1 = rand.nextInt((600 - 50) + 1) + 50;
-				int randomNum2 = rand.nextInt((600 - 50) + 1) + 50;
-				int randomNum3 = rand.nextInt((2 - 1) + 1) + 1;
-				int randomNum4 = rand.nextInt((2 - 1) + 1) + 1;
-				play = true;
-				p1Xpos = 200; p1Ypos = 500; p2Xpos = 400; p2Ypos = 500;
-				b1Xpos = randomNum1; b1Ypos = 400; b2Xpos = randomNum2; b2Ypos = 400;
-				b1Xdir = randomNum3; b1Ydir = -2; b2Xdir = randomNum4; b2Ydir = -2;
-				score1 = 0; score2 = 0; bricks = 75;
-				terrain = new Terrain(3,25); repaint(); } } }
+	
 
 	/*movement*/	public void moveRight1() {
-							play = true; p1Xpos += 50; }
+							play = true; p1Xpos += 5; }
 					public void moveLeft1() {
-							play = true; p1Xpos -= 50; }
+							play = true; p1Xpos -= 5; }
 					public void moveRight2() {
-							play = true; p2Xpos += 50; }
+							play = true; p2Xpos += 5; }
 					public void moveLeft2() {
-							play = true; p2Xpos -= 50; }
+							play = true; p2Xpos -= 5; }
+					
+					
+					
+					
+		public void movement() {
+			if(handler.getKeyManager().isD())
+			{
+				if(p1Xpos>=610) { p1Xpos=610; } else { moveRight1(); }
+			}
+			else if(handler.getKeyManager().isA())
+			{
+				if(p1Xpos<=10) { p1Xpos=10; } else { moveLeft1(); }
+
+			}
+			
+			if(handler.getKeyManager().isRIGHT())
+			{
+				if(p2Xpos>=610) { p2Xpos=610; } else { moveRight2(); }
+			
+			}
+			else if(handler.getKeyManager().isLEFT())
+			{
+				if(p2Xpos<=10) { p2Xpos=10; } else { moveLeft2(); }
+				
+			}
+			
+			if(handler.getKeyManager().isENTER())
+			{
+				if(!play) { 
+					Random rand = new Random();
+					int randomNum1 = rand.nextInt((600 - 50) + 1) + 50;
+					int randomNum2 = rand.nextInt((600 - 50) + 1) + 50;
+					int randomNum3 = rand.nextInt((2 - 1) + 1) + 1;
+					int randomNum4 = rand.nextInt((2 - 1) + 1) + 1;
+					play = true;
+					p1Xpos = 200; p1Ypos = 500; p2Xpos = 400; p2Ypos = 500;
+					b1Xpos = randomNum1; b1Ypos = 400; b2Xpos = randomNum2; b2Ypos = 400;
+					b1Xdir = randomNum3; b1Ydir = -2; b2Xdir = randomNum4; b2Ydir = -2;
+					score1 = 0; score2 = 0; bricks = 75;
+					terrain = new Terrain(3,25); repaint(); 
+					} 
+			
+			}
+
+			
+
+		}
+
+		
+		
+		
+		
+		
 }

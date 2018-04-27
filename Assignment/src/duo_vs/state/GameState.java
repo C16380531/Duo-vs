@@ -23,7 +23,7 @@ import duo_vs.connect4.Connect4;
 import duo_vs.pong.Pong;
 //import duo_vs.tictactoe.Tictactoe;
 //import duo_vs.checkers.Checkers;
-//import chris one*/
+import duo_vs.breakout.Game;
 
 import duo_vs.Handler;
 
@@ -35,7 +35,7 @@ public class GameState extends State
 //	private DotsandBoxes dotsandboxes;
 	private Pong pong;
 	//private Checkers checkers;
-	//chris class object*/
+	private Game breakout;
 	
 	//handler
 	private Handler handler;
@@ -59,7 +59,7 @@ public class GameState extends State
 	//	dotsandboxes = new DotsandBoxes(handler);
 		pong = new Pong(handler);
 		//checkers = new Checkers();
-		//chris class initialized here*/
+		breakout = new Game(handler);
 		
 		
 		try {
@@ -135,7 +135,7 @@ public class GameState extends State
 					//checkers.tick();
 					break;
 				case 6 :
-					//chris tick called here
+					breakout.tick();
 					break;    		
 			}	
 		}
@@ -225,8 +225,7 @@ public class GameState extends State
 	    			break;
 	    		case 6 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			//chris called here
-	    			g.drawString("WOW CHRIS YOU HAVE DONE SOOOOOO MUCH", 200, 240);
+	    			breakout.render(g);
 	    			break;    		
 			}
 		}
