@@ -112,4 +112,9 @@ public class Players implements Paddle{
 		lives-=1;
 	}
 	
+	void resetLives()
+	{
+		lives=3;
+	}
+	
 }

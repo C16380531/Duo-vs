@@ -46,6 +46,7 @@ public class Pong extends Applet {
 				gameOver=true; 
 				g.setColor(Color.red);
 				g.drawString("Game Over, player 2 wins", 250, 250);
+				g.drawString("Press enter to play again", 260, 280);
 			}
 			else
 			{
@@ -62,6 +63,7 @@ public class Pong extends Applet {
 				g.setFont(new Font("TimesRoman", Font.PLAIN, 20)); 
 				g.setColor(Color.red);
 				g.drawString("Game Over, player 1 wins", 250, 250);
+				g.drawString("Press enter to play again", 260, 280);
 			}
 			else
 			{
@@ -70,7 +72,6 @@ public class Pong extends Applet {
 				p2.reset();
 			}
 		}
-		
 		else
 		{
 			p1.draw(g);
@@ -79,6 +80,7 @@ public class Pong extends Applet {
 			s1.draw(g,p1.remainingLives());
 			s2.draw(g,p2.remainingLives());
 		}
+		
 		
 		if(!gameStarted)
 		{
@@ -135,6 +137,18 @@ public class Pong extends Applet {
 		if(handler.getKeyManager().isENTER())
 		{
 			gameStarted=true;
+			
+			if(gameOver)
+			{
+				System.out.print("Hello");
+				gameOver=false;
+				b1.reset();
+				p1.resetLives();
+				p2.resetLives();
+				p1.reset();
+				p2.reset();
+				repaint();
+			}
 		
 		}
 
