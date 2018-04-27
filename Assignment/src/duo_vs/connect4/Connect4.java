@@ -20,6 +20,7 @@ public class Connect4
 	private Handler handler;
 	private Winner winner;
 	boolean count, same, yellowpressed, redwon, yellowwon, finished_col, hover, won, discdrop=false;
+	boolean gameover;
 	int[] b, d, finished_column; 
 	int[] playerredx, playerredy, playeryellowx, playeryellowy;
 	int dummy_rows, rows, circle_height, circle_width, hovered;
@@ -45,7 +46,7 @@ public class Connect4
 	
 	public void tick()
 	{			
-		if(redwon ==false && yellowwon==false)
+		if(!finished_game())
 		{
 			pressed();
 			disc_place();
@@ -54,8 +55,9 @@ public class Connect4
 		}
 		else
 		{
-			finished_game();
+			System.out.print("win");
 		}
+
 	}
 	
 	public void pressed()
@@ -185,16 +187,30 @@ public class Connect4
 		}
 	}
 	
-	public void finished_game()
+	public boolean finished_game()
 	{
-		if(redwon==true)
+
+		if(redwon ==false && yellowwon==false && playeryellowx[21]==0)
 		{
-			System.out.print("Red won Red Won");
+			return false;
 		}
 		else
 		{
-			System.out.print("Yellow won yellow won");
+			if(redwon==true)
+			{
+				System.out.print("red won red won");
+			}
+			else if(yellowwon==true)
+			{
+				System.out.print("yellowwon");
+			}
+			else
+			{
+				System.out.print("Drawwwww");
+			}
+			return true;
 		}
+		
 	}
 	
 	//drawing classes below

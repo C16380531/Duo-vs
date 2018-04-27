@@ -63,10 +63,10 @@ public class GameState extends State
 		
 		
 		try {
-			arrowLeft = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\arrow_left.png"));
-			arrowRight = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\arrow_right.png"));
-			Pong = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\Pong.jpg"));
-			Breakout = ImageIO.read(new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\Breakout.png"));
+			arrowLeft = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/arrow_left.png"));
+			arrowRight = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/arrow_right.png"));
+			Pong = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/Pong.JPG"));
+			Breakout = ImageIO.read(new File("//C:/Users/User/Documents/Duo-vs/Assignment/src/duo_vs/Breakout.png"));
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -132,7 +132,7 @@ public class GameState extends State
 					//tictactoe.tick();
 					break;
 				case 5 :
-					//checkers.tick();
+			//		checkers.tick();
 					break;
 				case 6 :
 					breakout.tick();
