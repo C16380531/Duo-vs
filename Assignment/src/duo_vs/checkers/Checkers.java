@@ -108,7 +108,7 @@ public class Checkers {
 					g.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
 				}
 				if(checkTeamPiece(col, row) ==  true){			
-					g.setColor(Color.darkGray.darker());
+					g.setColor(Color.gray);
 					g.fillRect(col*tileSize, row*tileSize, tileSize, tileSize);
 				}
 				if(availablePlays[col][row] == 1){
