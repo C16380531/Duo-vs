@@ -6,12 +6,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import duo_vs.Handler;
+import duo_vs.background.Background;
 
 public class Pong extends Applet {
 
 	final int WIDTH =700, HEIGHT = 550;
 	Thread thread;
 	private Handler handler;
+	private Background background;
 	boolean gameStarted,gameOver;
 	Players p1;
 	Players p2;
@@ -29,12 +31,17 @@ public class Pong extends Applet {
 			s2= new Scoreboard(650);
 			gameStarted=false;
 			gameOver=false;
-		
+			background= new Background(handler);
 	}
-	
+	public int pressed3()
+	{
+		int p1;
+		p1=background.pressed();
+		return p1;
+	}
+
 	public void render(Graphics g)
 	{
-		
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
@@ -90,7 +97,8 @@ public class Pong extends Applet {
 			g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 			g.drawString("Press Enter to start game", 250, 150);
 		}
-			
+
+		background.render(g);
 	}
 
 	public void tick()
@@ -98,6 +106,7 @@ public class Pong extends Applet {
 		movement();
 		run();
 		secondmove();
+		background.tick();
 	}
 
 	

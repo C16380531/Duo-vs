@@ -9,18 +9,25 @@ package duo_vs.connect4;
 
 //plug ins
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 //imported classes
 import duo_vs.Handler;
+import duo_vs.background.Background;
 import duo_vs.connect4.Winner;
+import duo_vs.imageloader.ImageLoader;
 
 public class Connect4 
 {	
 	private Handler handler;
 	private Winner winner;
-	boolean count, same, yellowpressed, redwon, yellowwon, finished_col, hover, won, discdrop=false;
-	boolean gameover;
+	private Background background;
+	static BufferedImage connect = null;
+	
+	boolean count, same, yellowpressed, redwon, yellowwon, finished_col, hover;
+	boolean gameover, gameStarted=false;
 	int[] b, d, finished_column; 
 	int[] playerredx, playerredy, playeryellowx, playeryellowy;
 	int dummy_rows, rows, circle_height, circle_width, hovered;
@@ -34,6 +41,7 @@ public class Connect4
 		playerredy = new int[21];
 		playeryellowx = new int[22];
 		playeryellowy = new int[22];
+		background = new Background(handler);
 		b =new int[43];
 		d =new int[43];
 		dummy_rows=410;
@@ -41,25 +49,41 @@ public class Connect4
 		finished_column = new int[8];
 		circle_height = 67;
 		circle_width = 70;
-		won=false;
+		connect = ImageLoader.loadImage("/textures/connect4.png");
 	}
-	
+	public int pressed1()
+	{
+		int p1;
+		p1=background.pressed();
+		return p1;
+	}
 	public void tick()
-	{			
-		if(!finished_game())
+	{		
+		
+		if(gameStarted!=true)
 		{
-			pressed();
-			disc_place();
-			redplayer();
-			yellowplayer();
+			started();
 		}
 		else
 		{
-			System.out.print("win");
+			if(!finished_game())
+			{
+				pressed1();
+				disc_place();
+				redplayer();
+				yellowplayer();
+			}
 		}
-
+		background.tick();
 	}
 	
+	public void started()
+	{
+		if(handler.getKeyManager().isENTER())
+		{
+			gameStarted=true;
+		}
+	}
 	public void pressed()
 	{
 		for(int column = 60; column < 640; column+=85)
@@ -167,7 +191,7 @@ public class Connect4
 				playerredx[s] = b[i];
 				playerredy[s] = d[i];
 				s=s+1;
-				redwon =winner.RedWin(playerredx, playerredy);
+				redwon =winner.RedWin(playerredx, playerredy, l);
 			}
 		}
 	}
@@ -190,24 +214,12 @@ public class Connect4
 	public boolean finished_game()
 	{
 
-		if(redwon ==false && yellowwon==false && playeryellowx[21]==0)
+		if(redwon ==false && yellowwon==false && finished_column[6]==0)
 		{
 			return false;
 		}
 		else
 		{
-			if(redwon==true)
-			{
-				System.out.print("red won red won");
-			}
-			else if(yellowwon==true)
-			{
-				System.out.print("yellowwon");
-			}
-			else
-			{
-				System.out.print("Drawwwww");
-			}
 			return true;
 		}
 		
@@ -219,23 +231,65 @@ public class Connect4
 	{	
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 700 , 550);
+		if(gameStarted!= true)
+		{
+			g.drawImage(connect, 140, 80, 420 , 380, null);
+		}
+		else
+		{
+			g.setColor(Color.WHITE);
+			g.fillRect(20, 20, 660 , 490);
+			background.render(g);
+			//sets color of rectangle to blue
+			g.setColor(Color.BLACK);
+			g.fillRect(30, 30, 640 , 470);
+			
+			hover(g);
+			Drawcircles(g);			
+			colour_disc(g);
+		}
 		
-		//sets color of rectangle to blue
-	    g.setColor(Color.blue);
-		g.fillRect(30, 30, 640 , 490);
-		
-		hover(g);
-		Drawcircles(g);			
-		colour_disc(g);
+		if(finished_game())
+		{
+			if(redwon==true)
+			{
+				
+				g.setFont(new Font("AR DARLING", Font.PLAIN, 40)); 
+				g.setColor(Color.RED);
+				g.fillRect(225, 160, 250, 200);
+				g.setColor(Color.BLACK);
+				g.drawString("Red Won", 270, 265);
+			}
+			else if(yellowwon==true)
+			{
+				g.setFont(new Font("AR DARLING", Font.PLAIN, 40)); 
+				g.setColor(Color.YELLOW);
+				g.fillRect(225, 160, 250, 200);
+				g.setColor(Color.BLACK);
+				g.drawString("Yellow Won", 240, 265);
+			}
+			else
+			{
+				g.setFont(new Font("AR DARLING", Font.PLAIN, 40)); 
+				g.setColor(Color.CYAN);
+				g.fillRect(225, 160, 250, 200);
+				g.setColor(Color.BLACK);
+				g.drawString("Draw", 270, 265);
+			}
+		}
+
 	}
 	
 	public void hover(Graphics g)
 	{
-		if(hover = true)
+		if(hovered != 0)
 		{
-			g.setColor(Color.LIGHT_GRAY);	
-			g.fillRect(hovered, 30, 70 , 490);
-			hover=false;
+			if(hover = true)
+			{
+				g.setColor(Color.LIGHT_GRAY);	
+				g.fillRect(hovered, 30, 70 , 470);
+				hover=false;
+			}
 		}
 	}
 	

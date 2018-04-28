@@ -45,6 +45,8 @@ public class Game implements Runnable
 	//Handler
 	private Handler handler;
 
+	int p1=0;
+	
 	//Constructor
 	public Game(String title, int width, int height)
 	{
@@ -71,6 +73,7 @@ public class Game implements Runnable
 		
 		//state
 		gameState = new GameState(handler);
+		
 		State.setState(gameState);
 	}
 	

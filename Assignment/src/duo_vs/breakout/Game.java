@@ -8,10 +8,12 @@ import javax.swing.JPanel; import javax.swing.Timer;
 
 import duo_vs.breakout.Terrain;
 import duo_vs.Handler;
+import duo_vs.background.Background;
 
 public class Game extends JPanel implements ActionListener {
 	private boolean play = false;
 	private Handler handler;
+	private Background background;
 
 		/*players*/		private int p1Xpos = 200; private int p1Ypos = 500;
 						private int p2Xpos = 400; private int p2Ypos = 500;
@@ -26,9 +28,11 @@ public class Game extends JPanel implements ActionListener {
 	public Game(Handler handler) {
 		terrain = new Terrain(3,25);
 		this.handler =handler;
+		background = new Background(handler);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
-		timer = new Timer(speed, this); timer.start(); }
+		timer = new Timer(speed, this); timer.start(); 
+		}
 
 	public void render(Graphics g) {
 		/*background*/	g.setColor(Color.black); g.fillRect(1,1,700,550);
@@ -42,7 +46,7 @@ public class Game extends JPanel implements ActionListener {
 		/*score1*/		g.drawString(""+score1, 10, 20);
 		/*ball2*/		g.setColor(Color.blue); g.fillOval(b2Xpos,b2Ypos,15,15);
 		/*score2*/		g.drawString(""+score2, 675, 20);
-		
+		background.render(g);
 						
 
 		if(bricks<=0) {
@@ -64,14 +68,21 @@ public class Game extends JPanel implements ActionListener {
 			b1Xdir = 0; b1Ydir = 0;b2Xdir = 0; b2Ydir = 0;
 			g.setColor(Color.white); g.setFont(new Font("serif",Font.BOLD, 30));
 			g.drawString("Red player wins!", 160, 300); g.drawString("Press Enter to Restart", 260, 350); }
-
-		g.dispose(); }
+		
+		g.dispose(); 
+		}
 	
 	public void tick()
 	{
+		background.tick();
 		movement();
 	}
-
+	public int pressed6()
+	{
+		int p1;
+		p1=background.pressed();
+		return p1;
+	}
 	public void actionPerformed(ActionEvent arg0) {
 		timer.start();
 		if(play) {

@@ -7,7 +7,7 @@ import duo_vs.Handler;
 import duo_vs.imageloader.ImageLoader;
 
 public class Checkers {
-	public static int width = 420;
+	public static int width = 400;
 	public static final int tileSize = width/8; //8 Tiles for checkers board
 	public static final int numTilesPerRow = 1+(width/tileSize);
 	public static int[][] baseGameData = new int[numTilesPerRow+2][numTilesPerRow]; //Stores 8x8 board layout
@@ -155,8 +155,8 @@ public class Checkers {
 	
 	public void mousePressed()//java.awt.event.MouseEvent evt) 
 	{
-		int col=0;
-		int row=0;
+		int col=2;
+		int row=1;
 		if(handler.getMouseManager().isLeftPressed())
 		{
 			col = (handler.getMouseManager().getMouseX()-8) / tileSize; // 8 is left frame length

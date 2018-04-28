@@ -21,6 +21,7 @@ import duo_vs.pong.Pong;
 //import duo_vs.tictactoe.Tictactoe;
 import duo_vs.checkers.Checkers;
 import duo_vs.breakout.Game;
+import duo_vs.background.Background;
 
 import duo_vs.Handler;
 
@@ -39,7 +40,7 @@ public class GameState extends State
 	
 	//variable
 	private String str, str1, str2, str3, str4, str5, str6;
-	private int p1=0;
+	public int p1=0;
 	private int counter=1;
 	private int check;
 	private boolean right,left;
@@ -47,6 +48,7 @@ public class GameState extends State
 	static BufferedImage arrowRight = null;
 	static BufferedImage Pong = null;
 	static BufferedImage Breakout = null;
+	static BufferedImage connect_4 = null;
 	
 	public GameState(Handler handler)
 	{
@@ -63,6 +65,7 @@ public class GameState extends State
 			arrowRight = ImageLoader.loadImage("/textures/arrow_right.png");
 			Pong =  ImageLoader.loadImage("/textures/Pong.JPG");
 			Breakout =  ImageLoader.loadImage("/textures/Breakout.png");
+		    connect_4 = ImageLoader.loadImage("/textures/connectmenu.PNG");
 	}
 	public int menu()
 	{
@@ -111,21 +114,25 @@ public class GameState extends State
 			{
 				case 1 :
 					connect4.tick();
+					p1=connect4.pressed1();
+					//check=p1;
 					break;
 				case 2 :
-	//				dotsandboxes.tick();
+	//				dotsandboxes.tick(p1);
 					break;
 				case 3 :
 					pong.tick();
+					p1=pong.pressed3();
 					break;
 				case 4 :
-					//tictactoe.tick();
+					//tictactoe.tick(p1);
 					break;
 				case 5 :
 					checkers.tick();
 					break;
 				case 6 :
 					breakout.tick();
+					p1=breakout.pressed6();
 					break;    		
 			}	
 		}
@@ -134,6 +141,7 @@ public class GameState extends State
 	@Override
 	public void render(Graphics g) 
 	{
+		//g.clearRect(0, 0, 700, 600);
 		//make code better use array or something and loop
 		str = "Duo_vs";				
 		str1 = "Sharon's Game";
@@ -163,6 +171,7 @@ public class GameState extends State
 				{
 					case 1 :
 						g.drawString(str1, 276, 100);
+						g.drawImage(connect_4, 150, 150, 400, 250, null);
 						break;
 					case 2 :
 						g.drawString(str2, 276, 100);
@@ -194,7 +203,7 @@ public class GameState extends State
 			{
 				case 1 :
 					g.clearRect(0, 0, 700, 550);
-					connect4.render(g); 
+					connect4.render(g); 					
 					break;
 				case 2 :
 	    			g.clearRect(0, 0, 700, 550);

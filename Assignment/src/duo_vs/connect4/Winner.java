@@ -1,12 +1,12 @@
 package duo_vs.connect4;
 
-import java.util.Arrays;
 
 public class Winner 
 {	
 	boolean redwon, yellowwon;
 	int[] playerredx, playerredy, playeryellowy, playeryellowx;
-
+	int count;
+	
 	public Winner()
 	{	
 		playerredx = new int[21];
@@ -15,96 +15,154 @@ public class Winner
 		playeryellowy = new int[22];
 	}
 
-	public boolean RedWin(int[] playerredx, int[] playerredy)
+	public boolean RedWin(int[] playerredx, int[] playerredy, int l)
 	{
-		//values into array
-		for(int i=0; i<21; i++)
+		int temp2;
+		count=l;
+		int check;
+
+		check=0;
+		//check red player going up column 
+		for(int column=60; column<655; column +=85)
 		{
-			this.playerredx[i] = playerredx[i];
-			this.playerredy[i] = playerredy[i];
+			for(int row=410; row>60; row-=70)
+			{
+				check=0;
+				for(int j=0; j<21; j++)
+				{
+					if(playerredx[j]!=0)
+					{
+						if(column == playerredx[j]&& row ==playerredy[j])
+						{
+							check = check+1;
+							row=row-70;
+						}
+						
+						if(check==4)
+						{
+							j=22;
+							column=655;
+							row=60;
+							redwon=true;
+						}
+					}
+				}
+			}
 		}
-		
-		//checking if the red player won by placing discs up in one column
-		int check=0;
+		//checking if the red player won by placing discs across one row
+		if(!redwon)
+		{
 			for(int column=60; column<655; column +=85)
 			{
 				for(int row=410; row>60; row-=70)
 				{
-					for(int j=0; j<21; j++)
+					int temp1=column;
+				    temp2=row;
+					check=0;
+					for(int e=0; e<4; e++)
 					{
-						if(playerredx[j]!=0)
+						for(int j=0; j<21; j++)
 						{
-							if(column == playerredx[j]&& row ==playerredy[j])
+							if(playerredx[j]!=0)
 							{
-								check = check+1;
-								row=row-70;
+								if(temp1 == playerredx[j]&& temp2 ==playerredy[j])
+								{
+									check = check+1;
+									temp1=temp1+85;
+								}
+
+								if(check==4)
+								{
+									j=22;
+									column=655;
+									row=60;
+									e=4;
+									redwon=true;
+								}
 							}
-							
-							if(check==4)
+						}
+					}
+				}
+			}
+		}
+		//checking up and right
+		if(!redwon)
+		{	
+			for(int row=410; row>60; row-=70)
+			{
+				for(int column=60; column<655; column +=85)
+				{
+					int temp1=row;
+				    temp2=column;
+				    check=0;
+					for(int e=0; e<4; e++)
+					{
+						for(int j=0; j<21; j++)
+						{
+							if(playerredx[j]!=0)
 							{
-								j=22;
-								column=655;
-								row=60;
-								redwon=true;
+								if(temp1 == playerredx[j]&& temp2 ==playerredy[j])
+								{
+									check = check+1;
+									temp1=temp1+85;
+									temp2=temp2-70;
+								}
+								if(check==4)
+								{
+									j=22;
+									column=655;
+									row=60;
+									e=4;
+									redwon=true;
+								}
 							}
 						}
 					}
 				}
 				check=0;
 			}
-			//checking if the red player won by placing discs across one row
-			if(!redwon)
-			{
-				for(int row=410; row>60; row-=70)
-				{	
-					int[] rowstaken =new int[7];
-					int s=0;
+		}
+		//checking left and down
+				if(!redwon)
+				{
 					for(int column=60; column<655; column +=85)
 					{
-						for(int j=0; j<21; j++)
+						for(int row=410; row>60; row-=70)
 						{
-							if(playerredx[j]!=0)
+							int temp1=column;
+							temp2=row;
+							check=0;
+							for(int e=0; e<4; e++)
 							{
-								if(column == playerredx[j])
+								for(int j=0; j<21; j++)
 								{
-									
-									rowstaken[s] =playerredy[j];
-									Arrays.sort(rowstaken);
-									for(int i=0; i<7; i++)
+									if(playerredx[j]!=0)
 									{
-										if(rowstaken[i]!=0)
+										if(temp1 == playerredx[j]&& temp2 ==playerredy[j])
 										{
-											if(rowstaken[i]==playerredy[j]) 
-											{
-												System.out.print( "\nfirst " + column +"\nsecond "+ playerredx[j]);
-												System.out.print( "\nfirst " + row +"\nsecond "+ playerredy[j]);
-												check = check+1;
-												System.out.print( "\nyoyoyyo " +check);
-												i=7;
-											}
+											check = check+1;
+											temp1=temp1+85;
+											temp2=temp2+70;
+										}
+										if(check==4)
+										{
+											j=22;
+											column=655;
+											row=60;
+											e=4;
+											redwon=true;
 										}
 									}
 								}
-								
-								if(check==4)
-								{
-									System.out.print("wrong");
-									j=22;
-									column=655;
-									row=60;
-									redwon=true;
-								}
 							}
 						}
-					}	
-				check=0;
+						
+					}
 				}
-			}
-
 			return redwon;
-		
 	}
 	
+
 	public boolean YellowWin(int[] playeryellowx, int[] playeryellowy)
 	{
 		for(int i=0; i<21; i++)
@@ -114,82 +172,141 @@ public class Winner
 		}
 		//checking if the yellow player won by placing discs up in one column
 		int check=0;
+		for(int column=60; column<655; column +=85)
+		{
+			for(int row=410; row>60; row-=70)
+			{
+				check=0;
+				for(int j=0; j<22; j++)
+				{
+					if(playeryellowx[j]!=0)
+					{
+						if(column == playeryellowx[j]&& row ==playeryellowy[j])
+						{
+							check = check+1;
+							row=row-70;
+						}
+
+						if(check==4)
+						{
+							j=22;
+							column=655;
+							row=60;
+							yellowwon=true;
+						}
+					}
+				}
+			}
+		}
+		//checking if the yellow player won by placing discs across one row
+		if(!yellowwon)
+		{
 			for(int column=60; column<655; column +=85)
 			{
 				for(int row=410; row>60; row-=70)
 				{
-					for(int j=0; j<22; j++)
-					{
-						if(playeryellowx[j]!=0)
-						{
-							if(column == playeryellowx[j]&& row ==playeryellowy[j])
-							{
-								System.out.print( "\nfirst " + column +"\nsecond "+ playeryellowx[j]);
-								System.out.print( "\nfirst " + row +"\nsecond "+ playeryellowy[j]);
-								check = check+1;
-								System.out.print( "\nwin " +check);
-								row=row-70;
-							}
-							
-							if(check==4)
-							{
-								System.out.print("Yellow win Yellow win");
-								j=22;
-								column=655;
-								row=60;
-								yellowwon=true;
-							}
-						}
-					}
-				}
-				check=0;
-			}
-			//checking if the yellow player won by placing discs across one row
-			if(!yellowwon)
-			{
-				for(int row=410; row>60; row-=70)
-				{	
-					int[] rowstaken =new int[7];
-					int s=0;
-					for(int column=60; column<655; column +=85)
+					int temp1=column;
+				    int temp2=row;
+				    check=0;
+					for(int e=0; e<4; e++)
 					{
 						for(int j=0; j<21; j++)
 						{
 							if(playeryellowx[j]!=0)
 							{
-								if(column == playeryellowx[j])
+								if(temp1 == playeryellowx[j]&& temp2 ==playeryellowy[j])
 								{
-									
-									rowstaken[s] =playeryellowy[j];
-									Arrays.sort(rowstaken);
-									for(int i=0; i<7; i++)
-									{
-										if(rowstaken[i]!=0)
-										{
-											if(rowstaken[i]==playeryellowy[j]) 
-											{
-												check = check+1;
-												i=7;
-											}
-										}
-									}
+									check = check+1;
+									temp1=temp1+85;
 								}
-								
+	
 								if(check==4)
 								{
 									j=22;
 									column=655;
 									row=60;
+									e=4;
 									yellowwon=true;
 								}
 							}
 						}
 					}	
-				check=0;
 				}
 			}
-			return yellowwon;
+		}
+		//checking up and right
+		if(!yellowwon)
+		{
+			for(int column=60; column<655; column +=85)
+			{
+				for(int row=410; row>60; row-=70)
+				{
+					int temp1=column;
+					int temp2=row;
+					check=0;
+					for(int e=0; e<4; e++)
+					{
+						for(int j=0; j<21; j++)
+						{
+							if(playeryellowx[j]!=0)
+							{	
+								if(temp1 == playeryellowx[j]&& temp2 ==playeryellowy[j])
+								{
+									check = check+1;
+									temp1=temp1+85;
+									temp2=temp2-70;
+								}
+								if(check==4)
+								{
+									j=22;
+									column=655;
+									row=60;
+									e=4;
+									yellowwon=true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		//checking left and down
+		if(!yellowwon)
+		{
+			for(int column=60; column<655; column +=85)
+			{
+				for(int row=410; row>60; row-=70)
+				{
+					int temp1=column;
+					int temp2=row;
+					check=0;
+					for(int e=0; e<4; e++)
+					{
+						for(int j=0; j<21; j++)
+						{
+							if(playeryellowx[j]!=0)
+							{
 
+								if(temp1 == playeryellowx[j]&& temp2 ==playeryellowy[j])
+								{
+									check = check+1;
+									temp1=temp1+85;
+									temp2=temp2+70;
+								}
+								if(check==4)
+								{
+									j=22;
+									column=655;
+									row=60;
+									e=4;
+									yellowwon=true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return yellowwon;
 	}
 }
-
