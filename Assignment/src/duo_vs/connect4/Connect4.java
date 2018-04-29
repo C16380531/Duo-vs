@@ -291,7 +291,7 @@ public class Connect4
 				g.setColor(Color.CYAN);
 				g.fillRect(225, 160, 250, 200);
 				g.setColor(Color.BLACK);
-				g.drawString("Draw", 270, 265);
+				g.drawString("Draw", 280, 265);
 			}
 		}
 

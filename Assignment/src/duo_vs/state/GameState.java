@@ -18,7 +18,7 @@ import duo_vs.connect4.Connect4;
 import duo_vs.imageloader.ImageLoader;
 import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
-//import duo_vs.tictactoe.Tictactoe;
+import duo_vs.tictactoe.Tictactoe;
 import duo_vs.checkers.Checkers;
 import duo_vs.breakout.Game;
 
@@ -33,12 +33,12 @@ public class GameState extends State
 	private Pong pong;
 	private Checkers checkers;
 	private Game breakout;
-	
+	private Tictactoe tictac;
 	//handler
 	private Handler handler;
 	
 	//variable
-	private String str, str1, str2, str3, str4, str5, str6;
+	private String str, str1, str2, str3, str4, str5, str6, str7;
 	public int p1=0;
 	private int counter=1;
 	private int check;
@@ -59,6 +59,7 @@ public class GameState extends State
 		pong = new Pong(handler);
 		checkers = new Checkers(handler);
 		breakout = new Game(handler);
+		tictac = new Tictactoe(handler);
 		
 
 			arrowLeft = ImageLoader.loadImage("/textures/arrow_left.png");
@@ -102,12 +103,21 @@ public class GameState extends State
 		return p1;
 	}
 	
+	private void exit()
+	{
+		while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >275  && handler.getMouseManager().getMouseX() < 405 && handler.getMouseManager().getMouseY()> 485 && handler.getMouseManager().getMouseY() < 540)
+		{
+			System.exit(0); 	
+		}
+	}
+	 
 	@Override
 	public void tick() 
 	{
 		if(p1==0)
 		{
 			check= menu();
+			exit();
 		}
 		else
 		{
@@ -126,7 +136,7 @@ public class GameState extends State
 					p1=pong.pressed3();
 					break;
 				case 4 :
-					//tictactoe.tick(p1);
+					tictac.tick();
 					break;
 				case 5 :
 					checkers.tick();
@@ -151,9 +161,16 @@ public class GameState extends State
 		str4 = "Davis's Game";
 		str5 = "Paul's Game";
 		str6 = "Chris's Game";
+		str7 = "EXIT";
 		g.setColor(Color.red);
-		g.setFont(new Font("TimesRoman", Font.BOLD, 32));
-		g.drawString(str, 280, 65);
+		g.setFont(new Font("ALGERIAN", Font.BOLD, 52));
+		g.drawString(str, 235, 65);
+		
+		g.setColor(Color.red);
+		g.setFont(new Font("ALGERIAN", Font.BOLD, 50));
+		g.drawRect(275, 485, 130, 55);
+		g.drawString(str7, 280, 530);
+		
 		if(p1==0)
 		{
 			if(counter>=1 && counter <6)
@@ -194,6 +211,13 @@ public class GameState extends State
 				}
 		}
 		
+		if(handler.getMouseManager().getMouseX() >275  && handler.getMouseManager().getMouseX() < 275+130 && handler.getMouseManager().getMouseY()> 485 && handler.getMouseManager().getMouseY() < 485+55)
+		{
+			g.setColor(Color.BLUE);
+			g.setFont(new Font("ALGERIAN", Font.BOLD, 50));
+			g.drawRect(275, 485, 130, 55);
+			g.drawString(str7, 280, 530);
+		}
 
 		if(p1==0)
 		{
@@ -217,7 +241,7 @@ public class GameState extends State
 	    			break;
 	    		case 4 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			//tictactoe.render(g);
+	    			tictac.render(g);
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);

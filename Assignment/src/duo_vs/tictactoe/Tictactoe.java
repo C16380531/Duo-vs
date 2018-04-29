@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import duo_vs.Game;
+//import duo_vs.Game;
 //import java.awt.Color;
 //import java.awt.Graphics;
 
@@ -12,7 +12,7 @@ public class Tictactoe implements ActionListener
 {
 	
 	// Instance Variables
-	private Game game;
+	//private Game game;
 	
 	///private JFrame window = new JFrame ("TIC-TAC-TOE");
 	
@@ -27,7 +27,7 @@ public class Tictactoe implements ActionListener
 	private JButton button9 = new JButton("");
 	private JButton button10 = new JButton("");
 	private JButton button11 = new JButton("");
-	private JButton btnReset = new JButton("Reset");
+//	private JButton btnReset = new JButton("Reset");
 	private String letter ="";
 	private int count = 0;
 	private boolean win = false;
