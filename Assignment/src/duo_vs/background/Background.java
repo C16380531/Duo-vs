@@ -68,7 +68,6 @@ public class Background
 			g.fillRect(510, 530, 150, 60);
 			g.setColor(Color.RED);
 			g.drawRect(510, 530, 150, 60);
-			g.setColor(Color.RED);
 			g.drawString("BACK", 530, 570);
         	hover=false;
         }

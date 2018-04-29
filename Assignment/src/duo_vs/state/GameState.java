@@ -18,7 +18,7 @@ import duo_vs.connect4.Connect4;
 import duo_vs.imageloader.ImageLoader;
 import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
-import duo_vs.tictactoe.Tictactoe;
+//import duo_vs.tictactoe.Tictactoe;
 import duo_vs.checkers.Checkers;
 import duo_vs.breakout.Game;
 
@@ -33,7 +33,7 @@ public class GameState extends State
 	private Pong pong;
 	private Checkers checkers;
 	private Game breakout;
-	private Tictactoe tictac;
+//	private Tictactoe tictac;
 	//handler
 	private Handler handler;
 	
@@ -59,7 +59,7 @@ public class GameState extends State
 		pong = new Pong(handler);
 		checkers = new Checkers(handler);
 		breakout = new Game(handler);
-		tictac = new Tictactoe(handler);
+//		tictac = new Tictactoe(handler);
 		
 
 			arrowLeft = ImageLoader.loadImage("/textures/arrow_left.png");
@@ -136,7 +136,7 @@ public class GameState extends State
 					p1=pong.pressed3();
 					break;
 				case 4 :
-					tictac.tick();
+//					tictac.tick();
 					break;
 				case 5 :
 					checkers.tick();
@@ -241,7 +241,7 @@ public class GameState extends State
 	    			break;
 	    		case 4 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			tictac.render(g);
+//	    			tictac.render(g);
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);

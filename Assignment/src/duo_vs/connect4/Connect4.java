@@ -26,7 +26,7 @@ public class Connect4
 	private Background background;
 	static BufferedImage connect = null;
 	
-	boolean count, same, yellowpressed, redwon, yellowwon, finished_col, hover;
+	boolean count, same, yellowpressed, redwon, yellowwon, finished_col, hover, hoverre;
 	boolean gameover, gameStarted=false;
 	int[] b, d, finished_column; 
 	int[] playerredx, playerredy, playeryellowx, playeryellowy;
@@ -73,16 +73,36 @@ public class Connect4
 				redplayer();
 				yellowplayer();
 			}
+			resetfun();
 		}
 		background.tick();
 		if(p1==0)
 		{
 			gameStarted=false;
+			reset();
 		}
 	}
 	
-	public void reset()
+	private void reset()
 	{
+		for(int i=0; i<21; i++)
+		{
+			playerredx[i] = 0;
+			playerredy[i] = 0;
+		}
+		for(int j=0; j<22; j++)
+		{
+			playeryellowx[j] = 0;
+			playeryellowy[j] = 0;
+		}
+		for(int i=0; i<43; i++)
+		{
+			b[i]=0;
+			d[i]=0;
+		}
+		yellowwon=false;
+		l=0;
+		redwon=false;
 		
 	}
 	
@@ -110,7 +130,23 @@ public class Connect4
 			{
 				hover=true;
 				hovered=column;
-			}
+			}			
+		}
+	}
+	
+	private void resetfun()
+	{
+
+		//user is hovering over reset button
+		if(handler.getMouseManager().getMouseX() >40 && handler.getMouseManager().getMouseX() < 190 && handler.getMouseManager().getMouseY() > 530 && handler.getMouseManager().getMouseY() < 590)
+		{
+			hoverre=true;
+		}
+	
+		//user clicked on reset button
+		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >40 && handler.getMouseManager().getMouseX() < 190 && handler.getMouseManager().getMouseY() > 530 && handler.getMouseManager().getMouseY() < 590)
+		{
+			reset();
 		}
 	}
 	
@@ -264,6 +300,7 @@ public class Connect4
 			hover(g);
 			Drawcircles(g);			
 			colour_disc(g);
+			resetbtn(g);
 		}
 		
 		if(finished_game())
@@ -295,6 +332,28 @@ public class Connect4
 			}
 		}
 
+	}
+	
+	public void resetbtn(Graphics g)
+	{		
+		if(hoverre == true)
+		{
+			g.setFont(new Font("AR DARLING", Font.PLAIN, 40)); 
+			g.setColor(Color.BLACK);
+			g.fillRect(40, 530, 150, 60);
+			g.setColor(Color.RED);
+			g.drawRect(40, 530, 150, 60);
+			g.drawString("RESET", 50, 570);
+			hoverre =false;
+		}
+		else
+		{
+			g.setFont(new Font("AR DARLING", Font.PLAIN, 40)); 
+			g.setColor(Color.RED);
+			g.fillRect(40, 530, 150, 60);
+			g.setColor(Color.BLACK);
+			g.drawString("RESET", 50, 570);
+		}
 	}
 	
 	public void hover(Graphics g)
