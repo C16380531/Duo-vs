@@ -21,7 +21,6 @@ import duo_vs.pong.Pong;
 //import duo_vs.tictactoe.Tictactoe;
 import duo_vs.checkers.Checkers;
 import duo_vs.breakout.Game;
-import duo_vs.background.Background;
 
 import duo_vs.Handler;
 

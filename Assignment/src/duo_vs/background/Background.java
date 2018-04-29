@@ -12,24 +12,21 @@ public class Background
 
 	static BufferedImage nav = null;
 	private Handler handler;
-	//private GameState game;
 	boolean hover;
 	int p1, pressed;
 	
 	public Background(Handler handler)
 	{
 		this.handler=handler;
-	//	nav = ImageLoader.loadImage("/textures/nav.jpg");
 	}
 	public void tick()
 	{
+		pressed=0;
 		if(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >510 && handler.getMouseManager().getMouseX() < 660 && handler.getMouseManager().getMouseY() > 530 && handler.getMouseManager().getMouseY() < 590 )
 		{	
-
-			System.out.print("was here");
 			pressed=1;
 			pressed();
-			System.out.print("was here");
+			System.out.print("");
 		}
 		//user is hovering over a back button
 		if(handler.getMouseManager().getMouseX() >510 && handler.getMouseManager().getMouseX() < 660 && handler.getMouseManager().getMouseY() > 530 && handler.getMouseManager().getMouseY() < 590)
@@ -42,14 +39,14 @@ public class Background
 	{
 		if(pressed==1)
 	    {
-			return p1=0;
-			//pressed=false;
+			return p1=0; 
 	    }
 		else
 		{
 			return p1=3;
 		}
 	}
+	
 	public void render(Graphics g)
 	{
         

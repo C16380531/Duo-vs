@@ -31,7 +31,7 @@ public class Connect4
 	int[] b, d, finished_column; 
 	int[] playerredx, playerredy, playeryellowx, playeryellowy;
 	int dummy_rows, rows, circle_height, circle_width, hovered;
-	int l, g, h,m;
+	int l, g, h,m, p1=9;
 	
 	public Connect4(Handler handler)
 	{
@@ -53,10 +53,10 @@ public class Connect4
 	}
 	public int pressed1()
 	{
-		int p1;
 		p1=background.pressed();
 		return p1;
 	}
+	
 	public void tick()
 	{		
 		
@@ -68,13 +68,22 @@ public class Connect4
 		{
 			if(!finished_game())
 			{
-				pressed1();
+				pressed();
 				disc_place();
 				redplayer();
 				yellowplayer();
 			}
 		}
 		background.tick();
+		if(p1==0)
+		{
+			gameStarted=false;
+		}
+	}
+	
+	public void reset()
+	{
+		
 	}
 	
 	public void started()
@@ -174,16 +183,19 @@ public class Connect4
 			d[l]=dummy_rows;
 			same=false;
 		}
+		//counter to update change the array position every time mouse pressed a column
 		if(count)
 		{
 			l=l+1;
 			count =false;
 		}
 	}
-		
+	
+	//sets red disc co-ords to red player
 	public void redplayer()
 	{
 		int s=0;
+		//adds 2 cause we skip every second disc as the second discs are yellow
 		for(int i=0; i<42; i+=2)
 		{
 			if(b[i] !=0 && d[i]!=0)
@@ -191,14 +203,18 @@ public class Connect4
 				playerredx[s] = b[i];
 				playerredy[s] = d[i];
 				s=s+1;
+				//calls RedWin method in winner class to check if the reds disc have connected 4 it returns true if they have
 				redwon =winner.RedWin(playerredx, playerredy, l);
 			}
 		}
 	}
 	
+	//sets yellow disc co-ords to yellow player
 	public void yellowplayer()
 	{
 		int s=0;
+		/*Starts at 1 as that is when the first yellow disc drops 
+		adds 2 cause we skip every second disc as the second discs are red*/
 		for(int i=1; i<42; i+=2)
 		{
 			if(b[i] !=0 && d[i]!=0)
@@ -206,6 +222,7 @@ public class Connect4
 				playeryellowx[s] = b[i];
 				playeryellowy[s] = d[i];
 				s=s+1;
+				//calls YellowWin method in winner class to check if the reds disc have connected 4 it returns true if they have
 				yellowwon =winner.YellowWin(playeryellowx, playeryellowy);
 			}
 		}
@@ -213,7 +230,7 @@ public class Connect4
 	
 	public boolean finished_game()
 	{
-
+		//if red won or yellow won or the user filled up the whole column then it will return true
 		if(redwon ==false && yellowwon==false && finished_column[6]==0)
 		{
 			return false;
