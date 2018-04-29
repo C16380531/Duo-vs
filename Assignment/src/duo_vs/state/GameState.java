@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 //imported classes
 import duo_vs.connect4.Connect4;
 import duo_vs.imageloader.ImageLoader;
-//import duo_vs.dotsandboxes.DotsandBoxes;
+import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
 //import duo_vs.tictactoe.Tictactoe;
 import duo_vs.checkers.Checkers;
@@ -30,7 +30,7 @@ public class GameState extends State
 	
 	//objects
 	private Connect4 connect4;
-//	private DotsandBoxes dotsandboxes;
+	private DotsandBoxes dotsandboxes;
 	private Pong pong;
 	private Checkers checkers;
 	private Game breakout;
@@ -56,7 +56,7 @@ public class GameState extends State
 		this.handler = handler;
 		left=right=false;
 		connect4 = new Connect4(handler);
-	//	dotsandboxes = new DotsandBoxes(handler);
+		dotsandboxes = new DotsandBoxes(handler);
 		pong = new Pong(handler);
 		checkers = new Checkers(handler);
 		breakout = new Game(handler);
@@ -120,7 +120,7 @@ public class GameState extends State
 					//check=p1;
 					break;
 				case 2 :
-	//				dotsandboxes.tick(p1);
+					dotsandboxes.tick();
 					break;
 				case 3 :
 					pong.tick();
@@ -210,7 +210,7 @@ public class GameState extends State
 					break;
 				case 2 :
 	    			g.clearRect(0, 0, 700, 550);
-//	    			dotsandboxes.render(g);
+	    			dotsandboxes.render(g);
 	    			break;
 	    		case 3 :
 	    			g.clearRect(0, 0, 700, 550);

@@ -29,9 +29,11 @@ public class DotsandBoxes
 	//private boolean P1 = true;
 	private boolean P2 = false;
 	private boolean[][] boxes = new boolean[20][10];
-	//private boolean[][] fillBoxes = new boolean[][];	
+	private int[][] scoreBoxes = new int[10][10];
+	private int[][] boxOwner = new int[10][10];
+	
 	ArrayList Player = new ArrayList();
-	//Player p = new Player();
+	
 	private int moves_count = 50;
 	Layout l =  new Layout();
 	
@@ -42,7 +44,6 @@ public class DotsandBoxes
 	}
 	public void tick() 
 	{
-		
 		fillBoxes();
 	}
 	
@@ -51,8 +52,8 @@ public class DotsandBoxes
 		l.drawDots(g);
 		l.drawLines(g);
 		l.playerText(g);
-		updateFrame(g);
-		
+		drawClick(g);
+		drawPoints(g);
 	}
 	
 	private void fillBoxes() {
@@ -68,8 +69,17 @@ public class DotsandBoxes
 						handler.getMouseManager().getMouseY() > j &&
 						handler.getMouseManager().getMouseY() < j+15)
 				{
+					if(currentPlayer == 1) {
+						boxOwner[x/2][y] = 1;
+
+						
+					}
+					if(currentPlayer == 0) {
+						boxOwner[x/2][y]= 0;
+					}
 					validInput(boxes[x][y]);
 					boxes[x][y] = true;
+					
 					/*int num = p.getPcount();
 					Player.add(num);
 					System.out.print(num + "num1 ");
@@ -86,9 +96,16 @@ public class DotsandBoxes
 						handler.getMouseManager().getMouseY() > j &&
 						handler.getMouseManager().getMouseY() < j+50)
 				{
+					if(currentPlayer == 1) {
+						boxOwner[x/2][y] = 1;
+
+						
+					}
+					if(currentPlayer == 0) {
+						boxOwner[x/2][y]= 0;
+					}
 					validInput(boxes[x+1][y]);
 					boxes[x+1][y] = true;
-					
 					/*int num = p.getPcount();
 					Player.add(num);
 					int num1 = p.incrementCounter(x);*/
@@ -102,21 +119,22 @@ public class DotsandBoxes
 		
 	}
 	
-	private void updateFrame(Graphics g) {
+	private void drawClick(Graphics g) {
 		for(int i = 0; i <20; i += 2) {
 			for(int  j = 0; j < 10; j++){
 				if(boxes[i][j]) {
-						g.fillRect((i/2 * 50) + 25 , (j* 50) + 25, 50, 15);
+					g.fillRect((i/2 * 50) + 25 , (j* 50) + 25, 50, 15);
 				}
 				if(boxes[i+1][j]) {
 					g.fillRect(((i/2) * 50) + 25 , (j* 50) + 25, 15, 50);
 				}
 			}
 		}
-		
 		isSurrounded(g,currentPlayer);
-		
 	}
+		
+
+		
 	
 
 	
@@ -127,28 +145,13 @@ public class DotsandBoxes
 			for(int  j = 0; j < 10; j++){
 				if(boxes[i][j] && boxes[i+1][j] && boxes[i][j+1] && boxes[i+3][j])
 				{
-					System.out.println(currentPlayer);
-
-					if(currentPlayer==0){
-							g.setColor(Color.BLUE);
-							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							
-					}
-					if(currentPlayer==1)
-					{
-							g.setColor(Color.RED);
-							g.drawRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							g.fillRect(((i/2 * 50) + 40), (j * 50) + 40, 35, 35);
-							
-							
-							
-					}	
+					//System.out.println(currentPlayer);
+					scoreBoxes[i/2][j] = 1;
 					
 				}
 			}
-				
 		}
+
 	}
 	
 	private void validInput(boolean box) {
@@ -168,4 +171,34 @@ public class DotsandBoxes
 		System.out.println("Current Player: " + currentPlayer);
 	}
 		
-} 
+ 
+
+	private void drawPoints(Graphics g) {
+		for(int i = 0; i < 10; i++) {
+			for(int j = 0; j < 10; j++) {
+
+				if(scoreBoxes[i][j] == 1) {
+					if(boxOwner[i][j] == 1) {
+						
+						g.setColor(Color.BLUE);
+						//g.drawRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
+						g.fillRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
+						
+					
+						
+					}
+					if(boxOwner[i][j] == 0){
+						
+						g.setColor(Color.RED);
+						//g.drawRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
+						g.fillRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
+						
+						
+					}
+				}
+			}
+		}
+		
+		
+	}
+}

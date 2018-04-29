@@ -28,8 +28,8 @@ public class Layout {
 			String str1 = "Player 1";
 			String str2 = "Player 2";
 			
-			g.drawString(str1, 600, 150);
-			g.drawString(str2, 600, 350);
+			g.drawString(str1, 550, 150);
+			g.drawString(str2, 550, 350);
 			
 			
 		}
