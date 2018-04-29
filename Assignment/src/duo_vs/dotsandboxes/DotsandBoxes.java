@@ -31,6 +31,8 @@ public class DotsandBoxes
 	private boolean[][] boxes = new boolean[20][10];
 	private int[][] scoreBoxes = new int[10][10];
 	private int[][] boxOwner = new int[10][10];
+	private int scoreP0 = 0;
+	private int scoreP1 = 0;
 	
 	ArrayList Player = new ArrayList();
 	
@@ -40,6 +42,13 @@ public class DotsandBoxes
 	public DotsandBoxes(Handler handler) {
 		this.handler = handler;
 
+		for(int i = 0; i < 10; i++) {
+			for(int j = 0; j< 10; j++) {
+				
+				boxOwner[i][j] = -1;
+				
+			}
+		}
 	
 	}
 	public void tick() 
@@ -48,12 +57,16 @@ public class DotsandBoxes
 	}
 	
 	public void render(Graphics g) {
+		
+		g.setFont(new Font("Courier", Font.BOLD,20));
 		g.setColor(Color.BLACK);
 		l.drawDots(g);
 		l.drawLines(g);
 		l.playerText(g);
 		drawClick(g);
 		drawPoints(g);
+		score(g);
+		
 	}
 	
 	private void fillBoxes() {
@@ -184,6 +197,7 @@ public class DotsandBoxes
 						//g.drawRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
 						g.fillRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
 						
+						
 					
 						
 					}
@@ -201,4 +215,36 @@ public class DotsandBoxes
 		
 		
 	}
+	
+	private void score(Graphics g) {
+		int s0 = 0;
+		int s1 = 0;
+		for(int i = 0; i < 10; i++) {
+			for(int j = 0; j< 10; j++) {
+				
+				if(scoreBoxes[i][j] == 1) {
+				
+					if(boxOwner[i][j] == 1) {
+						s0++;
+					}
+					if(boxOwner[i][j] == 0) {
+						s1++;
+					}
+				}
+			}
+		}
+		
+		scoreP0 = s0;
+		scoreP1 = s1;
+		
+		String str1 = Integer.toString(scoreP0);
+		String str2 = Integer.toString(scoreP1);
+		
+		g.setColor(Color.BLACK);
+		g.setFont(new Font("Courier", Font.BOLD,20));
+		
+		g.drawString(str1, 650, 150);
+		g.drawString(str2, 650, 350);
+	}
+	
 }
