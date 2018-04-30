@@ -207,7 +207,7 @@ public class GameState extends State
 		    			break;
 		    		case 4 :
 		    			g.drawString(str4, 280, 100);
-		    			g.drawImage(Tic, 150, 150, 200, 250, null);
+		    			g.drawImage(Tic, 150, 150, 400, 250, null);
 		    			break;
 		    		case 5 :
 		    			g.drawString(str5, 284, 100);
