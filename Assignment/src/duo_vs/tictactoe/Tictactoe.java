@@ -1,6 +1,7 @@
 package duo_vs.tictactoe;
 
 import java.awt.Color;
+import java.awt.Font;
 //import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -18,7 +19,7 @@ public class Tictactoe //implements ActionListener
 	//private String letter ="";
 	int[] x, y, playerovalue, playerxyvalue, playerxvalue, playeryvalue;
 	int d, p1=9;
-	boolean pressed=false, gameStarted=false, xwon, winner;
+	boolean pressed=false, gameStarted=false, xwon, winner,gameOver=false;
 	
 	public Tictactoe(Handler handler) {
 		this.handler =handler;
@@ -53,6 +54,7 @@ public class Tictactoe //implements ActionListener
 		{
 			clickable();
 			xWin();
+			reset();
 		}
 		Background.tick();
 	}
@@ -192,6 +194,11 @@ public class Tictactoe //implements ActionListener
 		{
 			g.drawImage(tictactoe, 120, 35, 460 , 460, null);
 		}
+		
+		if(gameOver == true)
+		{
+			
+		}
 		 color(g);
 		
 		Background.render(g);
@@ -203,7 +210,10 @@ public class Tictactoe //implements ActionListener
 			
 				g.setColor(Color.ORANGE);
 				g.drawString(" Winner Winner", 165, 285);
+				gameOver=true;
 				
+				g.drawString("Game Over", 165, 320);
+				g.drawString("Press enter to play again", 165, 350);
 			}
 			else
 			{
@@ -264,5 +274,49 @@ public class Tictactoe //implements ActionListener
 			}
 			
 		}
+	}
+	
+
+	public void reset() {
+	if(handler.getKeyManager().isENTER())
+	{
+		gameStarted=true;
+		
+		if(gameOver)
+		{
+			int a =0;
+			for(int i = 0; i < 3; i++) {
+				for(int j = 0; j< 3; j++) {
+					
+					Boxes[i][j] = -1;
+				}
+			}
+
+			
+			for(int i=0;i<9;i++)
+			{
+				playerovalue[i]=a;
+				playerxyvalue[i]=a;
+				playerxvalue[i]=a;
+				playeryvalue[i]=a;
+			}
+			for(int i=0;i<10;i++)
+			{
+				x[i]=a;
+				y[i]=a;
+			}
+			
+			d=a;
+			pressed=false;
+			gameStarted=false;
+			xwon=false;
+			winner=false;
+			gameOver=false;
+		}
+
+	}
+
+
+
 	}
 }

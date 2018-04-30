@@ -53,9 +53,9 @@ public class Players implements Paddle{
 		{
 			y=0;
 		}
-		else if(y>470)
+		else if(y>430)
 		{
-			y=470;
+			y=430;
 		}
 		
 		if(yVel>=0.5)

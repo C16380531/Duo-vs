@@ -9,8 +9,8 @@ import javax.sound.sampled.Clip;
 
 public class Ball {
 	double xVel,yVel,x,y;
-	int startSpeed=1;
-	double min=0.1,max=0.3;
+	double startSpeed=1.5;
+	double min=0.3,max=0.5;
 	File pong= new File("/textures/Pong.wav");
 	
 	public Ball() {
@@ -23,13 +23,15 @@ public class Ball {
 	
 	public double getRandomDirection()
 	{
-		int rand=(int) Math.random()*2;
+		int rand=(int) Math.random()%2;
 		if(rand ==1)
 		{
+			System.out.print("Hello");
 			return Math.random() * (max - min) + min;
 		}
 		else
 		{
+			System.out.print("test");
 			return -(Math.random() * (max - min) + min);
 		}
 	}
@@ -43,7 +45,7 @@ public class Ball {
 		{
 			yVel=-yVel;
 		}
-		else if(y>520)
+		else if(y>510)
 		{
 			yVel=-yVel;
 		}
