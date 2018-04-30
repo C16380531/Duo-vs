@@ -1,16 +1,20 @@
 package duo_vs.tictactoe;
 
 import java.awt.Color;
-import java.awt.Font;
+//import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
 import duo_vs.Handler;
 import duo_vs.background.Background;
+import duo_vs.imageloader.ImageLoader;
 
 public class Tictactoe //implements ActionListener 
 {
 	private Handler handler;
 	private Background Background;
 	private int[][] Boxes = new int[3][3];
+	static BufferedImage tictactoe = null;
 	//private String letter ="";
 	int[] x, y, playerovalue, playerxyvalue, playerxvalue, playeryvalue;
 	int d, p1=9;
@@ -19,6 +23,7 @@ public class Tictactoe //implements ActionListener
 	public Tictactoe(Handler handler) {
 		this.handler =handler;
 		Background =new Background(handler);
+		tictactoe = ImageLoader.loadImage("/textures/tictactoe.png");
 		x= new int[10];
 		y= new int[10];
 		playerovalue= new int[9];
@@ -92,7 +97,81 @@ public class Tictactoe //implements ActionListener
 		 }
 	}
 	
-	
+	public boolean xWin()
+	{
+		
+		//count=l;
+		//int check;
+		boolean	winner=false;
+		//check=0;
+		//check red player going up column 
+		 
+		
+		//	check=0;
+			//going down
+				for(int i=0; i<3; i++)
+				{
+					for(int j=0; j<3; j++)
+					{
+					if(Boxes[0][0] == Boxes[0][1] && Boxes[0][1] == Boxes[0][2] && Boxes[0][0] != -1)
+					{
+					
+							System.out.print("win");
+							winner=true;
+							
+					}
+					else if(Boxes[1][0] == Boxes[1][1] && Boxes[1][1]==Boxes[1][2] && Boxes[1][0] != -1)
+					{
+						System.out.print("win");
+						winner=true;
+						
+					}else if(Boxes[2][0] == Boxes[2][1] && Boxes[2][1]==Boxes[2][2] && Boxes[2][0] != -1)
+					{
+						System.out.print("win");
+						winner=true;
+					}
+						
+				//across win
+					
+					if(Boxes[0][0] == Boxes[1][0] && Boxes[1][0] == Boxes[2][0] && Boxes[0][0] != -1)
+					{
+					
+							System.out.print("win");
+							winner=true;
+							
+					}
+					else if(Boxes[0][1] == Boxes[1][1] && Boxes[1][1]==Boxes[2][1] && Boxes[0][1] != -1)
+					{
+						System.out.print("win");
+						winner=true;
+						
+					}else if(Boxes[0][2] == Boxes[1][2] && Boxes[1][2]==Boxes[2][2] && Boxes[0][2] != -1)
+					{
+						System.out.print("win");
+						winner=true;
+					}
+					
+					}
+					
+				//diagonal win
+					
+					if(Boxes[0][0] == Boxes[1][1] && Boxes[1][1] == Boxes[2][2] && Boxes[0][0] != -1)
+					{
+					
+							System.out.print("win");
+							winner=true;
+							
+					}
+					else if(Boxes[2][0] == Boxes[1][1] && Boxes[1][1]==Boxes[0][2] && Boxes[2][0] != -1)
+					{
+						System.out.print("win");
+						winner=true;
+					}
+				
+			
+				}
+			return winner;
+	}
 	
 	public void render(Graphics g)
 	{
@@ -111,18 +190,34 @@ public class Tictactoe //implements ActionListener
 		 }
 		if(gameStarted==false)
 		{
-			g.setColor(Color.RED);
-			g.drawString("Press Enter", 175, 285);
+			g.drawImage(tictactoe, 120, 35, 460 , 460, null);
 		}
 		 color(g);
-		winner(g);
+		
 		Background.render(g);
+		
+		if(xWin())
+		{
+			if(winner==false )
+			{
+			
+				g.setColor(Color.ORANGE);
+				g.drawString(" Winner Winner", 165, 285);
+				
+			}
+			else
+			{
+				g.setColor(Color.ORANGE);
+				g.drawString(" Tie", 165, 285);
+			}
+		
+		}
 	}
 	
 	private void color(Graphics g)
 	{
 		int i,j;
-		for(int s=0; s<10; s+=2)
+		for(int s=0; s<9; s+=2)
 		{
 			if(x[s] != 0 || y[s] !=0)
 			{
@@ -144,8 +239,9 @@ public class Tictactoe //implements ActionListener
 					}
 				}
 			}
+			
 		}
-		for(int s=1; s<10; s+=2)
+		for(int s=1; s<9; s+=2)
 		{
 			if(x[s] != 0 || y[s] !=0)
 			{
@@ -153,246 +249,20 @@ public class Tictactoe //implements ActionListener
 				g.fillRect(x[s],y[s],150,150);
 				g.setColor(Color.BLUE);
 				g.drawString("O", x[s] +55, y[s]+85);
-			}
-			for(int h = 0; h<9; h++)
-			{
-				if(x[h] !=0)
+			
+				for(int h = 0; h<9; h++)
 				{
-					playerovalue[h] = x[s];
-					playerxyvalue[h] = y[s];
-					i = (playerovalue[h]/151);
-					j = (playerxyvalue[h]/151);
-					Boxes[i][j]= 0; // is 0
+					if(x[h] !=0)
+					{
+						playerovalue[h] = x[s];
+						playerxyvalue[h] = y[s];
+						i = (playerovalue[h]/151);
+						j = (playerxyvalue[h]/151);
+						Boxes[i][j]= 0; 
+					}
 				}
 			}
-		}
-	}
-	
-	private void winner(Graphics g)
-	{
-		if(xWin())
-		{
-			
-			g.setColor(Color.ORANGE);
-			g.drawString(" Winner Winner", 165, 285);
 			
 		}
-				
-		
-	}	
-	public boolean xWin()
-	{
-		
-		//count=l;
-		//int check;
-		boolean	Winner=false;
-		//check=0;
-		//check red player going up column 
-		 
-		
-		//	check=0;
-			//going down
-				for(int i=0; i<3; i++)
-				{
-					for(int j=0; j<3; j++)
-					{
-					if(Boxes[0][0] == Boxes[0][1] && Boxes[0][1] == Boxes[0][2] && Boxes[0][0] != -1)
-					{
-					
-							System.out.print("win");
-							Winner=true;
-							
-					}
-					else if(Boxes[1][0] == Boxes[1][1] && Boxes[1][1]==Boxes[1][2] && Boxes[1][0] != -1)
-					{
-						System.out.print("win");
-						Winner=true;
-					}else if(Boxes[2][0] == Boxes[2][1] && Boxes[2][1]==Boxes[2][2] && Boxes[2][0] != -1)
-					{
-						System.out.print("win");
-						Winner=true;
-					}
-						
-				//across win
-					
-					if(Boxes[0][0] == Boxes[1][0] && Boxes[1][0] == Boxes[2][0] && Boxes[0][0] != -1)
-					{
-					
-							System.out.print("win");
-							Winner=true;
-							
-					}
-					else if(Boxes[0][1] == Boxes[1][1] && Boxes[1][1]==Boxes[2][1] && Boxes[0][1] != -1)
-					{
-						System.out.print("win");
-						Winner=true;
-						
-					}else if(Boxes[0][2] == Boxes[1][2] && Boxes[1][2]==Boxes[2][2] && Boxes[0][2] != -1)
-					{
-						System.out.print("win");
-						Winner=true;
-					}
-					
-					}
-					
-				//diagonal win
-					
-					if(Boxes[0][0] == Boxes[1][1] && Boxes[1][1] == Boxes[2][2] && Boxes[0][0] != -1)
-					{
-					
-							System.out.print("win");
-							Winner=true;
-							
-					}
-					else if(Boxes[2][0] == Boxes[1][1] && Boxes[1][1]==Boxes[0][2] && Boxes[2][0] != -1)
-					{
-						System.out.print("win");
-						Winner=true;
-					}
-				
-			
-				}
-			return Winner;
 	}
 }
-
-	
-	
-		
-	
-//	public void actionPerformed(ActionEvent a) {
-		
-		/*if(a.getSource() == btnReset) {
-			window.getContentPane().removeAll();*/
-			
-			//count ++;
-		
-		//calculate whos turn it is
-		/*
-		if (count == 1 || count == 3 || count ==5 || count ==7 || count ==9 )
-		{
-			letter = "X";
-			
-			
-		} else if (count == 2 || count ==4 || count ==6 || count== 8 || count ==10)
-		{
-			
-			letter= "0";
-			
-		}
-	
-		//Display X's or O's on the buttons
-		if (a.getSource( ) == button1) {
-			button1.setText(letter);
-			button1.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button1.setEnabled(false);
-		} else if (a.getSource() == button2) {
-			button2.setText(letter);
-			button2.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button2.setEnabled(false);
-		}else if (a.getSource() == button3) {
-			button3.setText(letter);
-			button3.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button3.setEnabled(false);
-		}else if (a.getSource() == button5) {
-			button5.setText(letter);
-			button5.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button5.setEnabled(false);
-		}else if (a.getSource() == button6) {
-			button6.setText(letter);
-			button6.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button6.setEnabled(false);
-		}else if (a.getSource() == button7) {
-			button7.setText(letter);
-			button7.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button7.setEnabled(false);
-		}else if (a.getSource() == button9) {
-			button9.setText(letter);
-			button9.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button9.setEnabled(false);
-		}else if (a.getSource() == button10) {
-			button10.setText(letter);
-			button10.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button10.setEnabled(false);
-		}else if (a.getSource() == button11) {
-			button11.setText(letter);
-			button11.setFont(new Font("Tahona", Font.BOLD, 96));
-			
-			button11.setEnabled(false);
-		}
-		
-		
-		//Determine who wins
-		//horizontal win
-		if(button1.getText() == button2.getText()
-				&& button2.getText() == button3.getText()
-				&& button1.getText() !="") {
-			win = true;
-		} else if (button5.getText() == button6.getText()
-				&& button6.getText() == button7.getText()
-				&& button5.getText() != "") {
-			win = true;
-		}else if (button9.getText() == button10.getText()
-				&& button10.getText() == button11.getText()
-				&& button9.getText() != "") {
-			win = true;
-		}
-		
-		//virticle wins
-		else if (button1.getText() == button5.getText()
-				&& button5.getText() == button9.getText()
-				&& button9.getText() != "") {
-			win = true;
-		}else if (button2.getText() == button6.getText()
-				&& button6.getText() == button10.getText()
-				&& button2.getText() != "") {
-			win = true;
-		}else if (button3.getText() == button7.getText()
-				&& button7.getText() == button11.getText()
-				&& button3.getText() != "") {
-			win = true;
-		}
-		
-		// diagonal wins
-		else if (button1.getText() == button6.getText()
-				&& button6.getText() == button11.getText()
-				&& button1.getText() != "") {
-			win = true;
-		}else if (button3.getText() == button6.getText()
-				&& button6.getText() == button9.getText()
-				&& button3.getText() != "") {
-			win = true;
-		} else {
-			win = false;
-		}
-		
-		//show a dialog if someone wins or the game is tie
-		
-		if (win==true) {
-		
-		JOptionPane.showMessageDialog(null,  letter + "WINS!");
-		}else if (count == 9 && win == false ) {
-			JOptionPane.showMessageDialog(null,  "Tie Game!");
-		}
-		
-	}
-	
-	
-	public static void main(String[] args) {
-		
-		new Tictactoe();
-		
-		
-	} */
-
-	
-	
-	
