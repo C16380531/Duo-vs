@@ -49,6 +49,7 @@ public class GameState extends State
 	static BufferedImage Breakout = null;
 	static BufferedImage connect_4 = null;
 	static BufferedImage CHECKERS = null;
+	static BufferedImage Dots = null;
 	
 	public GameState(Handler handler)
 	{
@@ -68,6 +69,7 @@ public class GameState extends State
 			Breakout =  ImageLoader.loadImage("/textures/Breakout.png");
 		    connect_4 = ImageLoader.loadImage("/textures/connectmenu.PNG");
 		    CHECKERS = ImageLoader.loadImage("/textures/checkers.PNG");
+		    Dots = ImageLoader.loadImage("/textures/DotsandBoxes.PNG");
 	}
 	public int menu()
 	{
@@ -194,6 +196,7 @@ public class GameState extends State
 						break;
 					case 2 :
 						g.drawString(str2, 276, 100);
+						g.drawImage(Dots, 135, 140, 430, 325, null);
 		    			break;
 		    		case 3 :
 		    			g.drawString(str3, 284, 100);
