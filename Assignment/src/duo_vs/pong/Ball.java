@@ -11,7 +11,7 @@ public class Ball {
 	double xVel,yVel,x,y;
 	int startSpeed=1;
 	double min=0.1,max=0.3;
-	File pong= new File("C:\\Users\\Gary\\Documents\\year 2 sem 2\\OOP\\Duo-vs\\Assignment\\src\\duo_vs\\pong\\Pong.wav");
+	File pong= new File("/textures/Pong.wav");
 	
 	public Ball() {
 		x=350;
@@ -43,7 +43,7 @@ public class Ball {
 		{
 			yVel=-yVel;
 		}
-		else if(y>540)
+		else if(y>520)
 		{
 			yVel=-yVel;
 		}

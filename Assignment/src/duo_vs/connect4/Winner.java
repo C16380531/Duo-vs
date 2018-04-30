@@ -17,6 +17,7 @@ public class Winner
 
 	public boolean RedWin(int[] playerredx, int[] playerredy, int l)
 	{
+		redwon=false;
 		int temp2;
 		count=l;
 		int check;
@@ -165,11 +166,7 @@ public class Winner
 
 	public boolean YellowWin(int[] playeryellowx, int[] playeryellowy)
 	{
-		for(int i=0; i<21; i++)
-		{
-			this.playeryellowx[i] = playeryellowx[i];
-			this.playeryellowy[i] = playeryellowy[i];
-		}
+		yellowwon=false;
 		//checking if the yellow player won by placing discs up in one column
 		int check=0;
 		for(int column=60; column<655; column +=85)

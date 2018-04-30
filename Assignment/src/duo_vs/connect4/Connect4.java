@@ -31,7 +31,7 @@ public class Connect4
 	int[] b, d, finished_column; 
 	int[] playerredx, playerredy, playeryellowx, playeryellowy;
 	int dummy_rows, rows, circle_height, circle_width, hovered;
-	int l, g, h,m, p1=9;
+	int l, g, h,m, p1=9, a=0;
 	
 	public Connect4(Handler handler)
 	{
@@ -87,23 +87,28 @@ public class Connect4
 	{
 		for(int i=0; i<21; i++)
 		{
-			playerredx[i] = 0;
-			playerredy[i] = 0;
+			playerredx[i] = a;
+			playerredy[i] = a;
+			System.out.print(playerredx[i] + "\n");
 		}
 		for(int j=0; j<22; j++)
 		{
-			playeryellowx[j] = 0;
-			playeryellowy[j] = 0;
+			playeryellowx[j] = a;
+			playeryellowy[j] = a;
 		}
 		for(int i=0; i<43; i++)
 		{
-			b[i]=0;
-			d[i]=0;
+			b[i]=a;
+			d[i]=a;
+		}
+		for(int i=0; i<8; i++)
+		{
+			finished_column[i]=a;
 		}
 		yellowwon=false;
-		l=0;
+		l=a;
 		redwon=false;
-		
+		g=0;
 	}
 	
 	public void started()
