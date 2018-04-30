@@ -11,7 +11,7 @@ package duo_vs.dotsandboxes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.util.ArrayList;
+
 //imported classes
 import duo_vs.Handler;
 
@@ -20,28 +20,24 @@ public class DotsandBoxes
 {	
 	private Handler handler;
 	
-	private boolean check;
-	private int next=0;
-	private int currentPlayer = 0;
 	
-	private int P;
-	//private int count=0;
-	//private boolean P1 = true;
-	private boolean P2 = false;
+	//Initializing variables
+	
+	private int currentPlayer = 0;
 	private boolean[][] boxes = new boolean[20][10];
 	private int[][] scoreBoxes = new int[10][10];
 	private int[][] boxOwner = new int[10][10];
 	private int scoreP0 = 0;
 	private int scoreP1 = 0;
 	
-	ArrayList Player = new ArrayList();
-	
-	private int moves_count = 50;
+
 	Layout l =  new Layout();
 	
+	//Constructor
 	public DotsandBoxes(Handler handler) {
 		this.handler = handler;
 
+		//initializing the 2D array boxOwner with -1
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j< 10; j++) {
 				
@@ -51,24 +47,30 @@ public class DotsandBoxes
 		}
 	
 	}
+	
 	public void tick() 
 	{
 		fillBoxes();
 	}
 	
+	
+	//render method will be called every time 
 	public void render(Graphics g) {
 		
-		g.setFont(new Font("Courier", Font.BOLD,20));
 		g.setColor(Color.BLACK);
+		g.setFont(new Font("Courier", Font.BOLD,20));
 		l.drawDots(g);
 		l.drawLines(g);
 		l.playerText(g);
+		
 		drawClick(g);
 		drawPoints(g);
 		score(g);
+		endGame(g);
 		
 	}
 	
+	//method is used to get click of the user
 	private void fillBoxes() {
 		
 		for( int i = 25, x = 0; i < 500; i += 50, x += 2) 
@@ -82,6 +84,8 @@ public class DotsandBoxes
 						handler.getMouseManager().getMouseY() > j &&
 						handler.getMouseManager().getMouseY() < j+15)
 				{
+					
+					//checks who's turn it is
 					if(currentPlayer == 1) {
 						boxOwner[x/2][y] = 1;
 
@@ -90,19 +94,18 @@ public class DotsandBoxes
 					if(currentPlayer == 0) {
 						boxOwner[x/2][y]= 0;
 					}
+					
+					
 					validInput(boxes[x][y]);
+					//will add in true to boolean array that box has been clicked by user
 					boxes[x][y] = true;
 					
-					/*int num = p.getPcount();
-					Player.add(num);
-					System.out.print(num + "num1 ");
-					int num1 = p.incrementCounter(x);
-					System.out.print(num1 + "nun2 ");*/
+					
 					System.out.print("");
 					
 
 				}	
-				//Cols
+				//Columns
 				while(handler.getMouseManager().isLeftPressed() &&
 						handler.getMouseManager().getMouseX() >i &&
 						handler.getMouseManager().getMouseX() < i+15 &&
@@ -117,11 +120,10 @@ public class DotsandBoxes
 					if(currentPlayer == 0) {
 						boxOwner[x/2][y]= 0;
 					}
+					
 					validInput(boxes[x+1][y]);
 					boxes[x+1][y] = true;
-					/*int num = p.getPcount();
-					Player.add(num);
-					int num1 = p.incrementCounter(x);*/
+					
 					System.out.print("");
 				
 				}
@@ -132,9 +134,12 @@ public class DotsandBoxes
 		
 	}
 	
+	//method to fill in the clicked rectangles
 	private void drawClick(Graphics g) {
 		for(int i = 0; i <20; i += 2) {
 			for(int  j = 0; j < 10; j++){
+				
+				//if true, will fill the rectangle black
 				if(boxes[i][j]) {
 					g.fillRect((i/2 * 50) + 25 , (j* 50) + 25, 50, 15);
 				}
@@ -143,22 +148,21 @@ public class DotsandBoxes
 				}
 			}
 		}
+		//each time a rectangle is filled, it will call isSurrounded method to check
+		//if 4 rectangles in square form have been filled
 		isSurrounded(g,currentPlayer);
 	}
 		
 
-		
-	
-
-	
+	//method to check whether square of rectangles has been filled
 	private void isSurrounded(Graphics g,int currentPlayer){
 
-		
 		for(int i = 0; i <20; i += 2) {
 			for(int  j = 0; j < 10; j++){
+				//sequence of a square to check
 				if(boxes[i][j] && boxes[i+1][j] && boxes[i][j+1] && boxes[i+3][j])
 				{
-					//System.out.println(currentPlayer);
+					//if a box has been filled then the scoreBoxes array [i][j] will become 1
 					scoreBoxes[i/2][j] = 1;
 					
 				}
@@ -167,12 +171,17 @@ public class DotsandBoxes
 
 	}
 	
+	
+	//method to check whether or not the click was in rectangle or not. Is called from filBoxes method
 	private void validInput(boolean box) {
+		//will only change player when a rectangle has been clicked, stopping the player from changing each click 
+		//no matter where on the screen they click
 		if(!box) {
 			changePlayer();
 		}
 	}
 	
+	//method to change player
 	private void changePlayer() {
 		if(currentPlayer == 0) {
 			currentPlayer++;
@@ -185,28 +194,24 @@ public class DotsandBoxes
 	}
 		
  
-
+//method to fill the squares in color depending on what player closed the box
 	private void drawPoints(Graphics g) {
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
 
+				//if scoreBoxes is 1 that means that means that a square has been formed and needs to be coloured in
 				if(scoreBoxes[i][j] == 1) {
+					//boxOwner was initialised in fillBoxes depending on what player had clicked
 					if(boxOwner[i][j] == 1) {
 						
 						g.setColor(Color.BLUE);
-						//g.drawRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
 						g.fillRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
-						
-						
 					
-						
 					}
 					if(boxOwner[i][j] == 0){
 						
 						g.setColor(Color.RED);
-						//g.drawRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
 						g.fillRect(((i * 50) + 40), (j * 50) + 40, 35, 35);
-						
 						
 					}
 				}
@@ -247,4 +252,27 @@ public class DotsandBoxes
 		g.drawString(str2, 650, 350);
 	}
 	
+	private void endGame(Graphics g) {
+		
+		g.setFont(new Font("Courier", Font.BOLD,70));
+		
+		
+		if(scoreP0 == 10) {
+			g.setColor(Color.WHITE);
+			g.fillRect(75, 200,	545, 70);
+			g.drawRect(75, 200,	545, 70);
+			g.setColor(Color.BLUE);
+			g.drawString("Player 1 Wins", 75, 250);
+			
+		}
+		if(scoreP1 == 10) {
+			g.setColor(Color.WHITE);
+			g.fillRect(75, 200,	545, 70);
+			g.drawRect(75, 200,	545, 70);
+			g.setColor(Color.RED);
+			g.drawString("Player 2 Wins", 75, 250);
+		}
+	}
+	
 }
+
