@@ -43,9 +43,9 @@ public class Game extends JPanel implements ActionListener {
 		/*players*/		g.setColor(Color.red); g.fillRect(p1Xpos,p1Ypos,80,2);
 						g.setColor(Color.blue); g.fillRect(p2Xpos,p2Ypos,80,2);
 		/*ball1*/		g.setColor(Color.red); g.fillOval(b1Xpos, b1Ypos,15,15);
-		/*score1*/		g.drawString(""+score1, 10, 20);
+		/*score1*/		g.drawString(""+score1, 20, 40);
 		/*ball2*/		g.setColor(Color.blue); g.fillOval(b2Xpos,b2Ypos,15,15);
-		/*score2*/		g.drawString(""+score2, 675, 20);
+		/*score2*/		g.drawString(""+score2, 665, 40);
 		background.render(g);
 						
 
