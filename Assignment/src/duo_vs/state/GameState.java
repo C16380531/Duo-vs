@@ -161,12 +161,12 @@ public class GameState extends State
 		//g.clearRect(0, 0, 700, 600);
 		//make code better use array or something and loop
 		str = "Duo_vs";				
-		str1 = "Sharon's Game";
-		str2 = "Lauren's Game";
-		str3 = "Gary's Game";
-		str4 = "Davis's Game";
-		str5 = "Paul's Game";
-		str6 = "Chris's Game";
+		str1 = "Connect 4";
+		str2 = "Dots and Boxes";
+		str3 = "Pong";
+		str4 = "Tic Tac Toe";
+		str5 = "Checkers";
+		str6 = "Breakout";
 		str7 = "EXIT";
 		g.setColor(Color.red);
 		g.setFont(new Font("ALGERIAN", Font.BOLD, 52));
@@ -190,19 +190,19 @@ public class GameState extends State
 				g.drawImage(arrowLeft, 25, 225, 100, 100, null);
 			}
 			int game=counter;
-			g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
 				switch(game) 
 				{
 					case 1 :
-						g.drawString(str1, 276, 100);
+						g.drawString(str1, 295, 100);
 						g.drawImage(connect_4, 150, 150, 400, 250, null);
 						break;
 					case 2 :
-						g.drawString(str2, 276, 100);
+						g.drawString(str2, 270, 100);
 						g.drawImage(Dots, 135, 140, 430, 325, null);
 		    			break;
 		    		case 3 :
-		    			g.drawString(str3, 284, 100);
+		    			g.drawString(str3, 315, 100);
 		    			g.drawImage(Pong, 150, 150, 400, 250, null);
 		    			break;
 		    		case 4 :
@@ -210,11 +210,11 @@ public class GameState extends State
 		    			g.drawImage(Tic, 150, 150, 400, 250, null);
 		    			break;
 		    		case 5 :
-		    			g.drawString(str5, 284, 100);
+		    			g.drawString(str5, 295, 100);
 		    			g.drawImage(CHECKERS, 150, 150, 400, 400, null);
 		    			break;
 		    		case 6 :
-		    			g.drawString(str6, 280, 100);
+		    			g.drawString(str6, 295, 100);
 		    			g.drawImage(Breakout, 150, 150, 400, 250, null);
 				}
 		}

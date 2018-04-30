@@ -138,7 +138,7 @@ public class DotsandBoxes
 	//method is used to get click of the user
 	private void fillBoxes() {
 		
-		for( int i = 25, x = 0; i <= 500; i += 50, x += 2) 
+		for( int i = 25, x = 0; i <= 500; i += 50, x = x + 2) 
 		{
 			for(int j = 25, y = 0; j <= 500; j+= 50, y ++) 
 			{
@@ -153,7 +153,7 @@ public class DotsandBoxes
 					//checks who's turn it is
 					if(currentPlayer == 1) {
 						boxOwner[x/2][y] = 1;
-						//add
+						
 						
 					}
 					if(currentPlayer == 0) {
@@ -259,7 +259,7 @@ public class DotsandBoxes
 	}
 		
  
-//method to fill the squares in color depending on what player closed the box
+	//method to fill the squares in color depending on what player closed the box
 	private void drawPoints(Graphics g) {
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
@@ -286,6 +286,7 @@ public class DotsandBoxes
 		
 	}
 	
+	//method to keep track of score and print it out onto the screen
 	private void score(Graphics g) {
 		int s0 = 0;
 		int s1 = 0;
@@ -317,10 +318,12 @@ public class DotsandBoxes
 		g.drawString(str2, 650, 350);
 	}
 	
+	
+	//method that will end the game when one player reaches 10 points.
+	//point is scored by filling in a box
 	private void endGame(Graphics g) {
 		
 		g.setFont(new Font("Courier", Font.BOLD,70));
-		
 		
 		if(scoreP0 == 10) {
 			g.setColor(Color.BLUE);
@@ -330,6 +333,7 @@ public class DotsandBoxes
 			g.drawString("Player 1 Wins", 75, 250);
 			
 		}
+		
 		if(scoreP1 == 10) {
 			g.setColor(Color.RED);
 			g.fillRect(75, 200,	545, 70);

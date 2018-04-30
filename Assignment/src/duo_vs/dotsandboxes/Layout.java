@@ -25,11 +25,11 @@ public class Layout {
 		public void playerText(Graphics g) {
 			
 			
-			String str1 = "Player1: ";
-			String str2 = "Player2: ";
+			String str1 = "Player1:  ";
+			String str2 = "Player2:  ";
 			
-			g.drawString(str1, 550, 150);
-			g.drawString(str2, 550, 350);
+			g.drawString(str1, 540, 150);
+			g.drawString(str2, 540, 350);
 			
 			
 		}
