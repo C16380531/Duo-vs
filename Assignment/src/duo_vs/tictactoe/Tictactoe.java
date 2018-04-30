@@ -1,99 +1,136 @@
 package duo_vs.tictactoe;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import duo_vs.Handler;
 
-//import duo_vs.Game;
-//import java.awt.Color;
-//import java.awt.Graphics;
-
-public class Tictactoe implements ActionListener 
+public class Tictactoe //implements ActionListener 
 {
+	private Handler handler;
+	//private String letter ="";
+	int[] x, y, playero, playerx;
+	int d;
+	boolean pressed=false, gameStarted=false;
 	
-	// Instance Variables
-	//private Game game;
-	
-	///private JFrame window = new JFrame ("TIC-TAC-TOE");
-	
-	private JButton button1 = new JButton("");
-	private JButton button2 = new JButton("");
-	private JButton button3 = new JButton("");
-	private JButton button4 = new JButton("");
-	private JButton button5 = new JButton("");
-	private JButton button6 = new JButton("");
-	private JButton button7 = new JButton("");
-	private JButton button8 = new JButton("");
-	private JButton button9 = new JButton("");
-	private JButton button10 = new JButton("");
-	private JButton button11 = new JButton("");
-//	private JButton btnReset = new JButton("Reset");
-	private String letter ="";
-	private int count = 0;
-	private boolean win = false;
-
-	public Tictactoe() {
-
-	}
-	public void draw()
-	{
-		//create window
-
-		//	window.setSize(300, 300);
-		//	window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setLayout(new GridLayout(3,3));
-			
-			// Add buttons to window
-			
-			add(button1);
-			add(button2);
-			add(button3);
-			add(button4);
-			add(button5);
-			add(button6);
-			add(button7);
-			add(button8);
-			add(button9);
-			
-			//add action to button
-			
-			button1.addActionListener(this);
-			button2.addActionListener(this);
-			button3.addActionListener(this);
-			button4.addActionListener(this);
-			button5.addActionListener(this);
-			button6.addActionListener(this);
-			button7.addActionListener(this);
-			button8.addActionListener(this);
-			button9.addActionListener(this);
-	}
-	public void setLayout(GridLayout gridLayout) {
-		// TODO Auto-generated method stub
+	public Tictactoe(Handler handler) {
+		this.handler =handler;
+		x= new int[10];
+		y= new int[10];
+		playero= new int[9];
+		playerx=new int[9];
 		
 	}
-	public void add(JButton button92) {
-		// TODO Auto-generated method stub
 
-		
-	}
 	public void tick()
 	{
-		draw();
+		started();
+		if(gameStarted)
+		{
+			clickable();
+		}
+	
 	}
+	public void started()
+	{
+		if(handler.getKeyManager().isENTER())
+		{
+			gameStarted=true;
+		}
+	}
+	public void clickable()
+	{
+		 for(int i=120; i<450 ; i+=151 )
+		 {
+			 for(int j=55; j<450; j+=151)
+			 {
+				 while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >i && handler.getMouseManager().getMouseX() < i +150 && handler.getMouseManager().getMouseY() > j && handler.getMouseManager().getMouseY() <j+150)
+				 {
+					 x[d]=i;
+					 y[d]=j;
+					 pressed=true;
+					 System.out.print("");
+				 }
+			 }
+		}
+		 if(pressed)
+		 {
+			 d=d+1;
+			 pressed=false;
+		 }
+	}
+	
+	
+	
 	public void render(Graphics g)
 	{
-	//	g.draw3DRect(60, 60, 79, 79, true);
+		 g.setColor(Color.white);
+		 g.fillRect(120, 55, 450 , 450);
+		
+		 g.setColor(Color.blue);
+		 
+		 
+		 for(int i=120; i<450 ; i+=151 )
+		 {
+			 for(int y=55; y<450; y+=151)
+			 {
+				  g.fillRect(i,y,150,150);
+			 }
+		 }
+		if(gameStarted==false)
+		{
+			g.setColor(Color.RED);
+			g.drawString("Press Enter", 250, 250);
+		}
+		 color(g);
+
 	}
-	public void actionPerformed(ActionEvent a) 
+	
+	private void color(Graphics g)
 	{
+		for(int s=0; s<10; s+=2)
+		{
+			if(x[s] != 0 || y[s] !=0)
+			{
+				g.setColor(Color.BLACK);
+				g.fillRect(x[s],y[s],150,150);
+				g.setColor(Color.YELLOW);
+				g.drawString("X", x[s] +55, y[s]+85);
+				
+				for(int h = 0; h<9; h++)
+				{
+					if(x[h] !=0)
+					{
+					
+					}
+				}
+			}
+		}
+		for(int s=1; s<10; s+=2)
+		{
+			if(x[s] != 0 || y[s] !=0)
+			{
+				g.setColor(Color.BLACK);
+				g.fillRect(x[s],y[s],150,150);
+				g.setColor(Color.YELLOW);
+				g.drawString("O", x[s] +55, y[s]+85);
+			}
+		}
+	}
+}
+	
+	
+		
+	
+//	public void actionPerformed(ActionEvent a) {
 		
 		/*if(a.getSource() == btnReset) {
 			window.getContentPane().removeAll();*/
 			
-			count ++;
+			//count ++;
 		
 		//calculate whos turn it is
-		
+		/*
 		if (count == 1 || count == 3 || count ==5 || count ==7 || count ==9 )
 		{
 			letter = "X";
@@ -170,10 +207,7 @@ public class Tictactoe implements ActionListener
 				&& button9.getText() != "") {
 			win = true;
 		}
-		//Vertical wins
-		else if (button1.getText() == button4.getText()
-				&& button4.getText() == button7.getText()
-				&& button1.getText() != "") {}
+		
 		//virticle wins
 		else if (button1.getText() == button5.getText()
 				&& button5.getText() == button9.getText()
@@ -208,21 +242,19 @@ public class Tictactoe implements ActionListener
 		
 		JOptionPane.showMessageDialog(null,  letter + "WINS!");
 		}else if (count == 9 && win == false ) {
-			JOptionPane.showMessageDialog(null,  "Tie Game!");}
+			JOptionPane.showMessageDialog(null,  "Tie Game!");
+		}
 		
-	
 	}
-
-	/*
-
+	
+	
 	public static void main(String[] args) {
 		
 		new Tictactoe();
 		
 		
-	}
+	} */
 
-	*/
 	
-}
+	
 	
