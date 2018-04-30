@@ -1,7 +1,6 @@
 package duo_vs.tictactoe;
 
 import java.awt.Color;
-import java.awt.Font;
 //import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -18,7 +17,7 @@ public class Tictactoe //implements ActionListener
 	static BufferedImage tictactoe = null;
 	//private String letter ="";
 	int[] x, y, playerovalue, playerxyvalue, playerxvalue, playeryvalue;
-	int d, p1=9;
+	int d=0, p1=9;
 	boolean pressed=false, gameStarted=false, xwon, winner,gameOver=false;
 	
 	public Tictactoe(Handler handler) {
@@ -74,7 +73,7 @@ public class Tictactoe //implements ActionListener
 				 
 				 
 				 
-				 while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >i && handler.getMouseManager().getMouseX() < i +150 && handler.getMouseManager().getMouseY() > j && handler.getMouseManager().getMouseY() <j+150)
+				 while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >i && handler.getMouseManager().getMouseX() < i +150 && handler.getMouseManager().getMouseY() > j && handler.getMouseManager().getMouseY() <j+150 && d<10)
 				 {
 					 x[d]=i;
 					 y[d]=j;
@@ -99,16 +98,15 @@ public class Tictactoe //implements ActionListener
 		 }
 	}
 	
-	public boolean xWin()
+	public int xWin()
 	{
 		
 		//count=l;
 		//int check;
-		boolean	winner=false;
+		int winner=-1;
 		//check=0;
 		//check red player going up column 
-		 
-		
+	
 		//	check=0;
 			//going down
 				for(int i=0; i<3; i++)
@@ -117,20 +115,38 @@ public class Tictactoe //implements ActionListener
 					{
 					if(Boxes[0][0] == Boxes[0][1] && Boxes[0][1] == Boxes[0][2] && Boxes[0][0] != -1)
 					{
-					
-							System.out.print("win");
-							winner=true;
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 							
 					}
 					else if(Boxes[1][0] == Boxes[1][1] && Boxes[1][1]==Boxes[1][2] && Boxes[1][0] != -1)
 					{
-						System.out.print("win");
-						winner=true;
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
+						
 						
 					}else if(Boxes[2][0] == Boxes[2][1] && Boxes[2][1]==Boxes[2][2] && Boxes[2][0] != -1)
 					{
-						System.out.print("win");
-						winner=true;
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 					}
 						
 				//across win
@@ -138,19 +154,36 @@ public class Tictactoe //implements ActionListener
 					if(Boxes[0][0] == Boxes[1][0] && Boxes[1][0] == Boxes[2][0] && Boxes[0][0] != -1)
 					{
 					
-							System.out.print("win");
-							winner=true;
-							
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 					}
 					else if(Boxes[0][1] == Boxes[1][1] && Boxes[1][1]==Boxes[2][1] && Boxes[0][1] != -1)
 					{
-						System.out.print("win");
-						winner=true;
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 						
 					}else if(Boxes[0][2] == Boxes[1][2] && Boxes[1][2]==Boxes[2][2] && Boxes[0][2] != -1)
 					{
-						System.out.print("win");
-						winner=true;
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 					}
 					
 					}
@@ -160,18 +193,30 @@ public class Tictactoe //implements ActionListener
 					if(Boxes[0][0] == Boxes[1][1] && Boxes[1][1] == Boxes[2][2] && Boxes[0][0] != -1)
 					{
 					
-							System.out.print("win");
-							winner=true;
-							
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 					}
 					else if(Boxes[2][0] == Boxes[1][1] && Boxes[1][1]==Boxes[0][2] && Boxes[2][0] != -1)
 					{
-						System.out.print("win");
-						winner=true;
+						if(Boxes[0][0] == 1)
+						{
+							winner=1;
+						}else
+						{
+							winner=0;
+						}
+						gameOver=true;
 					}
 				
 			
 				}
+				
 			return winner;
 	}
 	
@@ -195,33 +240,43 @@ public class Tictactoe //implements ActionListener
 			g.drawImage(tictactoe, 120, 35, 460 , 460, null);
 		}
 		
-		if(gameOver == true)
+		if(gameOver == true || d>=9)
 		{
+			if(xWin()==1)
+			{
+				
 			
+				g.setColor(Color.ORANGE);
+				g.drawString(" X's Win", 165, 285);
+				
+				
+				g.drawString("Game Over", 165, 320);
+				g.drawString("Press enter to play again", 165, 350);
+			
+			
+		
+			}else if(xWin()==0) {
+				g.setColor(Color.ORANGE);
+				g.drawString(" O's Win", 165, 285);
+			
+				g.drawString("Game Over", 165, 320);
+				g.drawString("Press enter to play again", 165, 350);
+				
+			}else
+			{
+				gameOver=true;
+				g.setColor(Color.ORANGE);
+				g.drawString(" Tie", 165, 285);
+				
+				g.drawString("Game Over", 165, 320);
+				g.drawString("Press enter to play again", 165, 350);
+			}
 		}
 		 color(g);
 		
 		Background.render(g);
 		
-		if(xWin())
-		{
-			if(winner==false )
-			{
-			
-				g.setColor(Color.ORANGE);
-				g.drawString(" Winner Winner", 165, 285);
-				gameOver=true;
-				
-				g.drawString("Game Over", 165, 320);
-				g.drawString("Press enter to play again", 165, 350);
-			}
-			else
-			{
-				g.setColor(Color.ORANGE);
-				g.drawString(" Tie", 165, 285);
-			}
 		
-		}
 	}
 	
 	private void color(Graphics g)
