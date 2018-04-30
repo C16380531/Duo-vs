@@ -138,16 +138,16 @@ public class DotsandBoxes
 	//method is used to get click of the user
 	private void fillBoxes() {
 		
-		for( int i = 25, x = 0; i < 500; i += 50, x += 2) 
+		for( int i = 25, x = 0; i <= 500; i += 50, x += 2) 
 		{
-			for(int j = 25, y = 0; j < 500; j+= 50, y ++) 
+			for(int j = 25, y = 0; j <= 500; j+= 50, y ++) 
 			{
 				//Rows
 				while(handler.getMouseManager().isLeftPressed() && 
 						handler.getMouseManager().getMouseX() >i && 
-						handler.getMouseManager().getMouseX() < i+50 && 
+						handler.getMouseManager().getMouseX() <= i+50 && 
 						handler.getMouseManager().getMouseY() > j &&
-						handler.getMouseManager().getMouseY() < j+15)
+						handler.getMouseManager().getMouseY() <= j+15)
 				{
 					
 					//checks who's turn it is
@@ -173,9 +173,9 @@ public class DotsandBoxes
 				//Columns
 				while(handler.getMouseManager().isLeftPressed() &&
 						handler.getMouseManager().getMouseX() >i &&
-						handler.getMouseManager().getMouseX() < i+15 &&
+						handler.getMouseManager().getMouseX() <= i+15 &&
 						handler.getMouseManager().getMouseY() > j &&
-						handler.getMouseManager().getMouseY() < j+50)
+						handler.getMouseManager().getMouseY() <= j+50)
 				{
 					if(currentPlayer == 1) {
 						boxOwner[x/2][y] = 1;
@@ -340,4 +340,5 @@ public class DotsandBoxes
 	}
 	
 }
+
 
