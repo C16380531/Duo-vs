@@ -153,7 +153,7 @@ public class DotsandBoxes
 					//checks who's turn it is
 					if(currentPlayer == 1) {
 						boxOwner[x/2][y] = 1;
-
+						//add
 						
 					}
 					if(currentPlayer == 0) {
@@ -264,9 +264,9 @@ public class DotsandBoxes
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
 
-				//if scoreBoxes is 1 that means that means that a square has been formed and needs to be coloured in
+				//if scoreBoxes is 1 that means that means that a square has been formed and needs to be colored in
 				if(scoreBoxes[i][j] == 1) {
-					//boxOwner was initialised in fillBoxes depending on what player had clicked
+					//boxOwner was initialized in fillBoxes depending on what player had clicked
 					if(boxOwner[i][j] == 1) {
 						
 						g.setColor(Color.BLUE);
@@ -323,18 +323,18 @@ public class DotsandBoxes
 		
 		
 		if(scoreP0 == 10) {
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLUE);
 			g.fillRect(75, 200,	545, 70);
 			g.drawRect(75, 200,	545, 70);
-			g.setColor(Color.BLUE);
+			g.setColor(Color.BLACK);
 			g.drawString("Player 1 Wins", 75, 250);
 			
 		}
 		if(scoreP1 == 10) {
-			g.setColor(Color.WHITE);
+			g.setColor(Color.RED);
 			g.fillRect(75, 200,	545, 70);
 			g.drawRect(75, 200,	545, 70);
-			g.setColor(Color.RED);
+			g.setColor(Color.BLACK);
 			g.drawString("Player 2 Wins", 75, 250);
 		}
 	}
