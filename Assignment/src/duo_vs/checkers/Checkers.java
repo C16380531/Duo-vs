@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import duo_vs.Handler;
 import duo_vs.imageloader.ImageLoader;
+import duo_vs.background.Background;
 
 public class Checkers {
 	public static int width = 400;
@@ -22,11 +23,14 @@ public class Checkers {
 	public boolean isJump = false;
 	static BufferedImage crownImage = null;
 	private Handler handler;
+	private Background background;
+	int p1=9;
 	
 	public Checkers(Handler handler)
 	{
 		this.handler =handler;
 		crownImage = ImageLoader.loadImage("/textures/crown.jpg");
+		background = new Background(handler);
 	}
 	
 	public void tick() 
@@ -39,6 +43,7 @@ public class Checkers {
 		{
 		mousePressed();
 		}
+		background.tick();
 	//	gameOver();
 	}
 	
@@ -131,6 +136,8 @@ public class Checkers {
 		}
 		if(gameOver() == true)
 			gameOverDisplay(g);
+		
+		background.render(g);
 	}	
 	
 	public void gameOverDisplay(Graphics g) { //Displays the game over message
@@ -397,6 +404,11 @@ public class Checkers {
 			return new int[] {col+2, row-2};
 		else
 			return new int[] {col+2, row+2};
+	}
+
+	public int pressed5() {
+		p1=background.pressed();
+		return p1;
 	}
 	
 }

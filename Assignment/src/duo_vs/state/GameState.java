@@ -145,11 +145,12 @@ public class GameState extends State
 					p1=tictac.pressed4();
 					break;
 				case 5 :
-					checkers.tick();
-					break;
-				case 6 :
 					breakout.tick();
 					p1=breakout.pressed6();
+					break;
+				case 6 :
+					checkers.tick();
+					p1=checkers.pressed5();
 					break;    		
 			}	
 		}
@@ -210,12 +211,12 @@ public class GameState extends State
 		    			g.drawImage(Tic, 150, 150, 400, 250, null);
 		    			break;
 		    		case 5 :
-		    			g.drawString(str5, 295, 100);
-		    			g.drawImage(CHECKERS, 150, 150, 400, 400, null);
-		    			break;
-		    		case 6 :
 		    			g.drawString(str6, 295, 100);
 		    			g.drawImage(Breakout, 150, 150, 400, 250, null);
+		    			break;
+		    		case 6 :
+		    			g.drawString(str5, 295, 100);
+		    			g.drawImage(CHECKERS, 150, 150, 400, 400, null);
 				}
 		}
 		
@@ -253,11 +254,11 @@ public class GameState extends State
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			checkers.render(g);
+	    			breakout.render(g);
 	    			break;
 	    		case 6 :
 	    			g.clearRect(0, 0, 700, 550);
-	    			breakout.render(g);
+	    			checkers.render(g);
 	    			break;    		
 			}
 		}
