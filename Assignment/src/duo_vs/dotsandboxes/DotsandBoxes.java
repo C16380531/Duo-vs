@@ -11,14 +11,19 @@ package duo_vs.dotsandboxes;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+
 
 //imported classes
 import duo_vs.Handler;
-
+import duo_vs.background.Background;
+import duo_vs.imageloader.ImageLoader;
 
 public class DotsandBoxes 
 {	
 	private Handler handler;
+	private Background background;
+	static BufferedImage dots = null;
 	
 	
 	//Initializing variables
@@ -28,15 +33,17 @@ public class DotsandBoxes
 	private int[][] scoreBoxes = new int[10][10];
 	private int[][] boxOwner = new int[10][10];
 	private int scoreP0 = 0;
-	private int scoreP1 = 0;
-	
+	private int scoreP1 = 0, p1=9;
+	private boolean gameStarted;
 
 	Layout l =  new Layout();
 	
 	//Constructor
 	public DotsandBoxes(Handler handler) {
 		this.handler = handler;
-
+		background = new Background(handler);
+		dots = ImageLoader.loadImage("/textures/dots.png");
+		
 		//initializing the 2D array boxOwner with -1
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j< 10; j++) {
@@ -50,24 +57,82 @@ public class DotsandBoxes
 	
 	public void tick() 
 	{
-		fillBoxes();
+		if(gameStarted!=true)
+		{
+			started();
+		}
+		else
+		{
+			fillBoxes();
+		}
+		background.tick();
+		if(p1==0)
+		{
+			gameStarted=false;
+			reset();
+		}
 	}
 	
+	private void started()
+	{
+		if(handler.getKeyManager().isENTER())
+		{
+			gameStarted=true;
+		}
+	}
+	
+	private void reset()
+	{
+		for(int i = 0; i < 10; i++) 
+		{
+			for(int j = 0; j< 10; j++) 
+			{
+				scoreBoxes[i][j] = 0;
+				boxOwner[i][j] = -1;
+			}
+		}
+		for(int i = 0; i < 20; i++) 
+		{
+			for(int j = 0; j< 10; j++) 
+			{
+				boxes[i][j] = false;
+			}
+		}
+		currentPlayer=0;
+		scoreP0 = 0;
+		scoreP1 = 0;
+	}
+	
+	public int pressed2()
+	{
+		p1=background.pressed();
+		return p1;
+	}
 	
 	//render method will be called every time 
-	public void render(Graphics g) {
-		
-		g.setColor(Color.BLACK);
-		g.setFont(new Font("Courier", Font.BOLD,20));
-		l.drawDots(g);
-		l.drawLines(g);
-		l.playerText(g);
-		
-		drawClick(g);
-		drawPoints(g);
-		score(g);
-		endGame(g);
-		
+	public void render(Graphics g) 
+	{
+		if(gameStarted!= true)
+		{
+			g.setColor(Color.black);
+			g.fillRect(0, 0, 700 , 550);
+			g.drawImage(dots, 140, 80, 420 , 380, null);
+		}
+		else
+		{
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("Courier", Font.BOLD,20));
+			l.drawDots(g);
+			l.drawLines(g);
+			l.playerText(g);
+			
+			drawClick(g);
+			drawPoints(g);
+			score(g);
+			endGame(g);
+			background.render(g);
+		}
+
 	}
 	
 	//method is used to get click of the user

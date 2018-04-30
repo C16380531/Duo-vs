@@ -130,6 +130,7 @@ public class GameState extends State
 					break;
 				case 2 :
 					dotsandboxes.tick();
+					p1=dotsandboxes.pressed2();
 					break;
 				case 3 :
 					pong.tick();
