@@ -18,7 +18,7 @@ import duo_vs.connect4.Connect4;
 import duo_vs.imageloader.ImageLoader;
 import duo_vs.dotsandboxes.DotsandBoxes;
 import duo_vs.pong.Pong;
-//import duo_vs.tictactoe.Tictactoe;
+import duo_vs.tictactoe.Tictactoe;
 import duo_vs.checkers.Checkers;
 import duo_vs.breakout.Game;
 
@@ -33,7 +33,7 @@ public class GameState extends State
 	private Pong pong;
 	private Checkers checkers;
 	private Game breakout;
-//	private Tictactoe tictac;
+	private Tictactoe tictac;
 	//handler
 	private Handler handler;
 	
@@ -50,6 +50,7 @@ public class GameState extends State
 	static BufferedImage connect_4 = null;
 	static BufferedImage CHECKERS = null;
 	static BufferedImage Dots = null;
+	static BufferedImage Tic =null;
 	
 	public GameState(Handler handler)
 	{
@@ -60,7 +61,7 @@ public class GameState extends State
 		pong = new Pong(handler);
 		checkers = new Checkers(handler);
 		breakout = new Game(handler);
-//		tictac = new Tictactoe(handler);
+		tictac = new Tictactoe(handler);
 		
 
 			arrowLeft = ImageLoader.loadImage("/textures/arrow_left.png");
@@ -70,6 +71,7 @@ public class GameState extends State
 		    connect_4 = ImageLoader.loadImage("/textures/connectmenu.PNG");
 		    CHECKERS = ImageLoader.loadImage("/textures/checkers.PNG");
 		    Dots = ImageLoader.loadImage("/textures/DotsandBoxes.PNG");
+		    Tic = ImageLoader.loadImage("/textures/tictac.PNG");
 	}
 	public int menu()
 	{
@@ -139,7 +141,8 @@ public class GameState extends State
 					p1=pong.pressed3();
 					break;
 				case 4 :
-//					tictac.tick();
+					tictac.tick();
+					p1=tictac.pressed4();
 					break;
 				case 5 :
 					checkers.tick();
@@ -204,6 +207,7 @@ public class GameState extends State
 		    			break;
 		    		case 4 :
 		    			g.drawString(str4, 280, 100);
+		    			g.drawImage(Tic, 150, 150, 200, 250, null);
 		    			break;
 		    		case 5 :
 		    			g.drawString(str5, 284, 100);
@@ -245,7 +249,7 @@ public class GameState extends State
 	    			break;
 	    		case 4 :
 	    			g.clearRect(0, 0, 700, 550);
-//	    			tictac.render(g);
+	    			tictac.render(g);
 	    			break;
 	    		case 5 :
 	    			g.clearRect(0, 0, 700, 550);

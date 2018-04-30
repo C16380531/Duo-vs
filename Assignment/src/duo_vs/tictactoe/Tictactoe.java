@@ -4,32 +4,52 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import duo_vs.Handler;
+import duo_vs.background.Background;
 
 public class Tictactoe //implements ActionListener 
 {
 	private Handler handler;
+	private Background Background;
+	private int[][] Boxes = new int[3][3];
 	//private String letter ="";
-	int[] x, y, playero, playerx;
-	int d;
-	boolean pressed=false, gameStarted=false;
+	int[] x, y, playerovalue, playerxyvalue, playerxvalue, playeryvalue;
+	int d, p1=9;
+	boolean pressed=false, gameStarted=false, xwon, winner;
 	
 	public Tictactoe(Handler handler) {
 		this.handler =handler;
+		Background =new Background(handler);
 		x= new int[10];
 		y= new int[10];
-		playero= new int[9];
-		playerx=new int[9];
+		playerovalue= new int[9];
+		playerxyvalue= new int[9];
 		
+		playerxvalue=new int[9];
+		playeryvalue=new int[9];
+		
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j< 3; j++) {
+				
+				Boxes[i][j] = -1;
+			}
+		}
 	}
 
+	public int pressed4()
+	{
+		p1=Background.pressed();
+		return p1;
+	}
+	
 	public void tick()
 	{
 		started();
 		if(gameStarted)
 		{
 			clickable();
+			xWin();
 		}
-	
+		Background.tick();
 	}
 	public void started()
 	{
@@ -44,6 +64,9 @@ public class Tictactoe //implements ActionListener
 		 {
 			 for(int j=55; j<450; j+=151)
 			 {
+				 
+				 
+				 
 				 while(handler.getMouseManager().isLeftPressed() && handler.getMouseManager().getMouseX() >i && handler.getMouseManager().getMouseX() < i +150 && handler.getMouseManager().getMouseY() > j && handler.getMouseManager().getMouseY() <j+150)
 				 {
 					 x[d]=i;
@@ -52,7 +75,16 @@ public class Tictactoe //implements ActionListener
 					 System.out.print("");
 				 }
 			 }
-		}
+		}/*
+		 for(int i=0; i<d; i++) 
+		 { 
+			 if(x[i]==x[d])
+			 {
+				 x[d]=0;
+				 y[d]=0;
+				 pressed=false;
+			 }
+		 }*/
 		 if(pressed)
 		 {
 			 d=d+1;
@@ -83,15 +115,18 @@ public class Tictactoe //implements ActionListener
 			g.drawString("Press Enter", 250, 250);
 		}
 		 color(g);
-
+		winner(g);
+		Background.render(g);
 	}
 	
 	private void color(Graphics g)
 	{
+		int i,j;
 		for(int s=0; s<10; s+=2)
 		{
 			if(x[s] != 0 || y[s] !=0)
 			{
+				
 				g.setColor(Color.BLACK);
 				g.fillRect(x[s],y[s],150,150);
 				g.setColor(Color.YELLOW);
@@ -101,7 +136,11 @@ public class Tictactoe //implements ActionListener
 				{
 					if(x[h] !=0)
 					{
-					
+						playerxvalue[h] = x[s];
+						playeryvalue[h] = y[s];
+						i = (playerxvalue[h]/151);
+						j = (playeryvalue[h]/151);
+						Boxes[i][j]= 1; //is x; i=0->3 x=0->3
 					}
 				}
 			}
@@ -115,9 +154,109 @@ public class Tictactoe //implements ActionListener
 				g.setColor(Color.YELLOW);
 				g.drawString("O", x[s] +55, y[s]+85);
 			}
+			for(int h = 0; h<9; h++)
+			{
+				if(x[h] !=0)
+				{
+					playerovalue[h] = x[s];
+					playerxyvalue[h] = y[s];
+					i = (playerovalue[h]/151);
+					j = (playerxyvalue[h]/151);
+					Boxes[i][j]= 0; // is 0
+				}
+			}
 		}
 	}
+	
+	private void winner(Graphics g)
+	{
+		if(xWin())
+		{
+			g.setColor(Color.GREEN);
+			g.fillRect(400,400,150,150);
+			g.setColor(Color.BLACK);
+			g.drawString("X Winner Winner chicken dinner", 200, 200);
+			
+		}
+				
+		
+	}	
+	public boolean xWin()
+	{
+		
+		//count=l;
+		//int check;
+		boolean	redwin=false;
+		//check=0;
+		//check red player going up column 
+		 
+		
+		//	check=0;
+			//going down
+				for(int i=0; i<3; i++)
+				{
+					for(int j=0; j<3; j++)
+					{
+					if(Boxes[0][0] == Boxes[0][1] && Boxes[0][1] == Boxes[0][2] && Boxes[0][0] != -1)
+					{
+					
+							System.out.print("win");
+							redwin=true;
+							
+					}
+					else if(Boxes[1][0] == Boxes[1][1] && Boxes[1][1]==Boxes[1][2] && Boxes[1][0] != -1)
+					{
+						System.out.print("win");
+						redwin=true;
+					}else if(Boxes[2][0] == Boxes[2][1] && Boxes[2][1]==Boxes[2][2] && Boxes[2][0] != -1)
+					{
+						System.out.print("win");
+						redwin=true;
+					}
+						
+				//across win
+					
+					if(Boxes[0][0] == Boxes[1][0] && Boxes[1][0] == Boxes[2][0] && Boxes[0][0] != -1)
+					{
+					
+							System.out.print("win");
+							redwin=true;
+							
+					}
+					else if(Boxes[0][1] == Boxes[1][1] && Boxes[1][1]==Boxes[2][1] && Boxes[0][1] != -1)
+					{
+						System.out.print("win");
+						redwin=true;
+						
+					}else if(Boxes[0][2] == Boxes[1][2] && Boxes[1][2]==Boxes[2][2] && Boxes[0][2] != -1)
+					{
+						System.out.print("win");
+						redwin=true;
+					}
+					
+					}
+					
+				//diagonal win
+					
+					if(Boxes[0][0] == Boxes[1][1] && Boxes[1][1] == Boxes[2][2] && Boxes[0][0] != -1)
+					{
+					
+							System.out.print("win");
+							redwin=true;
+							
+					}
+					else if(Boxes[2][0] == Boxes[1][1] && Boxes[1][1]==Boxes[2][1] && Boxes[1][0] != -1)
+					{
+						System.out.print("win");
+						redwin=true;
+					}
+				
+			
+				}
+			return redwin;
+	}
 }
+
 	
 	
 		
