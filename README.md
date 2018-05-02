@@ -9,7 +9,7 @@ OOP Assignment
 
 ### Overview of Project
 
-We, team Duo-Vs, for this OOP assignment have submitted a series of two player games ran from a computer console. It includes the following games: Connect 4, Dots and Boxes, Pong, Checkers, Tic-Tac-Toe, and Breakout. 
+We, team Duo-Vs, for this OOP assignment have submitted a series of two player games ran from a computer console. It includes the following games: Connect 4 by Sharon, Dots and Boxes by Lauren, Pong by Gary, Checkers by Paul, Tic-Tac-Toe by Davis, and Breakout by Chris. 
 
 With six games, and six members, each game was taken by an individual member. However, when problems occurred, we of course helped each other to solve the problems that laid in front of us. Hence, the overall project was very much an evenly divided project in terms of workload. 
 
